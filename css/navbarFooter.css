@@ -42,11 +42,12 @@ body {
 .login-btn{
     background-color: #ccc;
     color: white;
-    border: solid black 1px;
+    border: 1px solid rgba(0, 0, 0, 0.075) !important;
     letter-spacing: 4px;
-    width: 75%;
+    width: 50%;
     text-decoration: underline;
 }
+
 
 .login-card label {
     margin-top: 5px;
