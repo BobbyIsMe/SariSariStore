@@ -1,4 +1,4 @@
-<?php 
+<?php
 // Get ordered items of user by User ID
 include_once("db_connect.php");
 $user_id = $_SESSION['user_id'];
@@ -10,11 +10,11 @@ if (!isset($user_id)) {
 }
 
 $stmt = $con->prepare("
-SELECT p.product_id, p.item_name, p.subcategory, p.brand, c.item_qty, c.price
-FROM Orders ca
-JOIN Order_items c ON ca.order_id = c.order_id
+SELECT p.product_id, p.item_name, p.subcategory, p.brand, c.item_qty, c.subtotal, c.variation_id
+FROM Carts ca
+JOIN Cart_Items c ON ca.cart_id = c.cart_id
 JOIN Products p ON c.product_id = p.product_id
-WHERE ca.user_id = ?");
+WHERE ca.user_id = ?  AND ca.type = 'order' AND NOT ca.status = 'closed'");
 $stmt->bind_param('i', $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -27,7 +27,8 @@ if ($result && $result->num_rows > 0) {
             'subcategory' => $row['subcategory'],
             'brand' => $row['brand'],
             'item_qty' => $row['item_qty'],
-            'price' => $row['price']
+            'subtotal' => $row['subtotal'],
+            'variation_id' => $row['variation_id']
         ];
     }
     $stmt->close();
@@ -37,7 +38,9 @@ if ($result && $result->num_rows > 0) {
 }
 
 $stmt = $con->prepare("
-SELECT total FROM Orders WHERE user_id = ?");
+SELECT total 
+FROM Carts 
+WHERE user_id = ? AND type = 'order' AND NOT status = 'closed'");
 $stmt->bind_param('i', $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -56,4 +59,3 @@ $myObj = array(
 );
 
 echo json_encode($myObj);
-?>

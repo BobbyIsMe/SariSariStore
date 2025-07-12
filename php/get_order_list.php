@@ -2,12 +2,12 @@
 // Get ordered items of all customers
 include_once("db_connect.php");
 include_once("admin_status.php");
-requireAdmin($con, 'Manager');
+requireAdmin($con, 'staff');
 
 $orders = [];
 $values = [];
 $params = '';
-$filter = " WHERE 1=1";
+$filter = " WHERE type = 'order'";
 $results = 0;
 $total = 5;
 
@@ -21,7 +21,7 @@ if (!empty($status)) {
 
 $stmt = $con->prepare("
 SELECT COUNT(*) AS total 
-FROM Orders" . $filter);
+FROM Carts" . $filter);
 $stmt->bind_param($params, ...$values);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -48,10 +48,10 @@ if($totalRows == 0) {
 $filter .= " LIMIT $total OFFSET $offset";
 
 $stmt = $con->prepare("
-SELECT ca.cart_id, CONCAT(n.fname, ' ', n.lname) AS name, ca.status, ca.order_date, ca.total, COUNT(c.cart_id) AS total_items 
-FROM Cart ca
+SELECT ca.cart_id, CONCAT(n.fname, ' ', n.lname) AS name, ca.status, ca.date_time_completed, ca.date_time_received, ca.date_time_created, ca.total, COUNT(c.cart_id) AS total_items 
+FROM Carts ca
 LEFT JOIN Cart_Items c ON ca.cart_id = c.cart_id
-LEFT JOIN Name n ON ca.user_id = n.user_id" . $filter . "
+LEFT JOIN Names n ON ca.user_id = n.user_id" . $filter . "
 GROUP BY ca.cart_id, name, ca.status, ca.order_date, ca.total" . $filter);
 if(!empty($params))
 $stmt->bind_param($params, ...$values);
@@ -62,7 +62,9 @@ while ($row = $result->fetch_assoc()) {
         'cart_id' => $row['cart_id'],
         'name' => $row['name'],
         'status' => $row['status'],
-        'order_date' => $row['order_date'],
+        'date_time_completed' => $row['date_time_completed'],
+        'date_time_received' => $row['date_time_received'],
+        'date_time_created' => $row['date_time_created'],
         'total' => $row['total'],
         'total_items' => $row['total_items']
     ];

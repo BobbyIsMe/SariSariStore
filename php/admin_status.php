@@ -4,7 +4,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 include_once("db_connect.php");
 
-function requireAdmin($con, $admin)
+function requireAdmin($con, $staff_type)
 {
     if (!isset($_SESSION["user_id"])) {
         echo json_encode([
@@ -20,7 +20,7 @@ function requireAdmin($con, $admin)
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
     $stmt->close();
-    if ($row['admin'] == $admin) {
+    if ($row['staff_type'] == $staff_type) {
         echo json_encode([
             'status' => 400,
             'message' => 'Unauthorized access.'

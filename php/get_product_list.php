@@ -15,6 +15,7 @@ $brand = $_GET['brand'] ?? null;
 $stock_qty = $_GET['stock_qty'] ?? null;
 $item_name = $_GET['item_name'] ?? null;
 $price = $_GET['price'] ?? null;
+$total_sales = $_GET['total_sales'] ?? null;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 
 if (!empty($category)) {
@@ -53,6 +54,10 @@ if (!empty($price) && is_numeric($price)) {
     $values[] = $price;
 }
 
+if (!empty($total_sales) && is_numeric($total_sales) && $total_sales == 1) {
+    $filter .= " ORDER BY total_sales DESC";
+}
+
 $stmt = $con->prepare("
 SELECT COUNT(*) AS total 
 FROM Products" . $filter);
@@ -82,8 +87,9 @@ if($totalRows == 0) {
 $filter .= " LIMIT $total OFFSET $offset";
 
 $stmt = $con->prepare("
-SELECT product_id, item_name, subcategory, brand 
-FROM Products". $filter);
+SELECT p.product_id, p.item_name, p.subcategory, p.brand, v.varation_name 
+FROM Products p
+JOIN Variations v ON p.variation_id=v.variation_id". $filter);
 if(!empty($params))
 $stmt->bind_param($params, ...$values);
 $stmt->execute();
