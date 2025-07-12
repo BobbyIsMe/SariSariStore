@@ -3,10 +3,11 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Homepage</title>
+    <title>Item</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../../css/navbarFooter.css">
     <link rel="stylesheet" href="../../css/webpageBody.css">
+    <link rel="stylesheet" href="../../css/itemDescription.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <style>
@@ -65,7 +66,7 @@
 
 
 
-        <main class="flex-fill">
+        <main class="flex-fill" style="">
             <div class="d-flex align-items-center justify-content-center " style="min-height: 70vh;"
                 style="background-color: white;">
                 <div class="item_nav col-2 flex-column align-items-center text-center">
@@ -113,51 +114,68 @@
 
                 <main style="flex-grow: 1;">
                     <div class="object_container">
-                        <!-- Top Selling Products -->
-                        <section class="top_selling">
-                            <div class="d-flex flex-row justify-content-between align-items-center me-3">
-                                <h2>Top Selling Products</h2>
-                                <a href="#">See More</a>
-                            </div>
-                            <div class="product_list">
+                        <!---item desc-->
+                        <div style="border-bottom: 1px solid black; padding: 40px; ;">
+                            <div class="d-flex align-items-center justify-content-center"
+                                style="background-color: rgb(255, 255, 255); gap: 50px; ">
 
-                                <div class="product_card">
-                                    <div class="image"><img src="" alt="img"></div>
-                                    <div class="category" style="font-size: 10px;">Junkfood</div>
-                                    <div class="name">Mang Juan | Chicharon</div>
-                                    <div class="price"><strong>₱12.00</strong></div>
-                                    <button style="width: 100%; margin-top: 5px;">Add to Cart</button>
+                                <div class="item_desc">
+                                    <img src="" alt="img">
                                 </div>
+                                <div>
+                                    <div class="product_card" style="width: 300px; height: 100%;">
+                                        <div class="category" style="font-size: 10px;">Junkfood</div>
+                                        <div class="name">Mang Juan | Chicharon</div>
+                                        <div class="price"><strong>₱12.00</strong></div>
+                                        <br><br>
 
-
-                                <div class="product_card">
-                                    <div class="image"><img src="" alt="img"></div>
-                                    <div class="category" style="font-size: 10px;">Junkfood</div>
-                                    <div class="name">Mang Juan | Chicharon</div>
-                                    <div class="price"><strong>₱12.00</strong></div>
-                                    <button style="width: 100%; margin-top: 5px;">Add to Cart</button>
-                                </div>
-                            </div>
-                        </section>
-
-                        <!-- restocked -->
-                        <section class="restocked" style="margin-top: 30px;">
-                            <div class="d-flex flex-row justify-content-between align-items-center me-3">
-                                <h2>Restocked Items</h2>
-                                <a href="#">See More</a>
-                            </div>
-                            <div class="product_list">
-                                <div class="product_card">
-                                    <div class="image"><img src="" alt="img"></div>
-                                    <div class="category" style="font-size: 10px;">Junkfood</div>
-                                    <div class="name">Mang Juan | Chicharon</div>
-                                    <div class="price"><strong>₱12.00</strong></div>
-                                    <button disabled style="width: 100%; margin-top: 5px;">Add to Cart</button>
+                                        <div class="product_controls">
+                                            <div class="quantity_control">
+                                                <button>-</button>
+                                                <input type="text" value="1" readonly />
+                                                <button>+</button>
+                                            </div>
+                                            <div class="price">₱12.00</div>
+                                            <button class="add_to_cart" disabled>Add To Cart</button>
+                                        </div>
+                                        
+                                    </div>
                                 </div>
 
                             </div>
-                        </section>
-                    </div>
+
+                            </div>
+
+                            <!-- restocked -->
+                            <section style=" margin-top: 30px;">
+                                <div class="d-flex flex-row justify-content-between align-items-center me-3">
+                                    <h2>More Items</h2>
+                                    <a href="#">See More</a>
+                                </div>
+                                <div class="d-flex flex-row" style="gap: 40px">
+                                    <div class="product_list">
+                                        <div class="product_card">
+                                            <div class="image"><img src="" alt="img"></div>
+                                            <div class="category" style="font-size: 10px;">Junkfood</div>
+                                            <div class="name">Mang Juan | Chicharon</div>
+                                            <div class="price"><strong>₱12.00</strong></div>
+                                            <button disabled style="width: 100%; margin-top: 5px;">Add to Cart</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="product_list">
+                                        <div class="product_card">
+                                            <div class="image"><img src="" alt="img"></div>
+                                            <div class="category" style="font-size: 10px;">Junkfood</div>
+                                            <div class="name">Mang Juan | Chicharon</div>
+                                            <div class="price"><strong>₱12.00</strong></div>
+                                            <button disabled style="width: 100%; margin-top: 5px;">Add to Cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </section>
+                        
 
                 </main>
             </div>
