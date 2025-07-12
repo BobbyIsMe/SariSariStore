@@ -113,51 +113,105 @@
 
                 <main style="flex-grow: 1;">
                     <div class="object_container">
-                        <!-- Top Selling Products -->
-                        <section class="top_selling">
-                            <div>
-                                <h2>Top Selling Products</h2>
-                                <a href="#">See More</a>
-                            </div>
-                            <div class="product_list">
+                        <div class="cart-container"
+                            style="display: flex; gap: 20px; padding: 20px; background: #f5f5f5;">
 
-                                <div class="product_card">
-                                    <div class="image"><img src="" alt="img"></div>
-                                    <div class="category" style="font-size: 10px;">Junkfood</div>
-                                    <div class="name">Mang Juan | Chicharon</div>
-                                    <div class="price"><strong>₱12.00</strong></div>
-                                    <button style="width: 100%; margin-top: 5px;">Add to Cart</button>
+                            <!-- cart items-->
+                            <div class="cart_items">
+                                <h2>Cart</h2>
+
+                                <!-- item-->
+                                <div class="cart_item">
+
+                                    <div class="item_image">
+                                        <img src="" alt="img">
+                                    </div>
+
+                                    <!-- details-->
+                                    <div style="flex: 1;">
+                                        <div class="category" style="font-size: 12px; color: gray;">Junkfood</div>
+                                        <div class="name" style="font-weight: bold;">Mang Juan | Chicharon</div>
+                                    </div>
+
+                                    <!-- price -->
+                                    <div style="width: 80px; text-align: right;">₱12.00</div>
+
+                                    <!-- qty of items-->
+                                    <div>
+                                        <select>
+                                            <option>1 pcs</option>
+                                            <option>2 pcs</option>
+                                            <option>3 pcs</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- delete item-->
+                                    <div>
+                                        <button style="background: none; border: none; cursor: pointer;">🗑️</button>
+                                    </div>
                                 </div>
 
 
-                                <div class="product_card">
-                                    <div class="image"><img src="" alt="img"></div>
-                                    <div class="category" style="font-size: 10px;">Junkfood</div>
-                                    <div class="name">Mang Juan | Chicharon</div>
-                                    <div class="price"><strong>₱12.00</strong></div>
-                                    <button style="width: 100%; margin-top: 5px;">Add to Cart</button>
-                                </div>
-                            </div>
-                        </section>
+                                <div class="cart_item">
 
-                        <!-- restocked -->
-                        <section class="restocked" style="margin-top: 30px;">
-                            <div>
-                                <h2>Restocked Items</h2>
-                                <a href="#">See More</a>
-                            </div>
-                            <div class="product_list">
-                                <div class="product_card">
-                                    <div class="image"><img src="" alt="img"></div>
-                                    <div class="category" style="font-size: 10px;">Junkfood</div>
-                                    <div class="name">Mang Juan | Chicharon</div>
-                                    <div class="price"><strong>₱12.00</strong></div>
-                                    <button disabled style="width: 100%; margin-top: 5px;">Add to Cart</button>
+                                    <div class="item_image">
+                                        <img src="" alt="img">
+                                    </div>
+
+                                    <!-- details-->
+                                    <div style="flex: 1;">
+                                        <div class="category" style="font-size: 12px; color: gray;">Softdrink</div>
+                                        <div class="name" style="font-weight: bold;">Coke| Softdrink</div>
+                                    </div>
+
+                                    <!-- price -->
+                                    <div style="width: 80px; text-align: right;">₱24.00</div>
+
+                                    <!-- qty of items-->
+                                    <div>
+                                        <select>
+                                            <option>1 pcs</option>
+                                            <option>2 pcs</option>
+                                            <option>3 pcs</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- delete item-->
+                                    <div>
+                                        <button style="background: none; border: none; cursor: pointer;">🗑️</button>
+                                    </div>
                                 </div>
 
                             </div>
-                        </section>
+
+                            <!--order summary-->
+                            <div class="order_summary">
+                                <h3>Order Details</h3>
+                                <!-- item -->
+                                <div class="summary_item">
+                                    <div>Mang Juan | Chicharon</div>
+                                    <div>₱12.00</div>
+                                </div>
+                                <div class="summary_item">
+                                    <div>Coke | Softdrinks</div>
+                                    <div>₱24.00</div>
+                                </div>
+                                <div
+                                    style="margin-top: 20px; font-weight: bold; display: flex; justify-content: space-between;">
+                                    <div>Estimated Total</div>
+                                    <div>₱80.00</div>
+                                </div>
+
+                                <button
+                                    style="width: 100%; margin-top: 20px; padding: 10px; background: #ccc; border: none;">
+                                    Reserve
+                                </button>
+                            </div>
+                        </div>
+
                     </div>
+
+
 
                 </main>
             </div>
