@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Homepage</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../css/navbarFooter.css">
+    <link rel="stylesheet" href="../../css/webpageBody.css">
+    <link rel="stylesheet" href="../../css/cart.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        * {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="d-flex flex-column min-vh-100">
+
+        <div class="header">
+            <div class="container-fluid d-flex flex-row align-items-center text-center py-3" style="gap: 40px;">
+                <h5 class="mb-0"><b>Cerina's Sari2Store</b></h5>
+                <div class="d-flex flex-grow-1">
+
+                    <div class="col-10 d-flex flex-row">
+                        <input type="text" class="form-control" placeholder="Search">
+                        <button class="btn btn-light" type="button">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+
+
+                    <div class="dropdown ms-auto">
+                        <button id="profile_dropdown" class="btn btn-outline-secondary dropdown-toggle" type="button"
+                            data-bs-toggle="dropdown">
+                            Profile
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <a class="dropdown-item" id="authLink" href="#" onclick="signoutClick(event)">Logout</a>
+                        </ul>
+                    </div>
+
+
+
+
+                </div>
+                <div class="">
+                    <img src="" alt="cart" />
+                </div>
+
+                <div class="">
+                    <img src="" alt="reservation" />
+                </div>
+
+                <div class="">
+                    <img src="" alt="notification" />
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <main class="flex-fill">
+            <div class="d-flex align-items-center justify-content-center " style="min-height: 70vh;"
+                style="background-color: white;">
+                <div class="item_nav col-2 flex-column align-items-center text-center">
+                    <h6> Categories <br>
+                        <hr style="color: black;">
+                    </h6>
+
+                    <details class="category ">
+                        <summary>School Supplies</summary>
+                        <ul class="subcategory">
+                            <li>Filler</li>
+                        </ul>
+                    </details> <br>
+
+                    <details class="category">
+                        <summary>Softdrinks</summary>
+                        <ul class="subcategory">
+                            <li>Filler</li>
+                        </ul>
+                    </details> <br>
+
+                    <details class="category">
+                        <summary>Powdered Drinks</summary>
+                        <ul class="subcategory">
+                            <li>Filler</li>
+                        </ul>
+                    </details> <br>
+
+                    <details class="category">
+                        <summary>Snacks</summary>
+                        <ul class="subcategory">
+                            <li>Filler</li>
+                        </ul>
+                    </details> <br>
+
+                    <details class="category">
+                        <summary>Hygiene</summary>
+                        <ul class="subcategory me-3">
+                            <li>Filler</li>
+
+
+                        </ul>
+                    </details> <br>
+                </div>
+
+                <main style="flex-grow: 1;">
+                    <div class="object_container">
+                        <div class="cart-container"
+                            style="display: flex; gap: 20px; padding: 20px; background: #f5f5f5;">
+
+                            <!-- cart items-->
+                            <div class="cart_items">
+                                <h2>Cart</h2>
+
+                                <!-- item-->
+                                <div class="cart_item">
+
+                                    <div class="item_image">
+                                        <img src="" alt="img">
+                                    </div>
+
+                                    <!-- details-->
+                                    <div style="flex: 1;">
+                                        <div class="category" style="font-size: 12px; color: gray;">Junkfood</div>
+                                        <div class="name" style="font-weight: bold;">Mang Juan | Chicharon</div>
+                                    </div>
+
+                                    <!-- price -->
+                                    <div style="width: 80px; text-align: right;">₱12.00</div>
+
+                                    <!-- qty of items-->
+                                    <div>
+                                        <select>
+                                            <option>1 pcs</option>
+                                            <option>2 pcs</option>
+                                            <option>3 pcs</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- delete item-->
+                                    <div>
+                                        <button style="background: none; border: none; cursor: pointer;">🗑️</button>
+                                    </div>
+                                </div>
+
+
+                                <div class="cart_item">
+
+                                    <div class="item_image">
+                                        <img src="" alt="img">
+                                    </div>
+
+                                    <!-- details-->
+                                    <div style="flex: 1;">
+                                        <div class="category" style="font-size: 12px; color: gray;">Softdrink</div>
+                                        <div class="name" style="font-weight: bold;">Coke| Softdrink</div>
+                                    </div>
+
+                                    <!-- price -->
+                                    <div style="width: 80px; text-align: right;">₱24.00</div>
+
+                                    <!-- qty of items-->
+                                    <div>
+                                        <select>
+                                            <option>1 pcs</option>
+                                            <option>2 pcs</option>
+                                            <option>3 pcs</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- delete item-->
+                                    <div>
+                                        <button style="background: none; border: none; cursor: pointer;">🗑️</button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!--order summary-->
+                            <div class="order_summary">
+                                <h3>Order Details</h3>
+                                <!-- item -->
+                                <div class="summary_item">
+                                    <div>Mang Juan | Chicharon</div>
+                                    <div>₱12.00</div>
+                                </div>
+                                <div class="summary_item">
+                                    <div>Coke | Softdrinks</div>
+                                    <div>₱24.00</div>
+                                </div>
+                                <div
+                                    style="margin-top: 20px; font-weight: bold; display: flex; justify-content: space-between;">
+                                    <div>Estimated Total</div>
+                                    <div>₱80.00</div>
+                                </div>
+
+                                <button
+                                    style="width: 100%; margin-top: 20px; padding: 10px; background: #ccc; border: none;">
+                                    Reserve
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                </main>
+            </div>
+        </main>
+
+        <footer class="footer mt-auto">
+            <div class="container d-flex flex-row justify-content-between p-4">
+                <div><b>About Us</b></div>
+                <div><b>Contact Us</b></div>
+                <div>Copyright © <b>2025</b>. All rights reserved.</div>
+            </div>
+        </footer>
+    </div>
+</body>
+
+</html>

@@ -39,7 +39,7 @@ body {
     text-align: center;
 }
 
-.login-btn{
+.login-btn {
     background-color: #ccc;
     color: white;
     border: 1px solid rgba(0, 0, 0, 0.075) !important;
@@ -53,4 +53,18 @@ body {
     margin-top: 5px;
     margin-bottom: 10px;
     display: block;
+}
+
+
+/*webpages css*/
+
+#profile_dropdown {
+    color: black;
+    letter-spacing: 2px;
+    border-radius: 5px;
+}
+
+#profile_dropdown[aria-expanded="true"], #profile_dropdown:hover {
+    background-color: #a79465;
+    color: black;
 }
