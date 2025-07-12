@@ -4,8 +4,8 @@ include_once("db_connect.php");
 $products = [];
 
 $stmt = $con->prepare("
-SELECT category,subcategory
-FROM products");
+SELECT category, subcategory
+FROM Products");
 $stmt->execute();
 $result = $stmt->get_result();
 

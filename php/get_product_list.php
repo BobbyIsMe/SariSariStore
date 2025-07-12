@@ -55,7 +55,7 @@ if (!empty($price) && is_numeric($price)) {
 
 $stmt = $con->prepare("
 SELECT COUNT(*) AS total 
-FROM products" . $filter);
+FROM Products" . $filter);
 $stmt->bind_param($params, ...$values);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -82,8 +82,8 @@ if($totalRows == 0) {
 $filter .= " LIMIT $total OFFSET $offset";
 
 $stmt = $con->prepare("
-SELECT prod_id, item_name, subcategory, brand 
-FROM products". $filter);
+SELECT product_id, item_name, subcategory, brand 
+FROM Products". $filter);
 if(!empty($params))
 $stmt->bind_param($params, ...$values);
 $stmt->execute();
@@ -91,7 +91,7 @@ $result = $stmt->get_result();
 
 while ($row = $result->fetch_assoc()) {
     $products[] = [
-        'prod_id' => $row['prod_id'],
+        'product_id' => $row['product_id'],
         'item_name' => $row['item_name'],
         'subcategory' => $row['subcategory'],
         'brand' => $row['brand']

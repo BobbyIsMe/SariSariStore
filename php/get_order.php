@@ -10,10 +10,10 @@ if (!isset($user_id)) {
 }
 
 $stmt = $con->prepare("
-SELECT p.prod_id, p.item_name, p.subcategory, p.brand, c.item_qty, c.price
-FROM order ca
-JOIN order_items c ON ca.order_id = c.order_id
-JOIN products p ON c.prod_id = p.prod_id
+SELECT p.product_id, p.item_name, p.subcategory, p.brand, c.item_qty, c.price
+FROM Orders ca
+JOIN Order_items c ON ca.order_id = c.order_id
+JOIN Products p ON c.product_id = p.product_id
 WHERE ca.user_id = ?");
 $stmt->bind_param('i', $user_id);
 $stmt->execute();
@@ -22,7 +22,7 @@ $result = $stmt->get_result();
 if ($result && $result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $order_items[] = [
-            'prod_id' => $row['prod_id'],
+            'product_id' => $row['product_id'],
             'item_name' => $row['item_name'],
             'subcategory' => $row['subcategory'],
             'brand' => $row['brand'],
@@ -37,7 +37,7 @@ if ($result && $result->num_rows > 0) {
 }
 
 $stmt = $con->prepare("
-SELECT total FROM order WHERE user_id = ?");
+SELECT total FROM Orders WHERE user_id = ?");
 $stmt->bind_param('i', $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
