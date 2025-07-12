@@ -11,9 +11,9 @@ if (!isset($user_id)) {
 
 $stmt = $con->prepare("
 SELECT p.prod_id, p.item_name, p.subcategory, p.brand, c.item_qty, c.price
-FROM cart ca
-JOIN cart_items c ON ca.cart_id = c.cart_id
-JOIN products p ON c.prod_id = p.prod_id
+FROM Cart ca
+JOIN Cart_items c ON ca.cart_id = c.cart_id
+JOIN Products p ON c.product_id = p.product_id
 WHERE ca.user_id = ?");
 $stmt->bind_param('i', $user_id);
 $stmt->execute();
@@ -22,7 +22,7 @@ $result = $stmt->get_result();
 if ($result && $result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $cart_items[] = [
-            'prod_id' => $row['prod_id'],
+            'product_id' => $row['product_id'],
             'item_name' => $row['item_name'],
             'subcategory' => $row['subcategory'],
             'brand' => $row['brand'],
