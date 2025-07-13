@@ -125,7 +125,7 @@ a {
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: left;
 }
 
 .creator-profile {
@@ -157,7 +157,7 @@ a {
 }
 
 .faq-box h4 {
-  text-align: center;
+  text-align: left;
 }
 
 .faq-box .image {
