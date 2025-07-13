@@ -9,7 +9,7 @@ requireAdmin($con, 'inventory');
 $edit = $_GET['edit'] ?? null;
 
 if (!isset($edit) || !in_array($edit, ['add', 'edit'])) {
-    echo json_encode(['status' => 400, 'message' => 'Invalid product ID.']);
+    echo json_encode(['status' => 400, 'message' => 'Only add/edit products.']);
     exit();
 }
 
@@ -54,36 +54,10 @@ if (!isset($item_name)) {
 $params = 'sis';
 $values = [$item_name, $category_id, $brand];
 
-$sql = "
+$stmt = $con->prepare("
     SELECT item_name 
     FROM Products 
-    WHERE item_name = ? AND category_id = ? AND brand = ?";
-
-if ($edit === 'edit') {
-    $product_id = $_POST['product_id'] ?? null;
-    if (!isset($product_id)) {
-        echo json_encode(['status' => 400, 'message' => 'Product ID is required for editing.']);
-        exit();
-    }
-    $stmt = $con->prepare("
-        SELECT product_id 
-        FROM Products 
-        WHERE product_id = ?");
-    $stmt->bind_param('i', $product_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if (!$result || $result->num_rows === 0) {
-        echo json_encode(['status' => 404, 'message' => 'Product not found.']);
-        exit;
-    }
-    $stmt->close();
-
-    $params .= 'i';
-    $values[] = $product_id;
-    $sql .= " AND product_id != ?";
-}
-
-$stmt = $con->prepare($sql);
+    WHERE item_name = ? AND category_id = ? AND brand = ?");
 $stmt->bind_param($params, ...$values);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -100,21 +74,41 @@ if ($edit === 'add') {
         ");
     $stmt->bind_param('sissds', $item_name, $category_id, $brand, $stock_qty, $item_details, $price);
     if ($stmt->execute()) {
-        $product_id = $stmt->insert_id;
         $stmt->close();
 
         echo json_encode([
             'status' => 200,
-            'message' => 'Product added successfully.',
-            'product_id' => $product_id
+            'message' => 'Product added successfully.'
         ]);
     } else {
         echo json_encode(['status' => 500, 'message' => 'Failed to add product.']);
     }
 } else if ($edit === 'edit') {
+    $product_id = $_POST['product_id'] ?? null;
+    if (!isset($product_id)) {
+        echo json_encode(['status' => 400, 'message' => 'Product ID is required for editing.']);
+        exit();
+    }
+
     $con->begin_transaction();
 
     try {
+        $stmt = $con->prepare("
+        SELECT product_id 
+        FROM Products 
+        WHERE product_id = ?");
+        $stmt->bind_param('i', $product_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        if (!$result || $result->num_rows === 0) {
+            echo json_encode(['status' => 404, 'message' => 'Product not found.']);
+            exit();
+        }
+
+        $params .= 'i';
+        $values[] = $product_id;
+        $sql .= " AND product_id != ?";
         $stmt = $con->prepare("
         UPDATE Products 
         SET item_name = ?, category_id = ?, brand = ?, stock_qty = ?, item_details = ?, price = ? 
