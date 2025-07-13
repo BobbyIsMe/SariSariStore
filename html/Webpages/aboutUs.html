@@ -2,42 +2,46 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Homepage</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../css/navbarFooter.css">
-    <link rel="stylesheet" href="../../css/webpageBody.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <style>
-        * {
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-       
-        }
-
-    </style>
+  <meta charset="UTF-8">
+  <title>About Us</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/navbarFooter.css">
+  <link rel="stylesheet" href="../../css/webpageBody.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <style>
+    * {
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+  </style>
 </head>
 
 <body>
-    <div class="d-flex flex-column min-vh-100">
+  <div class="d-flex flex-column min-vh-100">
 
-        <div class="header">
-            <div class="container-fluid d-flex flex-row align-items-center text-center py-2" style="gap: 40px;">
-                <a href="homepage.html" class="text-decoration-none">
-                    <h5 class="mb-0"><b>Cerina's Sari2Store</b></h5>
+    <!-- Header -->
+    <div class="header">
+      <div class="container-fluid d-flex flex-row align-items-center text-center py-2" style="gap: 40px;">
+                <a href="../Webpages/homepage.html" class="text-decoration-none">
+                  <h5 class="mb-0"><b>Cerina's Sari2Store</b></h5>
                 </a>
                 <div class="d-flex flex-grow-1">
 
                     <div class="col-10 d-flex flex-row">
                         <input type="text" class="form-control" placeholder="Search">
                         <button class="btn btn-light search-button" type="button" aria-label="Search">
-                            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="-81.92 -81.92 1187.84 1187.84">
-                                <path d="m795.904 750.72 124.992 124.928a32 32 0 0 1-45.248 
+                        <svg
+                            class="search-icon"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="-81.92 -81.92 1187.84 1187.84"
+                            >
+                            <path
+                                d="m795.904 750.72 124.992 124.928a32 32 0 0 1-45.248 
                                 45.248L750.656 795.904a416 416 0 1 1 45.248-45.248z
-                                M480 832a352 352 0 1 0 0-704 352 352 0 0 0 0 704z" />
-                            </svg>
-                        </button>
+                                M480 832a352 352 0 1 0 0-704 352 352 0 0 0 0 704z"
+                            />
+                        </svg>
+                    </button>
                     </div>
 
 
@@ -53,9 +57,10 @@
 
                 </div>
                 <div class="nav-icons d-flex gap-3 ms-3">
-                    <button class="btn nav-icon" onclick="window.location.href='../Cart/cart.html'" aria-label="Cart">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M6.29977 5H21L19 12H7.37671M20 16H8L6 3H3
+                <button class="btn nav-icon" onclick="window.location.href='../Cart/cart.html'" aria-label="Cart">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path
+                        d="M6.29977 5H21L19 12H7.37671M20 16H8L6 3H3
                         M9 20C9 20.5523 8.55228 21 8 21
                         C7.44772 21 7 20.5523 7 20
                         C7 19.4477 7.44772 19 8 19
@@ -64,14 +69,15 @@
                         M20 20C20 20.5523 19.5523 21 19 21
                         C18.4477 21 18 20.5523 18 20
                         C18 19.4477 18.4477 19 19 19
-                        C19.5523 19 20 19.4477 20 20Z" />
-                        </svg>
-                    </button>
+                        C19.5523 19 20 19.4477 20 20Z"
+                    />
+                    </svg>
+                </button>
 
-                    <button class="btn nav-icon" onclick="window.location.href='itemDescription.html'"
-                        aria-label="Reservation">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M16 8H17.1597C18.1999 8 19.0664 8.79732
+                <button class="btn nav-icon" onclick="window.location.href='../Webpages/itemDescription.html'" aria-label="Reservation">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path
+                        d="M16 8H17.1597C18.1999 8 19.0664 8.79732
                         19.1528 9.83391L19.8195 17.8339
                         C19.9167 18.9999 18.9965 20 17.8264 20
                         H6.1736C5.00352 20 4.08334 18.9999
@@ -80,12 +86,12 @@
                         M16 8H8M16 8L16 7C16 5.93913 15.5786 4.92172
                         14.8284 4.17157C14.0783 3.42143 13.0609 3 12 3
                         C10.9391 3 9.92172 3.42143 9.17157 4.17157
-                        C8.42143 4.92172 8 5.93913 8 7L8 8M16 8L16 12M8 8L8 12" />
-                        </svg>
-                    </button>
+                        C8.42143 4.92172 8 5.93913 8 7L8 8M16 8L16 12M8 8L8 12"
+                    />
+                    </svg>
+                </button>
 
-
-                    <div class="dropdown">
+                <div class="dropdown">
                         <button class="btn nav-icon d-flex flex-row" aria-label="Notifications" type="button"
                             id="notificationDropdown" data-bs-toggle="modal" aria-expanded="false"
                             data-bs-target="#notificationModal">
@@ -129,7 +135,7 @@
                                         </div>
                                         <div class="notification_card d-flex mb-3">
                                             <div class="col-1" style="background-color: rgb(217, 255, 0);"></div>
-                                        <div class="d-flex flex-column flex-grow-1" >
+                                        <div class="d-flex flex-column flex-grow-1"  >
                                             <div class="fw-bold">Order ID# 3</div>
                                             <div class="notification_message">Your reservation has been approvedjdsiahdshdsahdshdsahdiashiudashudashuidshaiudhsaiudhsauidhsauidhsauidhsuaihdasuihdsuiahdas</div>
                                             <small class="text-muted">3/5/25 10:01 AM</small>
@@ -137,7 +143,7 @@
                                         </div>
                                         <div class="notification_card d-flex mb-3">
                                             <div class="col-1" style="background-color: rgb(185, 185, 185);"></div>
-                                        <div class="d-flex flex-column flex-grow-1">
+                                        <div class="d-flex flex-column flex-grow-1" >
                                             <div class="fw-bold">Order ID# 3</div>
                                             <div class="notification_message">Your reservation has been closed</div>
                                             <small class="text-muted">3/5/25 12:00 PM</small>
@@ -170,88 +176,73 @@
             </div>
         </div>
 
-        <main class="flex-fill">
-            <div class="d-flex align-items-start justify-content-center" style="min-height: 70vh;">
-                <aside class="item_nav col-2 flex-column align-items-start text-start">
-          <h6>Categories</h6>
-          <hr>
-          <details class="category">
-            <summary>School Supplies</summary>
-            <ul class="subcategory">
-              <a href="">• Filler</a>
-            </ul>
-          </details>
-          <details class="category">
-            <summary>Softdrinks</summary>
-            <ul class="subcategory">
-              <a href="">• Filler</a>
-            </ul>
-          </details>
-          <details class="category">
-            <summary>Powdered Drinks</summary>
-            <ul class="subcategory">
-              <a href="">• Filler</a>
-            </ul>
-          </details>
-          <details class="category">
-            <summary>Snacks</summary>
-            <ul class="subcategory">
-              <a href="">• Filler</a>
-            </ul>
-          </details>
-          <details class="category">
-            <summary>Hygiene</summary>
-            <ul class="subcategory">
-              <a href="">• Filler</a>
-            </ul>
-          </details>
-        </aside>
+    <main class="flex-fill">
+  <section class="body_container p-5">
+    <h2 class="mb-4 text-center">About Us</h2>
 
-                <section class="body_container" style="flex-grow: 1;">
-                    <div class="object_container">
-                        <section class="top_selling">
-                            <div class="d-flex flex-row justify-content-between align-items-center me-3">
-                                <h4><b>Top Selling Products</b></h4>
-                                <a href="#">See More</a>
-                            </div>
-                            <div class="product_list">
-                                <div class="product_card">
-                                    <div class="image"><img src="" alt="img"></div>
-                                    <div class="category" style="font-size: 10px;">Junkfood</div>
-                                    <div class="name">Mang Juan | Chicharon</div>
-                                    <div class="price"><strong>₱12.00</strong></div>
-                                    <button style="width: 100%; margin-top: 5px;">Add to Cart</button>
-                                </div>
-                                <div class="product_card">
-                                    <div class="image"><img src="" alt="img"></div>
-                                    <div class="category" style="font-size: 10px;">Junkfood</div>
-                                    <div class="name">Mang Juan | Chicharon</div>
-                                    <div class="price"><strong>₱12.00</strong></div>
-                                    <button style="width: 100%; margin-top: 5px;">Add to Cart</button>
-                                </div>
-                            </div>
-                        </section>
-                        <section class="restocked" style="margin-top: 30px;">
-                            <div class="d-flex flex-row justify-content-between align-items-center me-3">
-                                <h4><b>Restocked Items</b></h4>
-                                <a href="#">See More</a>
-                            </div>
-                            <div class="product_list">
-                                <div class="product_card">
-                                    <div class="image"><img src="" alt="img"></div>
-                                    <div class="category" style="font-size: 10px;">Junkfood</div>
-                                    <div class="name">Mang Juan | Chicharon</div>
-                                    <div class="price"><strong>₱12.00</strong></div>
-                                    <button disabled style="width: 100%; margin-top: 5px;">Add to Cart</button>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </section>
-            </div>
-        </main>
+    <div class="about-section-wrapper d-flex flex-column flex-lg-row justify-content-center gap-4">
 
-        <footer class="footer mt-auto">
+      <!-- Creator Profiles Box -->
+      <div class="creator-box flex-grow-1">
+        <h3 class="mb-3">Meet the Creators</h3>
+
+        <div class="creator-profile d-flex align-items-start mb-4">
+          <div class="avatar-img bg-light border"></div>
+          <div class="creator-details">
+            <h5>James Cameron Abello</h5>
+            <p>Lead Developer. Focused on usability, dynamic features, and frontend polish.</p>
+          </div>
+        </div>
+
+        <div class="creator-profile d-flex align-items-start mb-4">
+          <div class="avatar-img bg-light border"></div>
+          <div class="creator-details">
+            <h5>Cedrick Digory</h5>
+            <p>UI Designer. Responsible for layout structure, colors, and responsive feel.</p>
+          </div>
+        </div>
+
+        <div class="creator-profile d-flex align-items-start mb-4">
+          <div class="avatar-img bg-light border"></div>
+          <div class="creator-details">
+            <h5>Roy THE Man</h5>
+            <p>Backend Engineer. Handles reservation logic and database efficiency.</p>
+          </div>
+        </div>
+
+        <div class="creator-profile d-flex align-items-start mb-4">
+          <div class="avatar-img bg-light border"></div>
+          <div class="creator-details">
+            <h5>Mizzi You 2</h5>
+            <p>Project Manager. Oversees development flow, timelines, and testing.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ Box -->
+      <div class="faq-box flex-grow-1">
+        <h3 class="mb-3">FAQ's</h3>
+        <ol>
+          <li>How do I reserve items?
+            <ul><li>Simply select your products and click “Reserve” in your cart.</li></ul>
+          </li>
+          <li>Can I cancel a reservation?
+            <ul><li>Yes, as long as the status is still pending approval.</li></ul>
+          </li>
+          <li>How often are items restocked?
+            <ul><li>We restock key products weekly; exact dates may vary per supplier.</li></ul>
+          </li>
+          <li>Who should I contact for help?
+            <ul><li>See our <a href="contactUs.html">Contact Us</a> page for full details.</li></ul>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+</main>
+
+
+    <footer class="footer mt-auto">
       <div class="container d-flex flex-row justify-content-between p-4">
         <div><a href="aboutUs.html"><b>About Us</b></a></div>
         <div><a href="contactUs.html"><b>Contact Us</b></a></div>
@@ -260,7 +251,7 @@
     </footer>
   </div>
 
-    <script src="../../js/script.js"></script>
+  <script src="../../js/script.js"></script>
 </body>
 
 </html>

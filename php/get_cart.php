@@ -10,10 +10,11 @@ if (!isset($user_id)) {
 }
 
 $stmt = $con->prepare("
-SELECT p.product_id, p.item_name, p.subcategory, p.brand, c.item_qty, c.subtotal, c.variation_id
+SELECT p.product_id, p.item_name, cs.subcategory, p.brand, c.item_qty, c.subtotal, c.variation_id
 FROM Carts ca
 JOIN Cart_Items c ON ca.cart_id = c.cart_id
 JOIN Products p ON c.product_id = p.product_id
+JOIN Categories cs ON p.category_id = cs.category_id
 WHERE ca.user_id = ? AND ca.type = 'cart'");
 $stmt->bind_param('i', $user_id);
 $stmt->execute();

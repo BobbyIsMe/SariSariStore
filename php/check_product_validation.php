@@ -12,6 +12,7 @@ function checkProductValidation($con, $filter, $values, $params)
     LEFT JOIN Products p ON c.product_id = p.product_id
     LEFT JOIN Variations v ON c.variation_id = v.variation_id
     WHERE " . $filter);
+    if(!empty($params))
     $stmt->bind_param($values, $params);
     $stmt->execute();
     $result = $stmt->get_result();

@@ -2,6 +2,7 @@
 include_once('db_connect.php');
 include_once('admin_status.php');
 include_once('check_product_validation.php');
+include_once('notify_users.php');
 requireAdmin($con, 'staff');
 
 $cart_id = $_POST['cart_id'] ?? null;
@@ -24,8 +25,77 @@ if (!isset($date_time_deadline)) {
 
 $orders = [];
 $stock_list = [];
-if ($status == 'approved') {
-    $orders = checkProductValidation($con, " ca.type = 'order' AND ca.cart_id = ? AND ca.status = 'pending'", 'i', $cart_id);
+
+if ($status == 'closed') {
+    $con->begin_transaction();
+
+    try {
+        $stmt = $con->prepare("
+        UPDATE Carts 
+        SET status = 'closed', date_time_closed = NOW() 
+        WHERE cart_id = ? AND type = 'order'
+    ");
+        $stmt->bind_param('i', $cart_id);
+        $stmt->execute();
+
+        if ($stmt->affected_rows > 0) {
+            $stmt->close();
+
+            $message = 'Your reservation has been closed.';
+            $stmt = $con->prepare("
+            INSERT INTO Notifications (cart_id, message, date_time_created, status)
+            VALUES (?, ?, NOW(), 'closed')
+        ");
+            $stmt->bind_param('is', $cart_id, $message);
+            $stmt->execute();
+
+            $con->commit();
+            echo json_encode(['status' => 200, 'message' => 'Order closed and notification sent.']);
+        } else {
+            throw new Exception('Order not found.');
+        }
+    } catch (Exception $e) {
+        $con->rollback();
+        echo json_encode(['status' => 500, 'message' => 'Transaction failed: ' . $e->getMessage()]);
+    }
+    $stmt->close();
+    exit();
+} else if ($status == 'rejected') {
+    $con->begin_transaction();
+
+    try {
+        $stmt = $con->prepare("
+        UPDATE Carts 
+        SET status = 'rejected' 
+        WHERE cart_id = ? AND type = 'order'
+    ");
+        $stmt->bind_param('i', $cart_id);
+        $stmt->execute();
+
+        if ($stmt->affected_rows > 0) {
+            $stmt->close();
+
+            $stmt = $con->prepare("
+            INSERT INTO Notifications (cart_id, message, date_time_created, status)
+            VALUES (?, ?, NOW(), 'rejected')
+            ");
+            $stmt->bind_param('is', $cart_id, 'Your reservation has been rejected.');
+            $stmt->execute();
+
+            $con->commit();
+            echo json_encode(['status' => 200, 'message' => 'Order rejected and notification sent.']);
+        } else {
+            throw new Exception('Order not found.');
+        }
+    } catch (Exception $e) {
+        $con->rollback();
+        echo json_encode(['status' => 500, 'message' => 'Transaction failed: ' . $e->getMessage()]);
+    }
+    $stmt->close();
+    exit();
+} else if ($status == 'approved') {
+
+    $orders = checkProductValidation($con, " ca.type = 'order' AND ca.status = 'pending'", '', []);
     if ($orders === null) {
         echo json_encode(['status' => 404, 'message' => 'Order not found.']);
         exit();
@@ -54,9 +124,6 @@ if ($status == 'approved') {
     }
 
     unset($orders[$cart_id]);
-}
-
-if ($status == 'approved') {
 
     $con->begin_transaction();
 
@@ -82,9 +149,14 @@ if ($status == 'approved') {
                 }
             }
 
-            $cart_id_list = array_keys($cart_id_list);
-            $placeholders = "";
+            $date_time = date('Y-m-d H:i:s');
+
+            //TODO: Notify users about order rejection and approval
             if (!empty($cart_id_list)) {
+
+                $cart_id_list = array_keys($cart_id_list);
+                $placeholders = "";
+
                 $placeholders = implode(',', array_fill(0, count($cart_id_list), '?'));
                 $stmt = $con->prepare("
                 UPDATE Carts 
@@ -93,45 +165,28 @@ if ($status == 'approved') {
                 ");
                 $stmt->bind_param(str_repeat('i', count($cart_id_list)), ...$cart_id_list);
                 $stmt->execute();
-            }
 
-            $date_time = date('Y-m-d H:i:s');
-
-            //TODO: Notify users about order rejection and approval
-            if (!empty($cart_id_list)) {
                 $notifications = [];
 
                 $notifications[] = [
                     'cart_id' => $cart_id,
                     'message' => 'Your reservation has been approved. Receive the item before ' . $date_time_deadline . '.',
-                    'date_time_created' => $date_time
+                    'date_time_created' => $date_time,
+                    'status' => 'approved'
                 ];
                 foreach ($cart_id_list as $id) {
                     $notifications[] = [
                         'cart_id' => $id['cart_id'],
                         'message' => 'Your reservation has been rejected due to invalid items.',
-                        'date_time_created' => $date_time
+                        'date_time_created' => $date_time,
+                        'status' => 'rejected'
                     ];
                 }
 
-                $placeholders = [];
-                $values = '';
-                $params = [];
-
-                foreach ($notifications as $notif) {
-                    $placeholders[] = '(?, ?, ?)';
-                    $values .= 'iss';
-                    $params[] = $notif['cart_id'];
-                    $params[] = $notif['message'];
-                    $params[] = $notif['date_time_created'];
-                }
-
-                $stmt = $con->prepare("INSERT INTO Notifications (cart_id, message, date_time_created) VALUES " . implode(', ', $placeholders));
-                $stmt->bind_param($values, ...$params);
-                $stmt->execute();
+                notifyUsers($con, $notifications);
             } else {
-                $stmt = $con->prepare("INSERT INTO Notifications (cart_id, message, date_time_created) VALUES (?, ?, ?)");
-                $stmt->bind_param('iss', 'Your reservation has been approved. Receive the item before ' . $date_time_deadline . '.', $date_time);
+                $stmt = $con->prepare("INSERT INTO Notifications (cart_id, message, date_time_created, status) VALUES (?, ?, ?, ?)");
+                $stmt->bind_param('isss', 'Your reservation has been approved. Receive the item before ' . $date_time_deadline . '.', $date_time, 'approved');
                 $stmt->execute();
             }
 
