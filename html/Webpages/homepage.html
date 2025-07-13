@@ -12,8 +12,9 @@
     <style>
         * {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
-            border: solid 1px black;
+       
         }
+
     </style>
 </head>
 
@@ -52,10 +53,9 @@
 
                 </div>
                 <div class="nav-icons d-flex gap-3 ms-3">
-                <button class="btn nav-icon" onclick="window.location.href='../Cart/cart.html'" aria-label="Cart">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path
-                        d="M6.29977 5H21L19 12H7.37671M20 16H8L6 3H3
+                    <button class="btn nav-icon" onclick="window.location.href='../Cart/cart.html'" aria-label="Cart">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M6.29977 5H21L19 12H7.37671M20 16H8L6 3H3
                         M9 20C9 20.5523 8.55228 21 8 21
                         C7.44772 21 7 20.5523 7 20
                         C7 19.4477 7.44772 19 8 19
@@ -68,10 +68,10 @@
                         </svg>
                     </button>
 
-                <button class="btn nav-icon" onclick="window.location.href='itemDescription.html'" aria-label="Reservation">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path
-                        d="M16 8H17.1597C18.1999 8 19.0664 8.79732
+                    <button class="btn nav-icon" onclick="window.location.href='itemDescription.html'"
+                        aria-label="Reservation">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M16 8H17.1597C18.1999 8 19.0664 8.79732
                         19.1528 9.83391L19.8195 17.8339
                         C19.9167 18.9999 18.9965 20 17.8264 20
                         H6.1736C5.00352 20 4.08334 18.9999
@@ -86,8 +86,9 @@
 
 
                     <div class="dropdown">
-                        <button class="btn nav-icon d-flex flex-row" aria-label="Notifications" type="button" id="notificationDropdown"
-                            data-bs-toggle="modal" aria-expanded="false" data-bs-target="#notificationModal">
+                        <button class="btn nav-icon d-flex flex-row" aria-label="Notifications" type="button"
+                            id="notificationDropdown" data-bs-toggle="modal" aria-expanded="false"
+                            data-bs-target="#notificationModal">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                 <path d="M12.0196 2.91016C8.7096 2.91016 6.0196 5.60016 6.0196 8.91016
                         V11.8002C6.0196 12.4102 5.7596 13.3402 5.4496 13.8602
@@ -104,7 +105,7 @@
                         12.0195 22.0601C11.1995 22.0601 10.4395 21.7201
                         9.89953 21.1801C9.35953 20.6401 9.01953 19.8801 9.01953 19.0601" />
                             </svg>
-                        <div style="color: white    ;">3</div>
+                            <div style="color: white    ;">3</div>
                         </button>
 
                         <div class="modal fade" id="notificationModal" tabindex="-1"
@@ -116,24 +117,46 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
-                                    <div class="modal-body" style="max-height: 400px; max-width: 600px; overflow-y: auto;">
-                                        <div class="notification_card mb-3">
+                                    <div class="modal-body"
+                                        style=" overflow-y: auto;">
+                                        <div class="notification_card d-flex mb-3">
+                                            <div class="col-1" style="background-color: red;"></div>
+                                        <div class="d-flex flex-column flex-grow-1">
                                             <div class="fw-bold">Order ID# 3</div>
-                                            <div>Your reservation has been approved</div>
-                                            <small class="text-muted">3/5/25 12pm</small>
+                                            <div class="notification_message">Your reservation has been rejected</div>
+                                            <small class="text-muted">3/5/25 1:40 AM</small>
                                         </div>
-                                        <div class="notification_card mb-3">
-                                            <div class="fw-bold">Order ID# 4</div>
-                                            <div>Your reservation has been rejected</div>
-                                            <small class="text-muted">3/5/25 12pm</small>
                                         </div>
-                                        <div class="notification_card mb-3">
-                                            <div class="fw-bold">Order ID# 5</div>
-                                            <div>Your reservation has been approved</div>
-                                            <small class="text-muted">3/5/25 12pm</small>
+                                        <div class="notification_card d-flex mb-3">
+                                            <div class="col-1" style="background-color: rgb(217, 255, 0);"></div>
+                                        <div class="d-flex flex-column flex-grow-1" >
+                                            <div class="fw-bold">Order ID# 3</div>
+                                            <div class="notification_message">Your reservation has been approvedjdsiahdshdsahdshdsahdiashiudashudashuidshaiudhsaiudhsauidhsauidhsauidhsuaihdasuihdsuiahdas</div>
+                                            <small class="text-muted">3/5/25 10:01 AM</small>
+                                        </div>
+                                        </div>
+                                        <div class="notification_card d-flex mb-3">
+                                            <div class="col-1" style="background-color: rgb(185, 185, 185);"></div>
+                                        <div class="d-flex flex-column flex-grow-1">
+                                            <div class="fw-bold">Order ID# 3</div>
+                                            <div class="notification_message">Your reservation has been closed</div>
+                                            <small class="text-muted">3/5/25 12:00 PM</small>
+                                        </div>
                                         </div>
 
-                                    
+                                        <div class="p-4 d-flex justify-content-center align-items-center gap-4">
+                                            <button class="navButton" type="button" id="prev_button">
+                                                Previous
+                                            </button>
+                                            <span>|</span>
+                                            <div id="page_number" class="paragraphs">
+                                                Page # out of #
+                                            </div>
+                                            <span>|</span>
+                                            <button class="navButton" type="button" id="next_button">
+                                                Next
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

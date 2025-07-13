@@ -118,11 +118,32 @@ body {
 
 }
 
+
+
 .notification_card {
-    padding: 10px 0;
+    padding: 30px 0;
     border-bottom: 1px solid #f1f1f1;
+    gap: 20px;
 }
 
 .notification_card:last-child {
     border-bottom: none;
+}
+
+.notification_message {
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    min-width: 0;
+    word-break: break-word;
+}
+
+.notification_card>.d-flex.flex-column.flex-grow-1 {
+    min-width: 0;
+}
+
+.navButton{
+    border: 1px solid black;
+    border-radius: 5px;
+    font-weight: lighter;
 }
