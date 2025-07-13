@@ -255,7 +255,7 @@
                   Add Item
                 </button>
                 <span class="d-flex align-items-center px-2">|</span>
-                <button id="edit_category" class="btn adminBtn " type="button">
+                <button id="edit_category" class="btn adminBtn" type="button" data-bs-toggle="modal" data-bs-target="#editCategoriesModal">
                   Edit Categories
                 </button>
               </div>
@@ -334,7 +334,8 @@
                     data-bs-toggle="modal" data-bs-target="#editItemModal">
                     Edit Item
                   </button>
-                  <button id="edit_variations" class="btn adminBtn " type="button" style="background-color: #e6cc8c;;">
+                  <button id="edit_variations" type="button" class="btn adminBtn" style="background-color: #e6cc8c;" 
+                    data-bs-toggle="modal" data-bs-target="#editVariationsModal">
                     Edit Variations
                   </button>
                   <button id="remove" class="btn adminBtn " type="button" style="background-color: red; color: white;">
@@ -351,7 +352,6 @@
               <div class="item_image" style="width: 300px; height: 400px;">
                 <img src="" alt="img">
               </div>
-              <!-- cart items-->
               <div class="cart_items">
                 <div>
                   <h4><b>Product Details</b></h4>
@@ -408,7 +408,6 @@
 
               </div>
 
-              <!--order summary-->
               <div class="order_summary" style="background-color:  #f5f5f5;">
 
 
@@ -419,7 +418,8 @@
                     data-bs-toggle="modal" data-bs-target="#editItemModal">
                     Edit Item
                   </button>
-                  <button id="edit_variations" class="btn adminBtn " type="button" style="background-color: #e6cc8c;;">
+                  <button id="edit_variations" type="button" class="btn adminBtn" style="background-color: #e6cc8c;" 
+                    data-bs-toggle="modal" data-bs-target="#editVariationsModal">
                     Edit Variations
                   </button>
                   <button id="remove" class="btn adminBtn " type="button" style="background-color: red; color: white;">
@@ -447,7 +447,42 @@
 
           </div>
 
+<!-- edit variations -->
+          <div class="modal fade" id="editVariationsModal" tabindex="-1" aria-labelledby="editVariationsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md modal-dialog-centered">
+              <div class="modal-content p-4">
+                <div class="modal-header border-0">
+                  <h5 class="modal-title" id="editVariationsModalLabel">Edit Variations</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
 
+                <div class="modal-body">
+                  <form id="editVariationsForm" class="d-flex flex-column gap-3">
+
+                    <div class="d-flex flex-row align-items-center gap-2">
+                      <input type="text" class="form-control" style="width: 220px; font-size: 14px;" placeholder="Your variation here..." id="newVariation" name="newVariation">  
+                      <button type="button" class="btn small" style="width: 140px; font-size: 16px; background-color: #e6cc8c;" id="addVariationBtn">Add Variation</button>
+                    </div>
+
+                    <div class="d-flex flex-row align-items-center gap-2">
+                      <input type="text" class="form-control" style="width: 220px; font-size: 14px;" placeholder="Flavor 1" id="newFlavor" name="newFlavor">
+                      <button type="button" class="btn btn-danger small" style="width: 140px;">Remove</button>
+                    </div>
+
+                    <div class="d-flex flex-row align-items-center gap-2">
+                      <input type="text" class="form-control" style="width: 220px; font-size: 14px;" placeholder="Flavor 2" id="newFlavor" name="newFlavor">  
+                      <button type="button" class="btn btn-danger small" style="width: 140px;">Remove</button>
+                    </div>
+
+                    <div class="d-flex justify-content-center">
+                      <button type="submit" class="btn px-4 py-1" style="background-color: #e6cc8c;">Update Variations</button>
+                    </div>
+
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
 
         </main>
 
@@ -466,7 +501,6 @@
 
   <script src="../js/script.js"></script>
 
-  <!-- Edit Item Modal -->
   <div class="modal fade" id="editItemModal" tabindex="-1" aria-labelledby="editItemModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
       <div class="modal-content p-4">
@@ -537,6 +571,53 @@
                 <button type="submit" class="btn btn-warning">Update Item</button>
               </div>
             </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Edit Categories -->
+  <div class="modal fade" id="editCategoriesModal" tabindex="-1" aria-labelledby="editCategoriesModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content p-4" style="max-width: 650px;">
+        <div class="modal-body">
+          <form id="editCategoriesForm" class="d-flex flex-column gap-3">
+
+            <div class="d-flex flex-row flex-wrap align-items-center gap-2">
+              <input type="text" class="form-control" style="width: 200px; font-size: 14px;" placeholder="Category Name">
+              <input type="text" class="form-control" style="width: 200px; font-size: 14px;" placeholder="Subcategory Name">
+              <button type="button" class="btn small" style="width: 140px; font-size: 14px; white-space: nowrap; background-color: #e6cc8c;">Add Category</button>
+            </div>
+
+            <hr class="my-2">
+
+            <h6><b>Category</b></h6>
+            <select class="form-select" style="font-size: 14px; width: 200px;" required>
+              <option value="">Select a category</option>
+              <option>School Supplies</option>
+              <option>Softdrinks</option>
+              <option>Powdered Drinks</option>
+              <option>Snacks</option>
+              <option>Hygiene</option>
+            </select>
+
+            <div class="d-flex flex-row flex-wrap align-items-center gap-2">
+              <input type="text" class="form-control" style="width: 200px; font-size: 14px;" placeholder="Category Name" readonly>
+              <input type="text" class="form-control" style="width: 200px; font-size: 14px;" placeholder="Subcategory Name" readonly>
+              <button type="button" class="btn btn-danger small" style="width: 140px; font-size: 14px; white-space: nowrap;">Remove</button>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap align-items-center gap-2">
+              <input type="text" class="form-control" style="width: 200px; font-size: 14px;" placeholder="Category Name" readonly>
+              <input type="text" class="form-control" style="width: 200px; font-size: 14px;" placeholder="Subcategory Name" readonly>
+              <button type="button" class="btn btn-danger small" style="width: 140px; font-size: 14px; white-space: nowrap;">Remove</button>
+            </div>
+
+            <div class="d-flex justify-content-center mt-2">
+              <button type="submit" class="btn px-4 py-1" style="background-color: #e6cc8c; white-space: nowrap;">Update Categories</button>
+            </div>
+
           </form>
         </div>
       </div>
@@ -616,5 +697,7 @@
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 
 </html>
