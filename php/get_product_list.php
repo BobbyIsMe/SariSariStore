@@ -20,37 +20,37 @@ $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 
 if (!empty($category)) {
     $params .= 's';
-    $filter .= " AND category = ?";
+    $filter .= " AND cs.category = ?";
     $values[] = $category;
 }
 
 if (!empty($subcategory)) { 
     $params .= 's';
-    $filter .= " AND subcategory = ?";
+    $filter .= " AND cs.subcategory = ?";
     $values[] = $subcategory;
 }
 
 if ($brand) {
     $params .= 's';
-    $filter .= " AND brand = ?";
+    $filter .= " AND p.brand = ?";
     $values[] = $brand;
 }
 
 if (!empty($stock_qty) && is_numeric($stock_qty) && $stock_qty >= 0) {
     $params .= 'i';
-    $filter .= " AND stock_qty = ?";
+    $filter .= " AND p.stock_qty = ?";
     $values[] = $stock_qty;
 }
 
 if (!empty($item_name)) {
     $params .= 's';
-    $filter .= " AND item_name LIKE ?";
+    $filter .= " AND p.item_name LIKE ?";
     $values[] = '%' . $item_name . '%';
 }
 
 if (!empty($price) && is_numeric($price)) {
     $params .= 'd';
-    $filter .= " AND price = ?";
+    $filter .= " AND p.price = ?";
     $values[] = $price;
 }
 
@@ -87,9 +87,10 @@ if($totalRows == 0) {
 $filter .= " LIMIT $total OFFSET $offset";
 
 $stmt = $con->prepare("
-SELECT p.product_id, p.item_name, p.subcategory, p.brand, v.varation_name 
+SELECT p.product_id, p.item_name, cs.subcategory, p.brand, v.varation_name 
 FROM Products p
-JOIN Variations v ON p.variation_id=v.variation_id". $filter);
+JOIN Variations v ON p.variation_id=v.variation_id
+JOIN Categories cs ON p.category_id=p.category_id". $filter);
 if(!empty($params))
 $stmt->bind_param($params, ...$values);
 $stmt->execute();
