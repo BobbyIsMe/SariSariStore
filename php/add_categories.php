@@ -47,7 +47,7 @@ if ($edit === 'add') {
     foreach ($category_list as $item) {
         if (!isset($item['category_id'], $item['category'], $item['subcategory'])) continue;
 
-        $category_id = $item['category_id'];
+        $category_id = (int)$item['category_id'];
         $category = $item['category'];
         $subcategory = $item['subcategory'];
 
