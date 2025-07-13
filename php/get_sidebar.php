@@ -5,7 +5,7 @@ $products = [];
 
 $stmt = $con->prepare("
 SELECT category, subcategory
-FROM Products");
+FROM Categories");
 $stmt->execute();
 $result = $stmt->get_result();
 
