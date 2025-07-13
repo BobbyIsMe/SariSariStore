@@ -1,4 +1,4 @@
-<?php 
+<?php
 // Add a product to the cart
 include_once("db_connect.php");
 
@@ -11,9 +11,11 @@ if (!$user_id) {
 $product_id = $_POST['product_id'];
 $variation_id = $_POST['variation_id'];
 $quantity = $_POST['quantity'];
-$cart_id = null;
+$cart_id = 0;
+$variation_id = 0;
+$stock_qty = 0;
 
-if(!isset($variation_id) && !isset($product_id) || !is_numeric($product_id) || !isset($quantity) || !is_numeric($quantity) || $quantity <= 0) {
+if (!isset($variation_id) && !isset($product_id) || !is_numeric($product_id) || !isset($quantity) || !is_numeric($quantity) || $quantity <= 0) {
     echo json_encode(['status' => 400, 'message' => 'Invalid product or quantity.']);
     exit();
 }
@@ -36,6 +38,7 @@ if ($row['stock_qty'] < $quantity) {
     exit();
 }
 $price = $row['price'];
+$stock_qty = $row['stock_qty'];
 $stmt->close();
 
 $stmt = $con->prepare("
@@ -49,9 +52,12 @@ if ($result->num_rows === 0) {
     echo json_encode(['status' => 404, 'message' => 'Variation not found.']);
     exit();
 }
+$row = $result->fetch_assoc();
+$variation_id = $row['variation_id'];
+$stmt->close();
 
 $stmt = $con->prepare("
-SELECT cart_id
+SELECT cart_id, c.item_qty
 FROM Carts 
 WHERE user_id = ? AND status = 'Pending'");
 $stmt->bind_param('i', $user_id);
@@ -60,6 +66,24 @@ $result = $stmt->get_result();
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $cart_id = $row['cart_id'];
+    $stmt->close();
+
+    $stmt = $con->prepare("
+    SELECT item_qty
+    FROM Cart_Items 
+    WHERE cart_id = ? AND product_id = ? AND variation_id = ?");
+    $stmt->bind_param('iii', $cart_id, $product_id, $variation_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $quantity += $row['item_qty'];
+        if ($quantity > $stock_qty) {
+            echo json_encode(['status' => 400, 'message' => 'Insufficient stock .']);
+            exit();
+        }
+    }
+    $stmt->close();
 } else {
     $stmt = $con->prepare("
     INSERT INTO Carts (user_id)
@@ -67,9 +91,9 @@ if ($result->num_rows > 0) {
     $stmt->bind_param('i', $user_id);
     $stmt->execute();
     $cart_id = $con->insert_id;
+    $stmt->close();
 }
 
-$stmt->close();
 $subtotal = $price * $quantity;
 
 $stmt = $con->prepare("
@@ -83,4 +107,3 @@ echo json_encode([
     'status' => 200,
     'message' => 'Product added to cart successfully.'
 ]);
-?>

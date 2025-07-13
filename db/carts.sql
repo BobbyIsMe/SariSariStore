@@ -2,7 +2,7 @@ CREATE TABLE `Carts` (
   `cart_id` bigint(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `user_id` bigint(11) NOT NULL,
   `status` enum('pending', 'approved', 'rejected', 'closed') NOT NULL DEFAULT 'pending',
-  `date_time_completed` datetime,
+  `date_time_deadline` datetime,
   `date_time_received` datetime,
   'date_time_created' datetime,
   `total` decimal(10,2),
