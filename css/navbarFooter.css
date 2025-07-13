@@ -43,11 +43,12 @@ body {
     background-color: #ccc;
     color: white;
     border: 1px solid rgba(0, 0, 0, 0.075) !important;
-    letter-spacing: 4px;
-    width: 50%;
-    text-decoration: underline;
+    letter-spacing: 3px;
+    width: 35%;
+    height: 3rem;
+    text-decoration: none;
+    margin-bottom: 20px;
 }
-
 
 .login-card label {
     margin-top: 5px;
@@ -55,16 +56,47 @@ body {
     display: block;
 }
 
+.login-card p.mt-2.mb-0 a {
+  color: #000;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.search-button .search-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: #333;
+}
 
 /*webpages css*/
 
 #profile_dropdown {
     color: black;
+    background-color: #fff;
     letter-spacing: 2px;
     border-radius: 5px;
 }
 
 #profile_dropdown[aria-expanded="true"], #profile_dropdown:hover {
-    background-color: #a79465;
+    background-color: #b8a36c;
     color: black;
+}
+
+.nav-icons { 
+  align-items: center; 
+}
+
+.nav-icon {
+  background: transparent;
+  border: none;
+  padding: 0.5rem;       /* breathing room */
+}
+
+.nav-icon svg {
+  width: 2.5rem;          /* 40px */
+  height: 1.8rem;
+  stroke: #fff;
+  stroke-width: 1.5;      /* fine lines */
+  fill: none;             /* these icons are stroke-only */
+  display: block;
 }
