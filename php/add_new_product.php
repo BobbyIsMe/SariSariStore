@@ -18,6 +18,7 @@ $brand = $_POST['brand'] ?? null;
 $stock_qty = $_POST['stock_qty'] ?? null;
 $item_details = $_POST['item_details'] ?? null;
 $price = $_POST['price'] ?? null;
+$image = $_POST['image'] ?? null;
 
 if (!isset($category_id, $brand, $stock_qty, $item_details, $price)) {
     echo json_encode(['status' => 400, 'message' => 'All fields are required.']);
@@ -93,29 +94,33 @@ if ($edit === 'add') {
     $con->begin_transaction();
 
     try {
-        $stmt = $con->prepare("
-        SELECT product_id 
-        FROM Products 
-        WHERE product_id = ?");
-        $stmt->bind_param('i', $product_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $stmt->close();
-        if (!$result || $result->num_rows === 0) {
-            echo json_encode(['status' => 404, 'message' => 'Product not found.']);
-            exit();
-        }
+        // $stmt = $con->prepare("
+        // SELECT product_id 
+        // FROM Products 
+        // WHERE product_id = ?");
+        // $stmt->bind_param('i', $product_id);
+        // $stmt->execute();
+        // $result = $stmt->get_result();
+        // $stmt->close();
+        // if (!$result || $result->num_rows === 0) {
+        //     echo json_encode(['status' => 404, 'message' => 'Product not found.']);
+        //     exit();
+        // }
 
-        $params .= 'i';
-        $values[] = $product_id;
-        $sql .= " AND product_id != ?";
+        // $params .= 'i';
+        // $values[] = $product_id;
+        // $sql .= " AND product_id != ?";
         $stmt = $con->prepare("
         UPDATE Products 
-        SET item_name = ?, category_id = ?, brand = ?, stock_qty = ?, item_details = ?, price = ? 
+        SET image = ? item_name = ?, category_id = ?, brand = ?, stock_qty = ?, item_details = ?, price = ?, date_time_restocked = NOW()
         WHERE product_id = ?
         ");
-        $stmt->bind_param('sisisdi', $item_name, $category_id, $brand, $stock_qty, $item_details, $price, $product_id);
+        $stmt->bind_param('ssisisdi', $image, $item_name, $category_id, $brand, $stock_qty, $item_details, $price, $product_id);
         $stmt->execute();
+        if ($stmt->affected_rows === 0) {
+            $stmt->close();
+            throw new Exception('No changes made or product not found.');
+        }
         $stmt->close();
 
         $orders = checkProductValidation($con, " ca.type = 'order' AND ca.status = 'pending'", '', []);
@@ -138,7 +143,7 @@ if ($edit === 'add') {
             UPDATE Carts 
             SET status = 'rejected' 
             WHERE cart_id IN ($placeholders) AND type = 'order'
-        ");
+            ");
             $stmt->bind_param(str_repeat('i', count($cart_id_list)), ...$cart_id_list);
             $stmt->execute();
             $stmt->close();

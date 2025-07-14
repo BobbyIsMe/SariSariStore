@@ -32,9 +32,9 @@ if ($status == 'closed') {
     try {
         $stmt = $con->prepare("
         UPDATE Carts 
-        SET status = 'closed', date_time_closed = NOW() 
+        SET status = 'closed', date_time_received = NOW() 
         WHERE cart_id = ? AND type = 'order'
-    ");
+        ");
         $stmt->bind_param('i', $cart_id);
         $stmt->execute();
 
@@ -45,7 +45,7 @@ if ($status == 'closed') {
             $stmt = $con->prepare("
             INSERT INTO Notifications (cart_id, message, date_time_created, status)
             VALUES (?, ?, NOW(), 'closed')
-        ");
+            ");
             $stmt->bind_param('is', $cart_id, $message);
             $stmt->execute();
 
@@ -63,6 +63,7 @@ if ($status == 'closed') {
 } else if ($status == 'rejected') {
     $con->begin_transaction();
 
+    //TODO: Restock the products
     try {
         $stmt = $con->prepare("
         UPDATE Carts 
@@ -120,7 +121,6 @@ if ($status == 'closed') {
             ];
             continue;
         }
-        exit();
     }
 
     unset($orders[$cart_id]);
@@ -191,7 +191,8 @@ if ($status == 'closed') {
             }
 
             // Update stock quantities of products  
-            $cases = "";
+            $stock_cases = "";
+            $sales_cases = "";
             $conditions = [];
 
             foreach ($items as $item) {
@@ -199,14 +200,16 @@ if ($status == 'closed') {
                 $variation_id = (int)$item['variation_id'];
                 $quantity = (int)$item['quantity'];
 
-                $cases .= "WHEN product_id = $product_id AND variation_id = $variation_id THEN $quantity\n";
+                $stock_cases .= "WHEN product_id = $product_id AND variation_id = $variation_id THEN $quantity\n";
+                $sales_cases .= "WHEN product_id = $product_id AND variation_id = $variation_id THEN total_sales + (stock_qty - $quantity)\n";
                 $conditions[] = "($product_id, $variation_id)";
             }
 
             $stmt = $con->query("
             UPDATE Products
-            SET stock_qty = CASE $cases 
-            END
+            SET 
+            stock_qty = CASE $stock_cases END,
+            total_sales = CASE $sales_cases END
             WHERE (product_id, variation_id) IN (" . implode(',', $conditions) . ")
             ");
 
