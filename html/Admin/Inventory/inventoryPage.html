@@ -38,7 +38,7 @@
 
     <div class="header">
       <div class="container-fluid d-flex flex-row align-items-center text-center py-2" style="gap: 40px;">
-        <a href="../Webpages/homepage.html" class="text-decoration-none">
+        <a href="../../Webpages/homepage.html" class="text-decoration-none">
           <h5 class="mb-0"><b>Cerina's Sari2Store</b></h5>
         </a>
         <div class="d-flex flex-grow-1">
@@ -242,9 +242,11 @@
                   </select>
                 </div>|
 
-                <button id="search_item" class="btn adminBtn " type="button">
+                <button id="search_item" class="btn adminBtn" type="button" 
+                  data-bs-toggle="modal" data-bs-target="#searchItemModal">
                   Search Item
                 </button>
+
 
               </div>
 
@@ -261,6 +263,29 @@
               </div>
 
             </div>
+<!-- Search item -->
+          <div class="modal fade" id="searchItemModal" tabindex="-1" aria-labelledby="searchItemModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md modal-dialog-centered">
+              <div class="modal-content p-4">
+                <div class="modal-header border-0">
+                  <h5 class="modal-title" id="searchItemModalLabel">Search Item</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                
+                <div class="modal-body">
+                  <form id="searchItemForm" class="d-flex flex-column gap-3">
+                    <label for="searchInput" class="form-label mb-0"><b>Item Name:</b></label>
+                    <input type="text" id="searchInput" class="form-control" placeholder="Enter item name...">
+                    
+                    <div class="d-flex justify-content-center">
+                      <button type="submit" class="btn px-4 py-1" style="background-color: #e6cc8c;">Search</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
             <div class="cart-container"
               style="display: flex; gap: 20px; padding: 20px; background: #f5f5f5; justify-content: center;">
               <div class="item_image" style="width: 300px; height: 400px;">
@@ -492,8 +517,8 @@
 
     <footer class="footer mt-auto">
       <div class="container d-flex flex-row justify-content-between p-4">
-        <div><b>About Us</b></div>
-        <div><b>Contact Us</b></div>
+        <div><a href="../../Webpages/aboutUs.html"><b>About Us</b></a></div>
+        <div><a href="../../Webpages/contactUs.html"><b>Contact Us</b></a></div>
         <div>Copyright © <b>2025</b>. All rights reserved.</div>
       </div>
     </footer>
