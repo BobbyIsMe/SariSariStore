@@ -15,6 +15,12 @@
             font-family: Verdana, Geneva, Tahoma, sans-serif;
 
         }
+
+        .subcategory {
+            margin-left: 0 !important;
+            text-align: left;
+            width: 100%;
+        }
     </style>
 </head>
 
@@ -24,25 +30,20 @@
         <div class="header">
             <div class="container-fluid d-flex flex-row align-items-center text-center py-2" style="gap: 40px;">
                 <a href="../Webpages/homepage.html" class="text-decoration-none">
-                  <h5 class="mb-0"><b>Cerina's Sari2Store</b></h5>
+                    <h5 class="mb-0"><b>Cerina's Sari2Store</b></h5>
                 </a>
                 <div class="d-flex flex-grow-1">
 
                     <div class="col-10 d-flex flex-row">
                         <input type="text" class="form-control" placeholder="Search">
                         <button class="btn btn-light search-button" type="button" aria-label="Search">
-                        <svg
-                            class="search-icon"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="-81.92 -81.92 1187.84 1187.84"
-                            >
-                            <path
-                                d="m795.904 750.72 124.992 124.928a32 32 0 0 1-45.248 
+                            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="-81.92 -81.92 1187.84 1187.84">
+                                <path d="m795.904 750.72 124.992 124.928a32 32 0 0 1-45.248 
                                 45.248L750.656 795.904a416 416 0 1 1 45.248-45.248z
-                                M480 832a352 352 0 1 0 0-704 352 352 0 0 0 0 704z"
-                            />
-                        </svg>
-                    </button>
+                                M480 832a352 352 0 1 0 0-704 352 352 0 0 0 0 704z" />
+                            </svg>
+                        </button>
                     </div>
 
 
@@ -58,10 +59,9 @@
 
                 </div>
                 <div class="nav-icons d-flex gap-3 ms-3">
-                <button class="btn nav-icon" onclick="window.location.href='../Cart/cart.html'" aria-label="Cart">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path
-                        d="M6.29977 5H21L19 12H7.37671M20 16H8L6 3H3
+                    <button class="btn nav-icon" onclick="window.location.href='../Cart/cart.html'" aria-label="Cart">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M6.29977 5H21L19 12H7.37671M20 16H8L6 3H3
                         M9 20C9 20.5523 8.55228 21 8 21
                         C7.44772 21 7 20.5523 7 20
                         C7 19.4477 7.44772 19 8 19
@@ -70,15 +70,14 @@
                         M20 20C20 20.5523 19.5523 21 19 21
                         C18.4477 21 18 20.5523 18 20
                         C18 19.4477 18.4477 19 19 19
-                        C19.5523 19 20 19.4477 20 20Z"
-                    />
-                    </svg>
-                </button>
+                        C19.5523 19 20 19.4477 20 20Z" />
+                        </svg>
+                    </button>
 
-                <button class="btn nav-icon" onclick="window.location.href='../Webpages/itemDescription.html'" aria-label="Reservation">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path
-                        d="M16 8H17.1597C18.1999 8 19.0664 8.79732
+                    <button class="btn nav-icon" onclick="window.location.href='../Webpages/itemDescription.html'"
+                        aria-label="Reservation">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M16 8H17.1597C18.1999 8 19.0664 8.79732
                         19.1528 9.83391L19.8195 17.8339
                         C19.9167 18.9999 18.9965 20 17.8264 20
                         H6.1736C5.00352 20 4.08334 18.9999
@@ -87,12 +86,11 @@
                         M16 8H8M16 8L16 7C16 5.93913 15.5786 4.92172
                         14.8284 4.17157C14.0783 3.42143 13.0609 3 12 3
                         C10.9391 3 9.92172 3.42143 9.17157 4.17157
-                        C8.42143 4.92172 8 5.93913 8 7L8 8M16 8L16 12M8 8L8 12"
-                    />
-                    </svg>
-                </button>
+                        C8.42143 4.92172 8 5.93913 8 7L8 8M16 8L16 12M8 8L8 12" />
+                        </svg>
+                    </button>
 
-                <div class="dropdown">
+                    <div class="dropdown">
                         <button class="btn nav-icon d-flex flex-row" aria-label="Notifications" type="button"
                             id="notificationDropdown" data-bs-toggle="modal" aria-expanded="false"
                             data-bs-target="#notificationModal">
@@ -112,7 +110,7 @@
                         12.0195 22.0601C11.1995 22.0601 10.4395 21.7201
                         9.89953 21.1801C9.35953 20.6401 9.01953 19.8801 9.01953 19.0601" />
                             </svg>
-                            <div style="color: white    ;">3</div>
+                            <div class="notification-badge">3</div>
                         </button>
 
                         <div class="modal fade" id="notificationModal" tabindex="-1"
@@ -124,31 +122,33 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
-                                    <div class="modal-body"
-                                        style=" overflow-y: auto;">
+                                    <div class="modal-body" style=" overflow-y: auto;">
                                         <div class="notification_card d-flex mb-3">
                                             <div class="col-1" style="background-color: red;"></div>
-                                        <div class="d-flex flex-column flex-grow-1">
-                                            <div class="fw-bold">Order ID# 3</div>
-                                            <div class="notification_message">Your reservation has been rejected</div>
-                                            <small class="text-muted">3/5/25 1:40 AM</small>
-                                        </div>
+                                            <div class="d-flex flex-column flex-grow-1">
+                                                <div class="fw-bold">Order ID# 3</div>
+                                                <div class="notification_message">Your reservation has been rejected
+                                                </div>
+                                                <small class="text-muted">3/5/25 1:40 AM</small>
+                                            </div>
                                         </div>
                                         <div class="notification_card d-flex mb-3">
                                             <div class="col-1" style="background-color: rgb(217, 255, 0);"></div>
-                                        <div class="d-flex flex-column flex-grow-1" >
-                                            <div class="fw-bold">Order ID# 3</div>
-                                            <div class="notification_message">Your reservation has been approvedjdsiahdshdsahdshdsahdiashiudashudashuidshaiudhsaiudhsauidhsauidhsauidhsuaihdasuihdsuiahdas</div>
-                                            <small class="text-muted">3/5/25 10:01 AM</small>
-                                        </div>
+                                            <div class="d-flex flex-column flex-grow-1">
+                                                <div class="fw-bold">Order ID# 3</div>
+                                                <div class="notification_message">Your reservation has been
+                                                    approvedjdsiahdshdsahdshdsahdiashiudashudashuidshaiudhsaiudhsauidhsauidhsauidhsuaihdasuihdsuiahdas
+                                                </div>
+                                                <small class="text-muted">3/5/25 10:01 AM</small>
+                                            </div>
                                         </div>
                                         <div class="notification_card d-flex mb-3">
                                             <div class="col-1" style="background-color: rgb(185, 185, 185);"></div>
-                                        <div class="d-flex flex-column flex-grow-1">
-                                            <div class="fw-bold">Order ID# 3</div>
-                                            <div class="notification_message">Your reservation has been closed</div>
-                                            <small class="text-muted">3/5/25 12:00 PM</small>
-                                        </div>
+                                            <div class="d-flex flex-column flex-grow-1">
+                                                <div class="fw-bold">Order ID# 3</div>
+                                                <div class="notification_message">Your reservation has been closed</div>
+                                                <small class="text-muted">3/5/25 12:00 PM</small>
+                                            </div>
                                         </div>
 
                                         <div class="p-4 d-flex justify-content-center align-items-center gap-4">
@@ -178,42 +178,44 @@
         </div>
 
 
-        <main class="flex-fill">
-            <div class="d-flex align-items-start justify-content-center" style="min-height: 70vh;">
-        <aside class="item_nav col-2 flex-column align-items-start text-start">
-          <h6>Categories</h6>
-          <hr>
-          <details class="category">
-            <summary>School Supplies</summary>
-            <ul class="subcategory">
-              <a href="">• Filler</a>
-            </ul>
-          </details>
-          <details class="category">
-            <summary>Softdrinks</summary>
-            <ul class="subcategory">
-              <a href="">• Filler</a>
-            </ul>
-          </details>
-          <details class="category">
-            <summary>Powdered Drinks</summary>
-            <ul class="subcategory">
-              <a href="">• Filler</a>
-            </ul>
-          </details>
-          <details class="category">
-            <summary>Snacks</summary>
-            <ul class="subcategory">
-              <a href="">• Filler</a>
-            </ul>
-          </details>
-          <details class="category">
-            <summary>Hygiene</summary>
-            <ul class="subcategory">
-              <a href="">• Filler</a>
-            </ul>
-          </details>
-        </aside>
+        <main class="flex-fill" style="height: 100%;">
+            <div class="d-flex align-items-stretch justify-content-center" style="min-height: 100vh;">
+                <div class="col-2 p-2" style="background-color: white; height: auto; flex-shrink: 0;">
+                    <aside class="item_nav flex-column align-items-start text-start">
+                        <h6>Categories</h6>
+                        <hr>
+                        <details class="category">
+                            <summary>School Supplies</summary>
+                            <ul class="subcategory">
+                                <a href="">• Filler</a>
+                            </ul>
+                        </details>
+                        <details class="category">
+                            <summary>Softdrinks</summary>
+                            <ul class="subcategory">
+                                <a href="">• Filler</a>
+                            </ul>
+                        </details>
+                        <details class="category">
+                            <summary>Powdered Drinks</summary>
+                            <ul class="subcategory">
+                                <a href="">• Filler</a>
+                            </ul>
+                        </details>
+                        <details class="category">
+                            <summary>Snacks</summary>
+                            <ul class="subcategory">
+                                <a href="">• Filler</a>
+                            </ul>
+                        </details>
+                        <details class="category">
+                            <summary>Hygiene</summary>
+                            <ul class="subcategory">
+                                <a href="">• Filler</a>
+                            </ul>
+                        </details>
+                    </aside>
+                </div>
 
                 <main style="flex-grow: 1;">
                     <div class="object_container">
@@ -232,9 +234,17 @@
                                     </div>
 
                                     <!-- details-->
-                                    <div style="flex: 1;">
-                                        <div class="category" style="font-size: 12px; color: gray;">Junkfood</div>
+                                    <div style="flex: 1; ">
+                                        <div class="d-flex flex-row g-2" style="gap: 20px; font-size: 12px; color: gray;" >
+                                            <div class="category">Snacks</div>
+                                            <div>|</div>
+                                            <div class="category" >Junkfood</div> 
+                                        </div>
+
                                         <div class="name" style="font-weight: bold;">Mang Juan | Chicharon</div>
+                                        <div style="font-size: 15px;">
+                                            Chilimansi
+                                        </div>
                                     </div>
 
                                     <!-- price -->
@@ -264,8 +274,15 @@
 
                                     <!-- details-->
                                     <div style="flex: 1;">
-                                        <div class="category" style="font-size: 12px; color: gray;">Softdrink</div>
-                                        <div class="name" style="font-weight: bold;">Coke| Softdrink</div>
+                                        <div class="d-flex flex-row g-2" style="gap: 20px; font-size: 12px; color: gray;" >
+                                            <div class="category">Drinks</div>
+                                            <div>|</div>
+                                            <div class="category" >Softdrinks</div> 
+                                        </div>
+                                        <div class="name" style="font-weight: bold;">Coke | Softdrink</div>
+                                        <div style="font-size: 15px;">
+                                            Coke Zero
+                                        </div>
                                     </div>
 
                                     <!-- price -->
@@ -322,13 +339,13 @@
         </main>
 
         <footer class="footer mt-auto">
-      <div class="container d-flex flex-row justify-content-between p-4">
-        <div><a href="aboutUs.html"><b>About Us</b></a></div>
-        <div><a href="contactUs.html"><b>Contact Us</b></a></div>
-        <div>Copyright © <b>2025</b>. All rights reserved.</div>
-      </div>
-    </footer>
-  </div>
+            <div class="container d-flex flex-row justify-content-between p-4">
+                <div><a href="../Webpages/aboutUs.html"><b>About Us</b></a></div>
+                <div><a href="../Webpages/contactUs.html"><b>Contact Us</b></a></div>
+                <div>Copyright © <b>2025</b>. All rights reserved.</div>
+            </div>
+        </footer>
+    </div>
 
     <script src="../../js/script.js"></script>
 </body>

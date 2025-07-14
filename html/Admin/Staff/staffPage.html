@@ -36,7 +36,7 @@
 
         <div class="header">
             <div class="container-fluid d-flex flex-row align-items-center text-center py-2" style="gap: 40px;">
-                <a href="../Webpages/homepage.html" class="text-decoration-none">
+                <a href="../../Webpages/homepage.html" class="text-decoration-none">
                     <h5 class="mb-0"><b>Cerina's Sari2Store</b></h5>
                 </a>
                 <div class="d-flex flex-grow-1">
@@ -66,7 +66,7 @@
 
                 </div>
                 <div class="nav-icons d-flex gap-3 ms-3">
-                    <button class="btn nav-icon" onclick="window.location.href='../Cart/cart.html'" aria-label="Cart">
+                    <button class="btn nav-icon" onclick="window.location.href='../../Cart/cart.html'" aria-label="Cart">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <path d="M6.29977 5H21L19 12H7.37671M20 16H8L6 3H3
                         M9 20C9 20.5523 8.55228 21 8 21
@@ -117,7 +117,7 @@
                         12.0195 22.0601C11.1995 22.0601 10.4395 21.7201
                         9.89953 21.1801C9.35953 20.6401 9.01953 19.8801 9.01953 19.0601" />
                             </svg>
-                            <div style="color: white    ;">3</div>
+                            <div class="notification-badge">3</div>
                         </button>
 
                         <div class="modal fade" id="notificationModal" tabindex="-1"
@@ -185,43 +185,45 @@
         </div>
 
 
-        <main class="flex-fill">
-            <div class="d-flex align-items-start justify-content-center" style="min-height: 70vh;">
-                <aside class="item_nav col-2 flex-column align-items-start text-start">
+      <main class="flex-fill" >
+        <div class="d-flex align-items-stretch justify-content-center" style="height: 100%; min-height: 100vh;">
+                <div class="col-2 p-2" style="background-color: white; height: auto; flex-shrink: 0;">
+                  <aside class="item_nav flex-column align-items-start text-start">
                     <h6>Categories</h6>
                     <hr>
                     <details class="category">
-                        <summary>School Supplies</summary>
-                        <ul class="subcategory">
-                            <a href="">• Filler</a>
-                        </ul>
+                      <summary>School Supplies</summary>
+                      <ul class="subcategory">
+                        <a href="">• Filler</a>
+                      </ul>
                     </details>
                     <details class="category">
-                        <summary>Softdrinks</summary>
-                        <ul class="subcategory">
-                            <a href="">• Filler</a>
-                        </ul>
+                      <summary>Softdrinks</summary>
+                      <ul class="subcategory">
+                        <a href="">• Filler</a>
+                      </ul>
                     </details>
                     <details class="category">
-                        <summary>Powdered Drinks</summary>
-                        <ul class="subcategory">
-                            <a href="">• Filler</a>
-                        </ul>
+                      <summary>Powdered Drinks</summary>
+                      <ul class="subcategory">
+                        <a href="">• Filler</a>
+                      </ul>
                     </details>
                     <details class="category">
-                        <summary>Snacks</summary>
-                        <ul class="subcategory">
-                            <a href="">• Filler</a>
-                        </ul>
+                      <summary>Snacks</summary>
+                      <ul class="subcategory">
+                        <a href="">• Filler</a>
+                      </ul>
                     </details>
                     <details class="category">
-                        <summary>Hygiene</summary>
-                        <ul class="subcategory">
-                            <a href="">• Filler</a>
-                        </ul>
+                      <summary>Hygiene</summary>
+                      <ul class="subcategory">
+                        <a href="">• Filler</a>
+                      </ul>
                     </details>
-                </aside>
-
+                  </aside>
+                </div>
+                
                 <main style="flex-grow: 1;">
                     <div class="object_container">
                         <h3>Reservation Details</h3>
@@ -381,6 +383,7 @@
 
                             </div>
                         </div>
+                        
 
 
                         
@@ -407,12 +410,12 @@
         </main>
 
         <footer class="footer mt-auto">
-            <div class="container d-flex flex-row justify-content-between p-4">
-                <div><b>About Us</b></div>
-                <div><b>Contact Us</b></div>
-                <div>Copyright © <b>2025</b>. All rights reserved.</div>
-            </div>
-        </footer>
+      <div class="container d-flex flex-row justify-content-between p-4">
+        <div><a href="../../Webpages/aboutUs.html"><b>About Us</b></a></div>
+        <div><a href="../../Webpages/contactUs.html"><b>Contact Us</b></a></div>
+        <div>Copyright © <b>2025</b>. All rights reserved.</div>
+      </div>
+    </footer>
     </div>
 
     <script src="../../js/script.js"></script>

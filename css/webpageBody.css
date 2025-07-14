@@ -3,6 +3,12 @@ a {
   text-decoration: none;
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 .body_container {
   flex-grow: 1;
   padding: 20px;
@@ -92,13 +98,24 @@ a {
 .product_card {
   border: 1px solid #ccc;
   padding: 10px;
-  width: 150px;
+  width: 250px;
 }
 
 .image {
-  width: 100px;
-  height: 100px;
+  width: 100%;
+  height: 200px;
   background: #eee;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
 }
 
 .item_desc {
