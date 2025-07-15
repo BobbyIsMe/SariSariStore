@@ -35,3 +35,33 @@
     justify-content: space-between;
     margin-top: 10px;
 }
+
+.quantity_control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f0f0f0;
+  border-radius: 20px;
+  padding: 5px;
+  width: 100px;
+}
+
+.quantity_control button {
+  background-color: #ccc;
+  border: none;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.quantity_control input {
+  border: none;
+  background: transparent;
+  text-align: center;
+  width: 30px;
+  font-size: 16px;
+  pointer-events: none;
+}
