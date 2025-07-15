@@ -59,6 +59,11 @@ body {
     text-align: center;
 }
 
+a{
+    color: black;
+    text-decoration: none;
+}
+
 .login-btn {
     background-color: #ccc;
     color: white;
