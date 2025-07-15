@@ -5,17 +5,19 @@ include_once("db_connect.php");
 $products = [];
 $values = [];
 $params = '';
+$order = '';
 $filter = " WHERE 1=1";
+$order = " ORDER BY p.product_id ASC";
 $results = 0;
-$total = 5;
+$total = 10;
 
 $category = $_GET['category'] ?? null;
 $subcategory = $_GET['subcategory'] ?? null;
 $brand = $_GET['brand'] ?? null;
 $stock_qty = $_GET['stock_qty'] ?? null;
 $item_name = $_GET['item_name'] ?? null;
-$price = $_GET['price'] ?? null;
 $total_sales = $_GET['total_sales'] ?? null;
+$date_restocked = $_GET['date_restocked'] ?? null;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 
 if (!empty($category)) {
@@ -30,16 +32,10 @@ if (!empty($subcategory)) {
     $values[] = $subcategory;
 }
 
-if ($brand) {
+if (!empty($brand)) {
     $params .= 's';
     $filter .= " AND p.brand = ?";
     $values[] = $brand;
-}
-
-if (!empty($stock_qty) && is_numeric($stock_qty) && $stock_qty >= 0) {
-    $params .= 'i';
-    $filter .= " AND p.stock_qty = ?";
-    $values[] = $stock_qty;
 }
 
 if (!empty($item_name)) {
@@ -48,19 +44,21 @@ if (!empty($item_name)) {
     $values[] = '%' . $item_name . '%';
 }
 
-if (!empty($price) && is_numeric($price)) {
-    $params .= 'd';
-    $filter .= " AND p.price = ?";
-    $values[] = $price;
+if (!empty($total_sales) && in_array($total_sales, ['ASC', 'DESC'])) {
+    $order .= ",p.total_sales " . $total_sales;
 }
 
-if (!empty($total_sales) && is_numeric($total_sales) && $total_sales == 1) {
-    $filter .= " ORDER BY total_sales DESC";
+if (!empty($stock_qty) && in_array($stock_qty, ['ASC', 'DESC'])) {
+    $order .= ",p.stock_qty " . $stock_qty;
+}
+
+if(!empty($date_restocked) && in_array($date_restocked, ['ASC', 'DESC'])) {
+    $order .= ",p.date_time_restocked" . $date_restocked;
 }
 
 $stmt = $con->prepare("
 SELECT COUNT(*) AS total 
-FROM Products" . $filter);
+FROM Products" . $filter . $order);
 $stmt->bind_param($params, ...$values);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -87,10 +85,9 @@ if($totalRows == 0) {
 $filter .= " LIMIT $total OFFSET $offset";
 
 $stmt = $con->prepare("
-SELECT p.product_id, p.item_name, cs.subcategory, p.brand, v.varation_name 
+SELECT p.product_id, p.image, p.item_name, cs.category, cs.subcategory, p.brand, p.price, (CASE WHEN p.stock_qty > 0 THEN 'Add to Cart' ELSE 'Out of Stock' END) AS stock_status
 FROM Products p
-JOIN Variations v ON p.variation_id=v.variation_id
-JOIN Categories cs ON p.category_id=p.category_id". $filter);
+JOIN Categories cs ON p.category_id=p.category_id". $filter. $order);
 if(!empty($params))
 $stmt->bind_param($params, ...$values);
 $stmt->execute();
@@ -99,9 +96,13 @@ $result = $stmt->get_result();
 while ($row = $result->fetch_assoc()) {
     $products[] = [
         'product_id' => $row['product_id'],
+        'image' => $row['image'],
         'item_name' => $row['item_name'],
+        'category' => $row['category'],
         'subcategory' => $row['subcategory'],
-        'brand' => $row['brand']
+        'brand' => $row['brand'],
+        'price' => $row['price'],
+        'stock_status' => $row['stock_status']
     ];
     $results++;
 }

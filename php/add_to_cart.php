@@ -22,14 +22,15 @@ if (!isset($variation_id) && !isset($product_id) || !is_numeric($product_id) || 
 
 $price = 0;
 $stmt = $con->prepare("
-SELECT stock_qty, price
-FROM Products 
+SELECT v.variation_id, p.stock_qty, v.price
+FROM Products p
+JOIN Variations v ON p.variation_id=v.variation_id
 WHERE product_id = ?");
 $stmt->bind_param('i', $product_id);
 $stmt->execute();
 $result = $stmt->get_result();
 if ($result->num_rows === 0) {
-    echo json_encode(['status' => 404, 'message' => 'Product not found.']);
+    echo json_encode(['status' => 404, 'message' => 'Product or variation not found.']);
     exit();
 }
 $row = $result->fetch_assoc();
@@ -39,22 +40,23 @@ if ($row['stock_qty'] < $quantity) {
 }
 $price = $row['price'];
 $stock_qty = $row['stock_qty'];
-$stmt->close();
-
-$stmt = $con->prepare("
-SELECT variation_id
-FROM Variations
-WHERE variation_id = ? AND product_id = ?");
-$stmt->bind_param('ii', $variation_id, $product_id);
-$stmt->execute();
-$result = $stmt->get_result();
-if ($result->num_rows === 0) {
-    echo json_encode(['status' => 404, 'message' => 'Variation not found.']);
-    exit();
-}
-$row = $result->fetch_assoc();
 $variation_id = $row['variation_id'];
 $stmt->close();
+
+// $stmt = $con->prepare("
+// SELECT variation_id
+// FROM Variations
+// WHERE variation_id = ? AND product_id = ?");
+// $stmt->bind_param('ii', $variation_id, $product_id);
+// $stmt->execute();
+// $result = $stmt->get_result();
+// if ($result->num_rows === 0) {
+//     echo json_encode(['status' => 404, 'message' => 'Variation not found.']);
+//     exit();
+// }
+// $row = $result->fetch_assoc();
+// $variation_id = $row['variation_id'];
+// $stmt->close();
 
 $stmt = $con->prepare("
 SELECT cart_id, c.item_qty
@@ -75,6 +77,7 @@ if ($result->num_rows > 0) {
     $stmt->bind_param('iii', $cart_id, $product_id, $variation_id);
     $stmt->execute();
     $result = $stmt->get_result();
+    $stmt->close();
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $quantity += $row['item_qty'];
@@ -83,7 +86,7 @@ if ($result->num_rows > 0) {
             exit();
         }
     }
-    $stmt->close();
+
 } else {
     $stmt = $con->prepare("
     INSERT INTO Carts (user_id)

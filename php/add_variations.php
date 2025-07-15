@@ -20,27 +20,30 @@ if ($edit === 'add') {
         exit();
     }
 
-    $stmt = $con->prepare("
-        SELECT product_id 
-        FROM Products 
-        WHERE product_id = ?");
-    $stmt->bind_param('i', $product_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $stmt->close();
-    if (!$result || $result->num_rows === 0) {
-        echo json_encode(['status' => 404, 'message' => 'Product not found.']);
-        exit();
-    }
+    // $stmt = $con->prepare("
+    //     SELECT product_id 
+    //     FROM Products 
+    //     WHERE product_id = ?");
+    // $stmt->bind_param('i', $product_id);
+    // $stmt->execute();
+    // $result = $stmt->get_result();
+    // $stmt->close();
+    // if (!$result || $result->num_rows === 0) {
+    //     echo json_encode(['status' => 404, 'message' => 'Product not found.']);
+    //     exit();
+    // }
 
     $stmt = $con->prepare("INSERT INTO Variations (product_id, variation_name) VALUES (?, ?)");
     $stmt->bind_param('is', $product_id, $variation_name);
-    if ($stmt->execute()) {
-        echo json_encode(['status' => 200, 'message' => 'Variation added successfully.']);
-    } else {
-        echo json_encode(['status' => 500, 'message' => 'Failed to add variation.']);
+    $stmt->execute();
+    if($stmt->affected_rows === 0)
+    {
+        echo json_encode(['status' => 404, 'message' => 'Product not found.']);
+        $stmt->close();
+        exit();
     }
     $stmt->close();
+
 } else if ($edit === 'edit') {
     $variation_list = $_POST['variation_list'] ?? null;
 

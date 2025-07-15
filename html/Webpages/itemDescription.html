@@ -15,6 +15,18 @@
             font-family: Verdana, Geneva, Tahoma, sans-serif;
 
         }
+
+        .desc {
+            font-size: 12px;
+            max-width: 300px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: normal;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+    
     </style>
 </head>
 
@@ -104,7 +116,7 @@
                         12.0195 22.0601C11.1995 22.0601 10.4395 21.7201
                         9.89953 21.1801C9.35953 20.6401 9.01953 19.8801 9.01953 19.0601" />
                             </svg>
-                            <div style="color: white    ;">3</div>
+                            <div class="notification-badge">3</div>
                         </button>
 
                         <div class="modal fade" id="notificationModal" tabindex="-1"
@@ -174,107 +186,118 @@
         <main class="flex-fill" style="height: 100%;">
             <div class="d-flex align-items-stretch justify-content-center" style="min-height: 100vh;">
                 <div class="col-2 p-2" style="background-color: white; height: auto; flex-shrink: 0;">
-                    <aside class="item_nav flex-column align-items-start text-start" >
+                    <aside class="item_nav flex-column align-items-start text-start">
                         <h6>Categories</h6>
                         <hr>
                         <details class="category">
-                          <summary>School Supplies</summary>
-                          <ul class="subcategory">
-                            <a href="">• Filler</a>
-                          </ul>
+                            <summary>School Supplies</summary>
+                            <ul class="subcategory">
+                                <a href="">• Filler</a>
+                            </ul>
                         </details>
                         <details class="category">
-                          <summary>Softdrinks</summary>
-                          <ul class="subcategory">
-                            <a href="">• Filler</a>
-                          </ul>
+                            <summary>Softdrinks</summary>
+                            <ul class="subcategory">
+                                <a href="">• Filler</a>
+                            </ul>
                         </details>
                         <details class="category">
-                          <summary>Powdered Drinks</summary>
-                          <ul class="subcategory">
-                            <a href="">• Filler</a>
-                          </ul>
+                            <summary>Powdered Drinks</summary>
+                            <ul class="subcategory">
+                                <a href="">• Filler</a>
+                            </ul>
                         </details>
                         <details class="category">
-                          <summary>Snacks</summary>
-                          <ul class="subcategory">
-                            <a href="">• Filler</a>
-                          </ul>
+                            <summary>Snacks</summary>
+                            <ul class="subcategory">
+                                <a href="">• Filler</a>
+                            </ul>
                         </details>
                         <details class="category">
-                          <summary>Hygiene</summary>
-                          <ul class="subcategory">
-                            <a href="">• Filler</a>
-                          </ul>
+                            <summary>Hygiene</summary>
+                            <ul class="subcategory">
+                                <a href="">• Filler</a>
+                            </ul>
                         </details>
-                      </aside>
+                    </aside>
                 </div>
 
-                    <main style="flex-grow: 1; padding: 20px;">
-                        <div class="object_container">
-                            <!---item desc-->
-                            <div style="border-bottom: 1px solid black; padding: 40px; ;">
-                                <div class="d-flex align-items-center justify-content-center"
-                                    style="background-color: rgb(255, 255, 255); gap: 50px; ">
+                <main style="flex-grow: 1; padding: 20px;">
+                    <div class="object_container">
+                        <!---item desc-->
+                        <div style="border-bottom: 1px solid black; padding: 40px; ;">
+                            <div class="d-flex align-items-center justify-content-center"
+                                style="background-color: rgb(255, 255, 255); gap: 50px; ">
 
-                                    <div class="item_desc">
-                                        <img src="" alt="img">
-                                    </div>
-                                    <div>
-                                        <div class="product_card" style="width: 300px; height: 100%;">
-                                            <div class="category" style="font-size: 10px;">Junkfood</div>
-                                            <div class="name">Mang Juan | Chicharon</div>
-                                            <div class="price"><strong>₱12.00</strong></div>
-                                            <br><br>
+                                <div class="item_desc">
+                                    <img src="" alt="img">
+                                </div>
+                                <div>
+                                    <div class="product_card" style="width: 300px; height: 100%;">
+                                        <div class="category" style="font-size: 10px;">Junkfood</div>
+                                        <div class="name">Mang Juan | Chicharon</div>
+                                        <div class="price"><strong>₱12.00</strong></div>
+                                        <br>
+                                        <div class="desc">James Cameron Nur Abello 11820033 Cabancalan, Cebu</div>
+                                        <br>
 
-                                            <div class="product_controls">
-                                                <div class="quantity_control">
-                                                    <button>-</button>
-                                                    <input type="text" value="1" readonly />
-                                                    <button>+</button>
-                                                </div>
-                                                <div class="price">₱12.00</div>
-                                                <button class="add_to_cart" disabled>Add To Cart</button>
+                                        <div class="product_controls">
+                                            <div class="quantity_control w-100">
+                                                <button>-</button>
+                                                <input type="text" value="1" readonly />
+                                                <button>+</button>
                                             </div>
-
+                                            <div class="flex-grow-1">
+                                                <label for="itemVariation" class="form-label">Item Variation:</label>
+                                                <select class="form-select" id="itemVariation" name="itemVariation"
+                                                    required title="Select Option" style="width: 100%;">
+                                                    <option value="Select" title="Select Option">Select Option</option>
+                                                    <option value="#">Mang Juan Suka't Sili</option>
+                                                    <option value="#">Mang Juan Chilimansi</option>
+                                                </select>
+                                            </div>
+                                            <div class="price">₱12.00</div>
+                                            <button class="add_to_cart" disabled>Add To Cart</button>
                                         </div>
-                                    </div>
 
+                                    </div>
                                 </div>
 
                             </div>
 
-                            <!-- restocked -->
-                            <section style=" margin-top: 30px;">
-                                <div class="d-flex flex-row justify-content-between align-items-center me-3">
-                                    <h4><b>More Items</b></h4>
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#moreItemsModal">See More</a>
-                                </div>
-                                <div class="d-flex flex-row" style="gap: 40px">
-                                    <div class="product_list">
-                                        <div class="product_card">
-                                            <div class="image"><img src="" alt="img"></div>
-                                            <div class="category" style="font-size: 10px;">Junkfood</div>
-                                            <div class="name">Mang Juan | Chicharon</div>
-                                            <div class="price"><strong>₱12.00</strong></div>
-                                            <button disabled style="width: 100%; margin-top: 5px;">Add to Cart</button>
-                                        </div>
-                                    </div>
+                        </div>
 
-                                    <div class="product_list">
-                                        <div class="product_card">
-                                            <div class="image"><img src="" alt="img"></div>
-                                            <div class="category" style="font-size: 10px;">Junkfood</div>
-                                            <div class="name">Mang Juan | Chicharon</div>
-                                            <div class="price"><strong>₱12.00</strong></div>
-                                            <button disabled style="width: 100%; margin-top: 5px;">Add to Cart</button>
-                                        </div>
+                        <!-- restocked -->
+                        <section style=" margin-top: 30px;">
+                            <div class="d-flex flex-row justify-content-between align-items-center me-3">
+                                <h4><b>More Items</b></h4>
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#moreItemsModal">See More</a>
+                            </div>
+                            <div class="d-flex flex-row" style="gap: 40px">
+                                <div class="product_list">
+                                    <div class="product_card">
+                                        <div class="image"><img src="" alt="img"></div>
+                                        <div class="category" style="font-size: 10px;">Junkfood</div>
+                                        <div class="name">Mang Juan | Chicharon</div>
+                                        <div class="price"><strong>₱12.00</strong></div>
+                                        <button disabled style="width: 100%; margin-top: 5px;">Add to Cart</button>
                                     </div>
                                 </div>
 
-                            </section>
+                                <div class="product_list">
+                                    <div class="product_card">
+                                        <div class="image"><img src="" alt="img"></div>
+                                        <div class="category" style="font-size: 10px;">Junkfood</div>
+                                        <div class="name">Mang Juan | Chicharon</div>
+                                        <div class="price"><strong>₱12.00</strong></div>
+                                        <button disabled style="width: 100%; margin-top: 5px;">Add to Cart</button>
+                                    </div>
+                                </div>
+                            </div>
 
-                    </main>
+                        </section>
+
+                </main>
             </div>
         </main>
 
