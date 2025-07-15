@@ -1,4 +1,37 @@
-function loadSidebar()
-{
-    
+function loadSidebar() {
+    fetch('../../php/get_sidebar.php')
+        .then(res => res.json())
+        .then(data => {
+            const sidebarBody = document.getElementById('sidebar');
+            sidebarBody.innerHTML = "";
+            const sidebarData = data.categories;
+            if (data.status == 404) {
+                sidebarBody.innerHTML = data.message;
+                return;
+            }
+
+            Object.entries(sidebarData).forEach(([category, subcategories]) => {
+                let subListHTML = `
+            <details class="category">
+            <summary>${category}</summary>
+            `;
+
+                subcategories.forEach(item => {
+                    subListHTML += `
+                <ul class="subcategory">
+                <a href="#">• ${item.subcategory}</a>
+                </ul>
+                `;
+                });
+
+                subListHTML += `</details>`;
+
+                sidebarBody.innerHTML += subListHTML;
+            });
+        })
+        .catch(err => console.error("Failed to fetch sidebar categories:", err));
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadSidebar();
+});

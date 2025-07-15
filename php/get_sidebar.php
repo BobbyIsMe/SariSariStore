@@ -1,26 +1,32 @@
 <?php 
 // Load sidebar categories
 include_once("db_connect.php");
-$products = [];
+$categories = [];
 
 $stmt = $con->prepare("
 SELECT category, subcategory
 FROM Categories");
 $stmt->execute();
 $result = $stmt->get_result();
+$stmt->close();
 
 if ($result && $result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $category = $row['category'];
-        $products[$category][] = [
+        $categories[$category][] = [
             'subcategory' => $row['subcategory']
         ];
     }
+} else if($result->num_rows === 0)
+{
+    echo json_encode(['status' => 404, 'message' => 'No categories found.']);
+    exit();
 }
-$stmt->close();
 
 $myObj = array(
-    'products' => $products
+    'categories' => $categories,
+    'status' => 200,
+    'message' => 'Succesfully retrieved categories.'
 );
 
 echo json_encode($myObj);
