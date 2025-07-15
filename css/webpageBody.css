@@ -97,6 +97,7 @@ html, body {
 
 .product_card {
   border: 1px solid #ccc;
+  border-radius: 5px;
   padding: 10px;
   width: 250px;
 }
@@ -122,6 +123,16 @@ html, body {
   width: 600px;
   height: 300px;
   border: 1px solid #000;
+}
+
+.add_to_cart {
+  width: 100%;
+  margin-top: 5px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #FFC107;
+  border: NONE;
+
 }
 
 
