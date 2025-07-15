@@ -7,7 +7,7 @@ $values = [];
 $params = '';
 $order = '';
 $filter = " WHERE 1=1";
-$order = " ORDER BY p.product_id ASC";
+$order = "";
 $results = 0;
 $total = 10;
 
@@ -18,6 +18,7 @@ $stock_qty = $_GET['stock_qty'] ?? null;
 $item_name = $_GET['item_name'] ?? null;
 $total_sales = $_GET['total_sales'] ?? null;
 $date_restocked = $_GET['date_restocked'] ?? null;
+$recent = $_GET['recent'] ?? null;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 
 if (!empty($category)) {
@@ -44,16 +45,27 @@ if (!empty($item_name)) {
     $values[] = '%' . $item_name . '%';
 }
 
+$order_parts = [];
 if (!empty($total_sales) && in_array($total_sales, ['ASC', 'DESC'])) {
-    $order .= ",p.total_sales " . $total_sales;
+    $order_parts[] = ",p.total_sales $total_sales";
 }
 
 if (!empty($stock_qty) && in_array($stock_qty, ['ASC', 'DESC'])) {
-    $order .= ",p.stock_qty " . $stock_qty;
+    $order_parts[] = ",p.stock_qty $stock_qty";
 }
 
 if(!empty($date_restocked) && in_array($date_restocked, ['ASC', 'DESC'])) {
-    $order .= ",p.date_time_restocked" . $date_restocked;
+    $order_parts[] = ",p.date_time_restocked $date_restocked";
+}
+
+if(!empty($recent) && in_array($recent, ['ASC', 'DESC'])) {
+    $order_parts[] = ",p.product_id $recent";
+}
+
+if (!empty($orderParts)) {
+    $order = "ORDER BY " . implode(", ", $orderParts);
+} else {
+    $order = "ORDER BY p.item_name ASC";
 }
 
 $stmt = $con->prepare("
@@ -85,7 +97,7 @@ if($totalRows == 0) {
 $filter .= " LIMIT $total OFFSET $offset";
 
 $stmt = $con->prepare("
-SELECT p.product_id, p.image, p.item_name, cs.category, cs.subcategory, p.brand, p.price, (CASE WHEN p.stock_qty > 0 THEN 'Add to Cart' ELSE 'Out of Stock' END) AS stock_status
+SELECT p.product_id, p.image, p.item_name, cs.category, cs.subcategory, p.brand, p.price, p.stock_qty
 FROM Products p
 JOIN Categories cs ON p.category_id=p.category_id". $filter. $order);
 if(!empty($params))
@@ -102,7 +114,7 @@ while ($row = $result->fetch_assoc()) {
         'subcategory' => $row['subcategory'],
         'brand' => $row['brand'],
         'price' => $row['price'],
-        'stock_status' => $row['stock_status']
+        'stock_qty' => $row['stock_qty']
     ];
     $results++;
 }

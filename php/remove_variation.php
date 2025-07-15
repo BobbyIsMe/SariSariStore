@@ -19,21 +19,17 @@ if (!$result || $result->num_rows === 0) {
     exit();
 }
 
-$stmt = $con->prepare("SELECT variation_id FROM Products WHERE variation_id = ? LIMIT 1");
-$stmt->bind_param('i', $variation_id);
-$stmt->execute();
-$result = $stmt->get_result();
-if ($result && $result->num_rows > 0) {
-    echo json_encode(['status' => 400, 'message' => 'Cannot remove variation with products.']);
-    exit();
-}
-
 $stmt = $con->prepare("DELETE FROM Variations WHERE variation_id = ?");
 $stmt->bind_param('i', $variation_id);
-if ($stmt->execute()) {
-    echo json_encode(['status' => 200, 'message' => 'Variation removed successfully.']);
+
+if (!$stmt->execute()) {
+    if (strpos($stmt->error, 'foreign key constraint fails') !== false) {
+        echo json_encode(['status' => 400, 'message' => 'Cannot remove variation with products.']);
+    } else {
+        echo json_encode(['status' => 500, 'message' => 'Failed to remove variation.']);
+    }
 } else {
-    echo json_encode(['status' => 500, 'message' => 'Failed to remove variation.']);
+    echo json_encode(['status' => 200, 'message' => 'Variation removed successfully.']);
 }
+
 $stmt->close();
-?>

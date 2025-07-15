@@ -4,6 +4,9 @@ include_once("db_connect.php");
 $user_id = $_SESSION['user_id'];
 $cart_items = [];
 $cart_id = null;
+$status = null;
+$total = 0;
+$date_time_created = null;
 
 if (!isset($user_id)) {
     echo json_encode(['status' => 400, 'message' => 'Must be signed in to proceed.']);
@@ -11,7 +14,7 @@ if (!isset($user_id)) {
 }
 
 $stmt = $con->prepare("
-SELECT ca.cart_id, p.product_id, p.image, p.item_name, cs.subcategory, p.brand, c.item_qty, c.subtotal, v.variation_name, (CASE WHEN p.stock_qty > 0 THEN 'In Stock' ELSE 'Out of Stock' END) AS stock_status
+SELECT ca.cart_id, ca.status, ca.date_time_created, ca.total, p.product_id, p.image, p.item_name, cs.subcategory, p.brand, c.item_qty, c.subtotal, v.variation_id, v.variation_name, (CASE WHEN p.stock_qty > 0 THEN 'In Stock' ELSE 'Out of Stock' END) AS stock_status
 FROM Carts ca
 JOIN Cart_Items c ON ca.cart_id = c.cart_id
 JOIN Products p ON c.product_id = p.product_id
@@ -33,27 +36,18 @@ if ($result && $result->num_rows > 0) {
             'item_qty' => $row['item_qty'],
             'subtotal' => $row['subtotal'],
             'variation_name' => $row['variation_name'],
+            'variation_id' => $row['variation_id'],
             'stock_status' => $row['stock_status']
         ];
     }
     $cart_id = $row['cart_id'];
+    $status = $row['status'];
+    $total = $row['total'];
+    $date_time_created = $row['date_time_created'];
     $stmt->close();
 } else {
     echo json_encode(['status' => 404, 'message' => 'No items in cart.']);
     exit();
-}
-
-$stmt = $con->prepare("
-SELECT total 
-FROM Carts 
-WHERE user_id = ? AND type = 'cart'");
-$stmt->bind_param('i', $user_id);
-$stmt->execute();
-$result = $stmt->get_result();
-$total = 0;
-if ($result && $result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    $total = $row['total'];
 }
 
 $stmt->close();
@@ -62,6 +56,8 @@ $myObj = array(
     'message' => 'Cart items retrieved successfully.',
     'cart_items' => $cart_items,
     'cart_id' => $cart_id,
+    'status' => $status,
+    'date_time_created' => $date_time_created,
     'total' => $total
 );
 

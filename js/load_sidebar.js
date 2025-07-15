@@ -19,7 +19,7 @@ function loadSidebar() {
                 subcategories.forEach(item => {
                     subListHTML += `
                 <ul class="subcategory">
-                <a href="#">• ${item.subcategory}</a>
+                <a href="../Webpages/category.php?category=${category}&subcategory=${item.subcategory}">• ${item.subcategory}</a>
                 </ul>
                 `;
                 });

@@ -4,7 +4,7 @@ CREATE TABLE `Carts` (
   `status` enum('pending', 'approved', 'rejected', 'closed') NOT NULL DEFAULT 'pending',
   `date_time_deadline` datetime,
   `date_time_received` datetime,
-  `date_time_created` datetime,
+  `date_time_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `total` decimal(10,2),
   `type` enum('cart', 'order') NOT NULL DEFAULT 'cart',
   FOREIGN KEY (`user_id`) REFERENCES Users(`user_id`)

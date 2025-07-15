@@ -4,6 +4,10 @@ include_once("db_connect.php");
 $user_id = $_SESSION['user_id'];
 $order_items = [];
 $cart_id = null;
+$status = null;
+$date_time_created = null;
+$date_time_deadline = null;
+$date_time_received = null;
 
 if (!isset($user_id)) {
     echo json_encode(['status' => 400, 'message' => 'Must be signed in to proceed.']);
@@ -11,7 +15,8 @@ if (!isset($user_id)) {
 }
 
 $stmt = $con->prepare("
-SELECT ca.cart_id, p.product_id, p.image, p.item_name, cs.subcategory, p.brand, c.item_qty, c.subtotal, v.variation_name, (CASE WHEN p.stock_qty > 0 THEN 'In Stock' ELSE 'Out of Stock' END) AS stock_status
+SELECT ca.cart_id, ca.status, ca.date_time_deadline, ca.date_time_created, ca.date_time_received, 
+p.product_id, p.image, p.item_name, cs.subcategory, p.brand, c.item_qty, c.subtotal, v.variation_name, (CASE WHEN p.stock_qty > 0 THEN 'In Stock' ELSE 'Out of Stock' END) AS stock_status
 FROM Carts ca
 JOIN Cart_Items c ON ca.cart_id = c.cart_id
 JOIN Products p ON c.product_id = p.product_id
@@ -37,6 +42,10 @@ if ($result && $result->num_rows > 0) {
         ];
     }
     $cart_id = $row['cart_id'];
+    $status = $row['status'];
+    $date_time_created = $row['date_time_created'];
+    $date_time_deadline = $row['date_time_deadline'];
+    $date_time_received = $row['date_time_received'];
     $stmt->close();
 } else {
     echo json_encode(['status' => 404, 'message' => 'No items in reservation.']);
@@ -62,6 +71,10 @@ $myObj = array(
     'message' => 'Reservation items retrieved successfully.',
     'order_items' => $order_items,
     'cart_id' => $cart_id,
+    'status' => $status,
+    'date_time_created' => $date_time_created,
+    'date_time_deadline' => $date_time_deadline,
+    'date_time_received' => $date_time_received,
     'total' => $total
 );
 
