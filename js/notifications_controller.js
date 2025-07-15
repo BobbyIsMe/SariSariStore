@@ -1,16 +1,36 @@
-notif_page = 0;
+let totalNotifPages = 0;
+let notif_page = 0;
 
 const tableBody = document.getElementById("notifications_popup");
 tableBody.innerHTML = "";
 
+document.getElementById("notif_prev_button").addEventListener("click", () => {
+    if (notif_page > 1) {
+        notif_page--;
+        loadPage(notif_page);
+    }
+});
+
+document.getElementById("notif_next_button").addEventListener("click", () => {
+    if (notif_page < totalNotifPages) {
+        notif_page++;
+        loadPage(notif_page);
+    }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
     color = "";
     loadNotificationBadge();
+    loadNotification(notif_page);
+});
+
+function loadNotification(notif_page) {
     fetch(`../../php/get_notifications.php?page=${notif_page}`)
         .then(res => res.json())
         .then(data => {
             if (data.status === 200) {
                 const notifications = data.notifications;
+                totalNotifPages = data.totalPages;
                 notifications.forEach(notif => {
                     if (notif.status === "approved")
                         color = "rgb(217, 255, 0)";
@@ -31,12 +51,15 @@ document.addEventListener('DOMContentLoaded', () => {
                                         </div>
                     `;
                 });
+                document.getElementById("notif_page_number").innerHTML = data.totalPages != 0 ? `Page <strong>${notif_page}</strong> of <strong>${data.totalPages}</strong>` : data.message;
+                document.getElementById("notif_prev_button").disabled = (notif_page === 1);
+                document.getElementById("notif_next_button").disabled = (notif_page >= totalNotifPages);
             } else {
                 tableBody.innerHTML = data.message;
             }
         })
         .catch(error => console.log(error));
-});
+}
 
 document.getElementById("notifications").addEventListener("click", () => {
     fetch('../../php/read_notifications.php')
@@ -52,14 +75,13 @@ document.getElementById("notifications").addEventListener("click", () => {
     loadNotificationBadge();
 });
 
-function loadNotificationBadge()
-{
+function loadNotificationBadge() {
     fetch('../../php/get_notification_count.php')
         .then(res => res.json())
         .then(data => {
             if (data.status === 200) {
-                document.getElementById("notification_count").innerHTML = 
-                `
+                document.getElementById("notification_count").innerHTML =
+                    `
                 <div class="notification-badge">${data.notification_count}</div>
                 `;
             } else {

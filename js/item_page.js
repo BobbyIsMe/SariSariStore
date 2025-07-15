@@ -1,6 +1,6 @@
-product_id = null;
-quantity = 1;
-stock_quantity = 0;
+let product_id = null;
+let quantity = 1;
+let stock_quantity = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
             fetch("../../php/get_variations.php" + "?product_id=" + urlParams.get("product_id"))
                 .then(res => res.json())
                 .then(data => {
-                    variations = data.variations;
+                    const variations = data.variations;
                     Object.keys(variations).forEach(variationId => {
                         const variation = variations[variationId];
                         const option = document.createElement("option");

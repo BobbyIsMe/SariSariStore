@@ -1,4 +1,4 @@
-let totalPage = 1;
+let totalPages = 1;
 let page = 1;
 let category = "";
 let subcategory = "";
@@ -142,7 +142,7 @@ function loadPage(page, all, id = null) {
 }
 
 function addToCart(product_id) {
-    window.location.href = "../itemDescription.php?product_id=" + product_id;
+    window.location.href = "../Webpages/itemDescription.php?product_id=" + product_id;
 }
 
 function loadHTML(tableBody, product) {

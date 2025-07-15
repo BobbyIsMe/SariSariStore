@@ -185,46 +185,52 @@
         </div>
 
 
-      <main class="flex-fill" >
-        <div class="d-flex align-items-stretch justify-content-center" style="height: 100%; min-height: 100vh;">
+        <main class="flex-fill">
+            <div class="d-flex align-items-stretch justify-content-center" style="height: 100%; min-height: 100vh;">
                 <div class="col-2 p-2" style="background-color: white; flex-shrink: 0;">
-          <aside class="item_nav flex-column align-items-start text-start">
-            <h6>Categories</h6>
-            <hr>
-            <details class="category">
-              <summary>School Supplies</summary>
-              <ul class="subcategory list-unstyled ms-3">
-                <li><a href="../../Webpages/category.html" onclick="updateCategory('School Supplies', 'Filler')">Filler</a></li>
-              </ul>
-            </details>
-            <details class="category">
-              <summary>Softdrinks</summary>
-              <ul class="subcategory list-unstyled ms-3">
-                <li><a href="../../Webpages/category.html" onclick="updateCategory('Softdrinks', 'Juice')">Juice</a></li>
-              </ul>
-            </details>
-            <details class="category">
-              <summary>Powdered Drinks</summary>
-              <ul class="subcategory list-unstyled ms-3">
-                <li><a href="../../Webpages/category.html" onclick="updateCategory('Powdered Drinks', 'Coffee')">Coffee</a></li>
-              </ul>
-            </details>
-            <details class="category">
-              <summary>Snacks</summary>
-              <ul class="subcategory list-unstyled ms-3">
-                <li><a href="../../Webpages/category.html" onclick="updateCategory('Snacks', 'Junkfood')">Junkfood</a></li>
-                <li><a href="../../Webpages/category.html" onclick="updateCategory('Snacks', 'Biscuits')">Biscuits</a></li>
-              </ul>
-            </details>
-            <details class="category">
-              <summary>Hygiene</summary>
-              <ul class="subcategory list-unstyled ms-3">
-                <li><a href="../../Webpages/category.html" onclick="updateCategory('Hygiene', 'Soap')">Soap</a></li>
-              </ul>
-            </details>
-          </aside>
-        </div>
-                
+                    <aside class="item_nav flex-column align-items-start text-start">
+                        <h6>Categories</h6>
+                        <hr>
+                        <details class="category">
+                            <summary>School Supplies</summary>
+                            <ul class="subcategory list-unstyled ms-3">
+                                <li><a href="../../Webpages/category.html"
+                                        onclick="updateCategory('School Supplies', 'Filler')">Filler</a></li>
+                            </ul>
+                        </details>
+                        <details class="category">
+                            <summary>Softdrinks</summary>
+                            <ul class="subcategory list-unstyled ms-3">
+                                <li><a href="../../Webpages/category.html"
+                                        onclick="updateCategory('Softdrinks', 'Juice')">Juice</a></li>
+                            </ul>
+                        </details>
+                        <details class="category">
+                            <summary>Powdered Drinks</summary>
+                            <ul class="subcategory list-unstyled ms-3">
+                                <li><a href="../../Webpages/category.html"
+                                        onclick="updateCategory('Powdered Drinks', 'Coffee')">Coffee</a></li>
+                            </ul>
+                        </details>
+                        <details class="category">
+                            <summary>Snacks</summary>
+                            <ul class="subcategory list-unstyled ms-3">
+                                <li><a href="../../Webpages/category.html"
+                                        onclick="updateCategory('Snacks', 'Junkfood')">Junkfood</a></li>
+                                <li><a href="../../Webpages/category.html"
+                                        onclick="updateCategory('Snacks', 'Biscuits')">Biscuits</a></li>
+                            </ul>
+                        </details>
+                        <details class="category">
+                            <summary>Hygiene</summary>
+                            <ul class="subcategory list-unstyled ms-3">
+                                <li><a href="../../Webpages/category.html"
+                                        onclick="updateCategory('Hygiene', 'Soap')">Soap</a></li>
+                            </ul>
+                        </details>
+                    </aside>
+                </div>
+
                 <main style="flex-grow: 1;">
                     <div class="object_container">
                         <h3>Reservation Details</h3>
@@ -317,45 +323,7 @@
                                     </button>
                                 </div>
 
-                                <div class="modal fade" id="seeMoreModal" tabindex="-1"
-                                    aria-labelledby="seeMoreModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="seeMoreModalLabel">Order Details</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div
-                                                    class="order-item d-flex justify-content-between align-items-center border-bottom pb-2 mb-2">
-                                                    <div>
-                                                        <div class="category" style="font-size: 12px; color: gray;">
-                                                            Junkfood</div>
-                                                        <div class="name fw-bold">Mang Juan | Chicharon</div>
-                                                    </div>
-                                                    <div class="text-end">
-                                                        <div>₱12.00</div>
-                                                        <div>1 pcs</div>
-                                                    </div>
-                                                </div>
-                                                <div
-                                                    class="order-item d-flex justify-content-between align-items-center border-bottom pb-2 mb-2">
-                                                    <div>
-                                                        <div class="category" style="font-size: 12px; color: gray;">
-                                                            Softdrink</div>
-                                                        <div class="name fw-bold">Coke | Softdrink</div>
-                                                    </div>
-                                                    <div class="text-end">
-                                                        <div>₱24.00</div>
-                                                        <div>2 pcs</div>
-                                                    </div>
-                                                </div>
 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
 
                             <!--order summary-->
@@ -384,10 +352,152 @@
 
                             </div>
                         </div>
-                        
+
+                        <div class="cart-container"
+                            style="display: flex; gap: 20px; padding: 20px; background: #f5f5f5;">
+
+                            <!-- cart items-->
+                            <div class="cart_items">
+                                <div>
+                                    <h6>Cart ID</h6>
+                                </div>
+
+                                <br>
+
+                                <div>
+                                    Name: sadsdasd
+                                </div>
+
+                                <br>
+
+                                <div class="d-flex flex-row col-12">
+                                    <div class="col-4">
+                                        Reserved: 5/2/2021 12:00 PM
+                                    </div>
+                                    <div class="col-4">
+                                        Received: 5/3/2021 12:00 PM
+                                    </div>
+                                    <div class="col-4">
+                                        Deadline: 5/4/2021 12:00 PM
+                                    </div>
+                                </div>
+
+                                <!-- item-->
+                                <div class="cart_item">
+
+                                    <!-- details-->
+                                    <div style="flex: 1;">
+                                        <div class="category" style="font-size: 12px; color: gray;">Junkfood</div>
+                                        <div class="name" style="font-weight: bold;">Mang Juan | Chicharon</div>
+                                    </div>
+
+                                    <!-- price -->
+                                    <div style="width: 80px; text-align: right;">₱12.00</div>
+
+                                    <!-- qty of items-->
+                                    <div>
+                                        1 pcs
+                                    </div>
+                                </div>
 
 
-                        
+                                <div class="cart_item">
+
+
+                                    <!-- details-->
+                                    <div style="flex: 1;">
+                                        <div class="category" style="font-size: 12px; color: gray;">Softdrink</div>
+                                        <div class="name" style="font-weight: bold;">Coke| Softdrink</div>
+                                    </div>
+
+                                    <!-- price -->
+                                    <div style="width: 80px; text-align: right;">₱24.00</div>
+
+                                    <!-- qty of items-->
+                                    <div>
+                                        2 pcs
+                                    </div>
+
+                                </div>
+
+                                <div class="d-flex justify-content-center align-items-center mt-3">
+                                    <button type="button" class="btn seeMoreBtn" data-bs-toggle="modal"
+                                        data-bs-target="#seeMoreModal">
+                                        See More
+                                    </button>
+                                </div>
+
+
+                            </div>
+
+                            <!--order summary-->
+                            <div class="order_summary">
+                                <div class="dropdown">
+                                    <select class="form-select border-0" id="status_dropdown" name="rent_status"
+                                        required>
+                                        <option value="status">Status</option>
+                                        <option value="closed">Approved</option>
+                                        <option value="rejected">Rejected</option>
+                                        <option value="closed">Closed</option>
+                                    </select>
+                                </div>
+
+                                <br><br><br>
+
+                                <div class="d-flex flex-column align-items-center ">
+
+                                    <div class="" style="border-top: solid black 1px;">
+                                        <label for="check_in_date" class="form-label">Check-in Date</label>
+                                        <input type="date" class="paragraphs form-control" id="rent_check_in_date"
+                                            name="check_in_date" required>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+
+                        <div class="modal fade" id="seeMoreModal" tabindex="-1" aria-labelledby="seeMoreModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="seeMoreModalLabel">Order Details</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div
+                                            class="order-item d-flex justify-content-between align-items-center border-bottom pb-2 mb-2">
+                                            <div>
+                                                <div class="category" style="font-size: 12px; color: gray;">
+                                                    Junkfood</div>
+                                                <div class="name fw-bold">Mang Juan | Chicharon</div>
+                                            </div>
+                                            <div class="text-end">
+                                                <div>₱12.00</div>
+                                                <div>1 pcs</div>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="order-item d-flex justify-content-between align-items-center border-bottom pb-2 mb-2">
+                                            <div>
+                                                <div class="category" style="font-size: 12px; color: gray;">
+                                                    Softdrink</div>
+                                                <div class="name fw-bold">Coke | Softdrink</div>
+                                            </div>
+                                            <div class="text-end">
+                                                <div>₱24.00</div>
+                                                <div>2 pcs</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="p-4 d-flex justify-content-center align-items-center gap-4">
                             <button class="navButton" type="button" id="prev_button">
@@ -411,12 +521,12 @@
         </main>
 
         <footer class="footer mt-auto">
-      <div class="container d-flex flex-row justify-content-between p-4">
-        <div><a href="../Webpages/aboutUs.html"><b>About Us</b></a></div>
-        <div><a href="../Webpages/contactUs.html"><b>Contact Us</b></a></div>
-        <div>Copyright © <b>2025</b>. All rights reserved.</div>
-      </div>
-    </footer>
+            <div class="container d-flex flex-row justify-content-between p-4">
+                <div><a href="../Webpages/aboutUs.html"><b>About Us</b></a></div>
+                <div><a href="../Webpages/contactUs.html"><b>Contact Us</b></a></div>
+                <div>Copyright © <b>2025</b>. All rights reserved.</div>
+            </div>
+        </footer>
     </div>
 
     <script src="../../js/script.js"></script>

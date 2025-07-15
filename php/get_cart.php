@@ -14,7 +14,7 @@ if (!isset($user_id)) {
 }
 
 $stmt = $con->prepare("
-SELECT ca.cart_id, ca.status, ca.date_time_created, ca.total, p.product_id, p.image, p.item_name, cs.subcategory, p.brand, c.item_qty, c.subtotal, v.variation_id, v.variation_name, (CASE WHEN p.stock_qty > 0 THEN 'In Stock' ELSE 'Out of Stock' END) AS stock_status
+SELECT ca.cart_id, ca.status, ca.date_time_created, p.product_id, p.image, p.item_name, cs.subcategory, p.brand, c.item_qty, c.subtotal, v.variation_id, v.variation_name, p.stock_qty
 FROM Carts ca
 JOIN Cart_Items c ON ca.cart_id = c.cart_id
 JOIN Products p ON c.product_id = p.product_id
@@ -37,12 +37,12 @@ if ($result && $result->num_rows > 0) {
             'subtotal' => $row['subtotal'],
             'variation_name' => $row['variation_name'],
             'variation_id' => $row['variation_id'],
-            'stock_status' => $row['stock_status']
+            'stock_qty' => $row['stock_qty']
         ];
+        $total += $row['subtotal'];
     }
     $cart_id = $row['cart_id'];
     $status = $row['status'];
-    $total = $row['total'];
     $date_time_created = $row['date_time_created'];
     $stmt->close();
 } else {
