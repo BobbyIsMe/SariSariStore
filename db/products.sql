@@ -9,7 +9,7 @@ CREATE TABLE `Products` (
   `item_details` text,
   `price` decimal(10,2) NOT NULL,
   `date_time_restocked` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (`category_id`) REFERENCES Categories(`category_id`),
+  FOREIGN KEY (`category_id`) REFERENCES Categories(`category_id`)
 )
 
 CREATE TABLE `Categories` (

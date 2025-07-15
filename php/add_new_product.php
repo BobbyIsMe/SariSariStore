@@ -18,12 +18,16 @@ $brand = $_POST['brand'] ?? null;
 $stock_qty = $_POST['stock_qty'] ?? null;
 $item_details = $_POST['item_details'] ?? null;
 $price = $_POST['price'] ?? null;
-$image = $_POST['image'] ?? null;
+$image = $_FILES['image'] ?? null;
+$targetDir = "img/";
 
-if (!isset($category_id, $brand, $stock_qty, $item_details, $price)) {
+if (!isset($category_id, $brand, $stock_qty, $item_details, $price, $image)) {
     echo json_encode(['status' => 400, 'message' => 'All fields are required.']);
     exit();
 }
+
+$image_name = pathinfo($file['name'], PATHINFO_FILENAME) . "." . strtolower(pathinfo($image['name'], PATHINFO_EXTENSION));
+$image_old_name = '';
 
 if (!is_numeric($stock_qty) || $price <= 0) {
     echo json_encode(['status' => 400, 'message' => 'Price must be greater than zero.']);
@@ -70,10 +74,10 @@ $stmt->close();
 
 if ($edit === 'add') {
     $stmt = $con->prepare("
-        INSERT INTO Products (item_name, category_id, brand, stock_qty, item_details, price) 
-        VALUES (?, ?, ?, ?, ?, ?)
+        INSERT INTO Products (image, item_name, category_id, brand, stock_qty, item_details, price) 
+        VALUES (?, ?, ?, ?, ?, ?, ?)
         ");
-    $stmt->bind_param('sissds', $item_name, $category_id, $brand, $stock_qty, $item_details, $price);
+    $stmt->bind_param('ssissds', $image_name, $item_name, $category_id, $brand, $stock_qty, $item_details, $price);
     if ($stmt->execute()) {
         $stmt->close();
 
@@ -94,25 +98,31 @@ if ($edit === 'add') {
     $con->begin_transaction();
 
     try {
-        // $stmt = $con->prepare("
-        // SELECT product_id 
-        // FROM Products 
-        // WHERE product_id = ?");
-        // $stmt->bind_param('i', $product_id);
-        // $stmt->execute();
-        // $result = $stmt->get_result();
-        // $stmt->close();
-        // if (!$result || $result->num_rows === 0) {
-        //     echo json_encode(['status' => 404, 'message' => 'Product not found.']);
-        //     exit();
-        // }
+        $stmt = $con->prepare("
+        SELECT image 
+        FROM Products 
+        WHERE product_id = ?");
+        $stmt->bind_param('i', $product_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        if (!$result || $result->num_rows === 0) {
+            throw new Exception('Product not found.');
+            exit();
+        }
+        $row = $result->fetch_assoc();
+        $image_old_name = $row['image'];
+
+        if($image_old_name != $image_name) {
+            unlink($targetDir . $image_old_name);
+        }
 
         // $params .= 'i';
         // $values[] = $product_id;
         // $sql .= " AND product_id != ?";
         $stmt = $con->prepare("
         UPDATE Products 
-        SET image = ? item_name = ?, category_id = ?, brand = ?, stock_qty = ?, item_details = ?, price = ?, date_time_restocked = NOW()
+        SET image = ?, item_name = ?, category_id = ?, brand = ?, stock_qty = ?, item_details = ?, price = ?, date_time_restocked = NOW()
         WHERE product_id = ?
         ");
         $stmt->bind_param('ssisisdi', $image, $item_name, $category_id, $brand, $stock_qty, $item_details, $price, $product_id);
@@ -168,5 +178,20 @@ if ($edit === 'add') {
     } catch (Exception $e) {
         $con->rollback();
         echo json_encode(['status' => 500, 'message' => 'Transaction failed: ' . $e->getMessage()]);
+    }
+}
+
+if($image_old_name != $image_name || $image_old_name == '') {
+    $allowedTypes = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+    $fileExtension = pathinfo($image_name, PATHINFO_EXTENSION);
+    if (!in_array($fileExtension, $allowedTypes)) {
+        echo json_encode(['status' => 400, 'message' => 'Invalid file type.']);
+        exit();
+    }
+
+    if (move_uploaded_file($file['tmp_name'], $targetDir . $image_name)) {
+        echo json_encode(['status' => 200, 'message' => 'File uploaded successfully.']);
+    } else {
+        echo json_encode(['status' => 500, 'message' => 'Failed to upload file.']);
     }
 }

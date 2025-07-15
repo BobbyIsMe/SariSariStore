@@ -100,8 +100,7 @@ function loadPage(page, all) {
                 productsData.slice(0, 5).forEach(product => {
                     loadHTML(tableBody, product);
                 });
-            else
-            {
+            else {
                 productsData.forEach(product => {
                     loadHTML(tableBody, product);
                 });
@@ -116,6 +115,12 @@ function loadPage(page, all) {
 
 function loadHTML(tableBody, product) {
     tableBody.innerHTML += `
-    
+    <div class="product_card">
+        <div class="image"><img src="../../img/${product.image}" alt="img"></div>
+        <div class="subcategory" style="font-size: 10px;">${product.subcategory}</div>
+        <div class="name">${product.brand} | ${product.item_name}</div>
+        <div class="price"><strong>${product.price}</strong></div>
+        <button disabled style="width: 100%; margin-top: 5px;">Add to Cart</button>
+    </div>
     `;
 }
