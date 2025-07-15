@@ -5,13 +5,13 @@ function loadSidebar() {
             const sidebarBody = document.getElementById('sidebar');
             sidebarBody.innerHTML = "";
             const sidebarData = data.categories;
-            if (data.status == 404) {
+            if (data.status != 200) {
                 sidebarBody.innerHTML = data.message;
                 return;
             }
 
             Object.entries(sidebarData).forEach(([category, subcategories]) => {
-                let subListHTML = `
+                const subListHTML = `
             <details class="category">
             <summary>${category}</summary>
             `;
@@ -19,7 +19,7 @@ function loadSidebar() {
                 subcategories.forEach(item => {
                     subListHTML += `
                 <ul class="subcategory">
-                <a href="#">• ${item.subcategory}</a>
+                <a href="../Webpages/category.php?category=${category}&subcategory=${item.subcategory}">• ${item.subcategory}</a>
                 </ul>
                 `;
                 });

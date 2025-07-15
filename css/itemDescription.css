@@ -67,12 +67,4 @@
   pointer-events: none;
 }
 
-.add_to_cart {
-  background-color: #ddd;
-  border: none;
-  padding: 10px;
-  border-radius: 8px;
-  color: #999;
-  font-weight: bold;
-  cursor: not-allowed;
-}
+

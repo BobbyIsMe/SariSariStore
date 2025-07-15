@@ -1,6 +1,8 @@
 <?php
-// Load homepage products
+// Load inventory list
 include_once("db_connect.php");
+include_once("admin_status.php");
+requireAdmin($con, 'inventory');
 
 $products = [];
 $values = [];
@@ -9,7 +11,7 @@ $order = '';
 $filter = " WHERE 1=1";
 $order = "";
 $results = 0;
-$total = 10;
+$total = 5;
 
 $category = $_GET['category'] ?? null;
 $subcategory = $_GET['subcategory'] ?? null;
@@ -97,7 +99,7 @@ if($totalRows == 0) {
 $filter .= " LIMIT $total OFFSET $offset";
 
 $stmt = $con->prepare("
-SELECT p.product_id, p.image, p.item_name, cs.category, cs.subcategory, p.brand, p.price, p.stock_qty
+SELECT p.product_id, p.image, p.item_name, p.item_details, p.category_id, cs.category, cs.subcategory, p.brand, p.price, p.stock_qty
 FROM Products p
 JOIN Categories cs ON p.category_id=p.category_id". $filter. $order);
 if(!empty($params))
@@ -108,8 +110,10 @@ $result = $stmt->get_result();
 while ($row = $result->fetch_assoc()) {
     $products[] = [
         'product_id' => $row['product_id'],
+        'category_id' => $row['category_id'],
         'image' => $row['image'],
         'item_name' => $row['item_name'],
+        'item_details' => $row['item_details'],
         'category' => $row['category'],
         'subcategory' => $row['subcategory'],
         'brand' => $row['brand'],

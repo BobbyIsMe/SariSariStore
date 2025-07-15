@@ -74,8 +74,8 @@
                         </svg>
                     </button>
 
-                    <button class="btn nav-icon" onclick="window.location.href='../Webpages/itemDescription.html'"
-                        aria-label="Reservation">
+                    <button class="btn nav-icon" onclick="window.location.href='../Orders/order.html'"
+                        aria-label="Order">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <path d="M16 8H17.1597C18.1999 8 19.0664 8.79732
                         19.1528 9.83391L19.8195 17.8339
@@ -181,42 +181,48 @@
         <main class="flex-fill" style="height: 100%;">
             <div class="d-flex align-items-stretch justify-content-center" style="min-height: 100vh;">
                 <div class="col-2 p-2" style="background-color: white; flex-shrink: 0;">
-          <aside class="item_nav flex-column align-items-start text-start">
-            <h6>Categories</h6>
-            <hr>
-            <details class="category">
-              <summary>School Supplies</summary>
-              <ul class="subcategory list-unstyled ms-3">
-                <li><a href="../../Webpages/category.html" onclick="updateCategory('School Supplies', 'Filler')">Filler</a></li>
-              </ul>
-            </details>
-            <details class="category">
-              <summary>Softdrinks</summary>
-              <ul class="subcategory list-unstyled ms-3">
-                <li><a href="../../Webpages/category.html" onclick="updateCategory('Softdrinks', 'Juice')">Juice</a></li>
-              </ul>
-            </details>
-            <details class="category">
-              <summary>Powdered Drinks</summary>
-              <ul class="subcategory list-unstyled ms-3">
-                <li><a href="../../Webpages/category.html" onclick="updateCategory('Powdered Drinks', 'Coffee')">Coffee</a></li>
-              </ul>
-            </details>
-            <details class="category">
-              <summary>Snacks</summary>
-              <ul class="subcategory list-unstyled ms-3">
-                <li><a href="../../Webpages/category.html" onclick="updateCategory('Snacks', 'Junkfood')">Junkfood</a></li>
-                <li><a href="../../Webpages/category.html" onclick="updateCategory('Snacks', 'Biscuits')">Biscuits</a></li>
-              </ul>
-            </details>
-            <details class="category">
-              <summary>Hygiene</summary>
-              <ul class="subcategory list-unstyled ms-3">
-                <li><a href="../../Webpages/category.html" onclick="updateCategory('Hygiene', 'Soap')">Soap</a></li>
-              </ul>
-            </details>
-          </aside>
-        </div>
+                    <aside class="item_nav flex-column align-items-start text-start">
+                        <h6>Categories</h6>
+                        <hr>
+                        <details class="category">
+                            <summary>School Supplies</summary>
+                            <ul class="subcategory list-unstyled ms-3">
+                                <li><a href="../../Webpages/category.html"
+                                        onclick="updateCategory('School Supplies', 'Filler')">Filler</a></li>
+                            </ul>
+                        </details>
+                        <details class="category">
+                            <summary>Softdrinks</summary>
+                            <ul class="subcategory list-unstyled ms-3">
+                                <li><a href="../../Webpages/category.html"
+                                        onclick="updateCategory('Softdrinks', 'Juice')">Juice</a></li>
+                            </ul>
+                        </details>
+                        <details class="category">
+                            <summary>Powdered Drinks</summary>
+                            <ul class="subcategory list-unstyled ms-3">
+                                <li><a href="../../Webpages/category.html"
+                                        onclick="updateCategory('Powdered Drinks', 'Coffee')">Coffee</a></li>
+                            </ul>
+                        </details>
+                        <details class="category">
+                            <summary>Snacks</summary>
+                            <ul class="subcategory list-unstyled ms-3">
+                                <li><a href="../../Webpages/category.html"
+                                        onclick="updateCategory('Snacks', 'Junkfood')">Junkfood</a></li>
+                                <li><a href="../../Webpages/category.html"
+                                        onclick="updateCategory('Snacks', 'Biscuits')">Biscuits</a></li>
+                            </ul>
+                        </details>
+                        <details class="category">
+                            <summary>Hygiene</summary>
+                            <ul class="subcategory list-unstyled ms-3">
+                                <li><a href="../../Webpages/category.html"
+                                        onclick="updateCategory('Hygiene', 'Soap')">Soap</a></li>
+                            </ul>
+                        </details>
+                    </aside>
+                </div>
 
                 <main style="flex-grow: 1;">
                     <div class="object_container">
@@ -236,10 +242,11 @@
 
                                     <!-- details-->
                                     <div style="flex: 1; ">
-                                        <div class="d-flex flex-row g-2" style="gap: 20px; font-size: 12px; color: gray;" >
+                                        <div class="d-flex flex-row g-2"
+                                            style="gap: 20px; font-size: 12px; color: gray;">
                                             <div class="category">Snacks</div>
                                             <div>|</div>
-                                            <div class="category" >Junkfood</div> 
+                                            <div class="category">Junkfood</div>
                                         </div>
 
                                         <div class="name" style="font-weight: bold;">Mang Juan | Chicharon</div>
@@ -248,21 +255,30 @@
                                         </div>
                                     </div>
 
-                                    <!-- price -->
-                                    <div style="width: 80px; text-align: right;">₱12.00</div>
+                                    <div class="d-flex flex-row align-items-center" style="gap:20px">
+                                        <div style="width: auto; text-align: right;">₱24.00</div>
+                                        <div class="d-flex flex-column align-items-center text-center"
+                                            style="gap: 10px; ">
+                                            <div readonly
+                                                style="height: 12px; width: 200px; font-size: 12PX; color: red; ">
+                                                </div>
+                                            <div>
 
-                                    <!-- qty of items-->
-                                    <div>
-                                        <select>
-                                            <option>1 pcs</option>
-                                            <option>2 pcs</option>
-                                            <option>3 pcs</option>
-                                        </select>
-                                    </div>
+                                               
+                                                <div class="quantity_control  ">
+                                                    <button>-</button>
+                                                    <input type="text" value="2" readonly />
+                                                    <button>+</button>
+                                                </div>
 
-                                    <!-- delete item-->
-                                    <div>
-                                        <button style="background: none; border: none; cursor: pointer;">🗑️</button>
+                                            </div>
+
+                                            <div style="font-size: 10px; color: gray;">2 in Stock</div>
+                                        </div>
+                                        <div>
+                                            <button style="background: none; border: none; cursor: pointer;">🗑️
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -275,10 +291,11 @@
 
                                     <!-- details-->
                                     <div style="flex: 1;">
-                                        <div class="d-flex flex-row g-2" style="gap: 20px; font-size: 12px; color: gray;" >
+                                        <div class="d-flex flex-row g-2"
+                                            style="gap: 20px; font-size: 12px; color: gray;">
                                             <div class="category">Drinks</div>
                                             <div>|</div>
-                                            <div class="category" >Softdrinks</div> 
+                                            <div class="category">Softdrinks</div>
                                         </div>
                                         <div class="name" style="font-weight: bold;">Coke | Softdrink</div>
                                         <div style="font-size: 15px;">
@@ -286,22 +303,39 @@
                                         </div>
                                     </div>
 
-                                    <!-- price -->
-                                    <div style="width: 80px; text-align: right;">₱24.00</div>
+                                    <div class="d-flex flex-row align-items-center" style="gap:20px">
+                                        <div style="width: auto; text-align: right;">₱24.00</div>
+                                        <div class="d-flex flex-column align-items-center text-center"
+                                            style="gap: 10px; ">
+                                            <div readonly
+                                                style="height: 12px; width: 200px; font-size: 12PX; color: red; ">
+                                                QUANTITY EXCEEDS STOCK</div>
+                                            <div>
 
-                                    <!-- qty of items-->
-                                    <div>
-                                        <select>
-                                            <option>1 pcs</option>
-                                            <option>2 pcs</option>
-                                            <option>3 pcs</option>
-                                        </select>
+                                               
+                                                <div class="quantity_control  ">
+                                                    <button>-</button>
+                                                    <input type="text" value="2" readonly />
+                                                    <button>+</button>
+                                                </div>
+
+                                            </div>
+
+                                            <div style="font-size: 10px; color: gray;">1 in Stock</div>
+                                        </div>
+                                        <div>
+                                            <button style="background: none; border: none; cursor: pointer;">🗑️
+                                            </button>
+                                        </div>
                                     </div>
 
-                                    <!-- delete item-->
-                                    <div>
-                                        <button style="background: none; border: none; cursor: pointer;">🗑️</button>
-                                    </div>
+
+
+
+
+
+
+
                                 </div>
 
                             </div>
@@ -323,9 +357,9 @@
                                     <div>Estimated Total</div>
                                     <div>₱80.00</div>
                                 </div>
-
+                                <br>
                                 <button
-                                    style="width: 100%; margin-top: 20px; padding: 10px; background: #ccc; border: none;">
+                                    class="add_to_cart">
                                     Reserve
                                 </button>
                             </div>

@@ -183,7 +183,7 @@ if ($edit === 'add') {
 
 if($image_old_name != $image_name || $image_old_name == '') {
     $allowedTypes = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
-    $fileExtension = pathinfo($image_name, PATHINFO_EXTENSION);
+    $fileExtension = strtolower(pathinfo($image['name'], PATHINFO_EXTENSION));
     if (!in_array($fileExtension, $allowedTypes)) {
         echo json_encode(['status' => 400, 'message' => 'Invalid file type.']);
         exit();

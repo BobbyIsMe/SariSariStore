@@ -82,7 +82,7 @@ if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $quantity += $row['item_qty'];
         if ($quantity > $stock_qty) {
-            echo json_encode(['status' => 400, 'message' => 'Insufficient stock .']);
+            echo json_encode(['status' => 400, 'message' => 'Insufficient stock.']);
             exit();
         }
     }
@@ -101,7 +101,7 @@ $subtotal = $price * $quantity;
 
 $stmt = $con->prepare("
 INSERT INTO Cart_Items (cart_id, product_id, variation_id, item_qty, subtotal)
-VALUES (? ?, ?, ?, ?) ON DUPLICATE KEY UPDATE item_qty = item_qty + ?, subtotal = subtotal + ?");
+VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE item_qty = ?, subtotal = ?");
 $stmt->bind_param('iiiidid', $cart_id, $product_id, $variation_id, $quantity, $subtotal, $quantity, $subtotal);
 $stmt->execute();
 $stmt->close();

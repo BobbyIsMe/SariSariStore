@@ -6,7 +6,6 @@ include_once('notify_users.php');
 requireAdmin($con, 'staff');
 
 $cart_id = $_POST['cart_id'] ?? null;
-$date_time_deadline = $_POST['date_time_deadline'] ?? null;
 $status = $_POST['status'] ?? null;
 
 if (!isset($cart_id)) {
@@ -15,11 +14,6 @@ if (!isset($cart_id)) {
 }
 if (!isset($status) || !in_array($status, ['approved', 'rejected', 'closed'])) {
     echo json_encode(['status' => 400, 'message' => 'Invalid status.']);
-    exit();
-}
-
-if (!isset($date_time_deadline)) {
-    echo json_encode(['status' => 400, 'message' => 'Invalid date time.']);
     exit();
 }
 
@@ -95,7 +89,11 @@ if ($status == 'closed') {
     $stmt->close();
     exit();
 } else if ($status == 'approved') {
-
+    $date_time_deadline = $_POST['date_time_deadline'] ?? null;
+    if (!isset($date_time_deadline)) {
+        echo json_encode(['status' => 400, 'message' => 'Invalid date time.']);
+        exit();
+    }
     $orders = checkProductValidation($con, " ca.type = 'order' AND ca.status = 'pending'", '', []);
     if ($orders === null) {
         echo json_encode(['status' => 404, 'message' => 'Order not found.']);
