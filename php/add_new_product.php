@@ -99,7 +99,7 @@ if ($edit === 'add') {
 
     try {
         $stmt = $con->prepare("
-        SELECT image 
+        SELECT image, price 
         FROM Products 
         WHERE product_id = ?");
         $stmt->bind_param('i', $product_id);
@@ -112,6 +112,18 @@ if ($edit === 'add') {
         }
         $row = $result->fetch_assoc();
         $image_old_name = $row['image'];
+        $old_price = $row['price'];
+
+        if($old_price != $price) {
+            $stmt = $con->prepare("
+            UPDATE Carts 
+            SET subtotal = (item_qty * ?)
+            WHERE product_id = ? AND NOT status = 'closed'
+            ");
+            $stmt->bind_param('di', $price, $product_id);
+            $stmt->execute();
+            $stmt->close();
+        }
 
         if($image_old_name != $image_name) {
             unlink($targetDir . $image_old_name);

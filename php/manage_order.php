@@ -82,6 +82,55 @@ if ($status == 'closed') {
         } else {
             throw new Exception('Order not found.');
         }
+
+        $stmt = $con->prepare("
+        SELECT ca.status, c.product_id, (p.stock_qty + c.item_qty) AS quantity
+        FROM Carts ca
+        LEFT JOIN Cart_Items c ON ca.cart_id = c.cart_id
+        LEFT JOIN Products p ON c.product_id = p.product_id
+        LEFT JOIN Variations v ON c.variation_id = v.variation_id
+        WHERE cart_id = ? AND type = 'order'
+        ");
+        $stmt->bind_param('i', $cart_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        if ($result->num_rows > 0) {
+            $old_status = $row['status'];
+            if ($old_status == 'approved') {
+                $row = $result->fetch_assoc();
+                while ($row = $result->fetch_assoc()) {
+                    $stock_list[] = [
+                        'product_id' => $row['product_id'],
+                        'quantity' => $row['quantity']
+                    ];
+                }
+                $stock_cases = "";
+                $sales_cases = "";
+                $conditions = [];
+
+                foreach ($stock_list as $item) {
+                    $p = (int) $item['product_id'];
+                    $quantity = (int)$item['quantity'];
+
+                    $stock_cases .= "WHEN product_id = $p THEN $quantity\n";
+                    $sales_cases .= "WHEN product_id = $p THEN total_sales + (stock_qty - $quantity)\n";
+                    $conditions[] = "$p";
+                }
+
+                $stmt = $con->query("
+            UPDATE Products
+            SET 
+            stock_qty = CASE $stock_cases END,
+            total_sales = CASE $sales_cases END
+            WHERE (product_id) IN (" . implode(',', $conditions) . ")
+            ");
+
+                if ($con->affected_rows <= 0) {
+                    throw new Exception('Failed to update stock quantities.');
+                }
+            }
+        }
     } catch (Exception $e) {
         $con->rollback();
         echo json_encode(['status' => 500, 'message' => 'Transaction failed: ' . $e->getMessage()]);
@@ -94,38 +143,29 @@ if ($status == 'closed') {
         echo json_encode(['status' => 400, 'message' => 'Invalid date time.']);
         exit();
     }
-    $orders = checkProductValidation($con, " ca.type = 'order' AND ca.status = 'pending'", '', []);
-    if ($orders === null) {
-        echo json_encode(['status' => 404, 'message' => 'Order not found.']);
-        exit();
-    }
-
-    foreach ($carts[$cart_id] as $product_id => $item) {
-        if ($product_id == null) {
-            json_encode(['status' => 404, 'message' => 'Product is unavailable.']);
-        } else
-
-            if ($item['variation_id'] == null) {
-            json_encode(['status' => 404, 'message' => 'Variation is unavailable.']);
-        } else
-
-            if ($item['quantity'] <= 0) {
-            json_encode(['status' => 400, 'message' => 'Insufficient stock for product ID: ' . $item['product_id']]);
-        } else {
-            $stock_list[] = [
-                'product_id' => $item['product_id'],
-                'variation_id' => $item['variation_id'],
-                'quantity' => $item['quantity']
-            ];
-            continue;
-        }
-    }
-
-    unset($orders[$cart_id]);
 
     $con->begin_transaction();
 
     try {
+        $orders_cur = checkProductValidation($con, " ca.type = 'order' AND ca.status = 'pending' AND ca.cart_id = ?", 'i', [$cart_id]);
+        if ($orders_cur === null || !empty($orders_cur)) {
+            echo json_encode(['status' => 404, 'message' => 'Order not found.']);
+            exit();
+        }
+
+        foreach ($carts[$cart_id] as $product_id => $item) {
+            if($product_id == null || $item['variation_id' == null]) {
+                throw new Exception('Invalid item.');
+            }
+            if($item['quantity'] <= 0) {
+                throw new Exception('Insufficient stock.');
+            }
+            $stock_list[] = [
+                'product_id' => $item['product_id'],
+                'quantity' => $item['quantity']
+            ];
+        }
+
         $stmt = $con->prepare("
         UPDATE Carts 
         SET status = 'approved', date_time_deadline = ?
@@ -135,7 +175,34 @@ if ($status == 'closed') {
         $stmt->execute();
 
         if ($stmt->affected_rows > 0) {
+            // Update stock quantities of products  
+            $stock_cases = "";
+            $sales_cases = "";
+            $conditions = [];
+
+            foreach ($stock_list as $item) {
+                $p = $item['product_id'];
+                $quantity = (int)$item['quantity'];
+
+                $stock_cases .= "WHEN product_id = $p THEN $quantity\n";
+                $sales_cases .= "WHEN product_id = $p THEN total_sales + (stock_qty - $quantity)\n";
+                $conditions[] = "$p";
+            }
+
+            $stmt = $con->query("
+            UPDATE Products
+            SET 
+            stock_qty = CASE $stock_cases END,
+            total_sales = CASE $sales_cases END
+            WHERE (product_id) IN (" . implode(',', $conditions) . ")
+            ");
+
+            if ($con->affected_rows <= 0) {
+                throw new Exception('Failed to update stock quantities.');
+            }
+
             // Automatically reject orders with invalid items
+            $orders = checkProductValidation($con, " ca.type = 'order' AND ca.status = 'pending'", '', []);
             $cart_id_list = [];
 
             foreach ($orders as $cart_id_invalid => $items) {
@@ -186,33 +253,6 @@ if ($status == 'closed') {
                 $stmt = $con->prepare("INSERT INTO Notifications (cart_id, message, date_time_created, status) VALUES (?, ?, ?, ?)");
                 $stmt->bind_param('isss', 'Your reservation has been approved. Receive the item before ' . $date_time_deadline . '.', $date_time, 'approved');
                 $stmt->execute();
-            }
-
-            // Update stock quantities of products  
-            $stock_cases = "";
-            $sales_cases = "";
-            $conditions = [];
-
-            foreach ($items as $item) {
-                $product_id = (int)$item['product_id'];
-                $variation_id = (int)$item['variation_id'];
-                $quantity = (int)$item['quantity'];
-
-                $stock_cases .= "WHEN product_id = $product_id AND variation_id = $variation_id THEN $quantity\n";
-                $sales_cases .= "WHEN product_id = $product_id AND variation_id = $variation_id THEN total_sales + (stock_qty - $quantity)\n";
-                $conditions[] = "($product_id, $variation_id)";
-            }
-
-            $stmt = $con->query("
-            UPDATE Products
-            SET 
-            stock_qty = CASE $stock_cases END,
-            total_sales = CASE $sales_cases END
-            WHERE (product_id, variation_id) IN (" . implode(',', $conditions) . ")
-            ");
-
-            if ($con->affected_rows <= 0) {
-                throw new Exception('Failed to update stock quantities.');
             }
 
             $con->commit();
