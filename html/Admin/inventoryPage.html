@@ -26,8 +26,10 @@
     #edit_variations,
     #remove {
       width: 200px;
-      border: 1px solid black;
+      
     }
+
+
   </style>
 </head>
 
@@ -61,6 +63,7 @@
                 <a class="dropdown-item" id="authLink" href="#" onclick="signoutClick(event)">Logout</a>
             </ul>
           </div>
+          
         </div>
 
         <div class="nav-icons d-flex gap-3 ms-3">
@@ -314,16 +317,17 @@
 
               <div class="order_summary" style="background-color:  #f5f5f5;">
                 <div class="d-flex flex-column align-items-center p-4" style="gap: 20px;">
-                  <button id="edit_item" class="btn adminBtn " type="button" style="background-color: #e6cc8c;;"
+                  <button id="edit_item" class="btn adminBtn " type="button" style="background-color: #FFC107;"
                     data-bs-toggle="modal" data-bs-target="#editItemModal">Edit Item</button>
-                  <button id="edit_variations" type="button" class="btn adminBtn" style="background-color: #e6cc8c;"
+                  <button id="edit_variations" type="button" class="btn adminBtn" style="background-color: #FFC107;"
                     data-bs-toggle="modal" data-bs-target="#editVariationsModal">Edit Variations</button>
                   <button id="remove" class="btn adminBtn " type="button" style="background-color: red; color: white;">Remove</button>
                 </div>
               </div>
             </div>
 
-            <div class="cart-container" style="display: flex; gap: 20px; padding: 20px; background: #f5f5f5; justify-content: center; align-items: center;">
+            <div class="cart-container"
+              style="display: flex; gap: 20px; padding: 20px; background: #f5f5f5; justify-content: center; align-items: center; ">
               <div class="item_image" style="width: 300px; height: 400px;">
                 <img src="" alt="img">
               </div>
@@ -346,13 +350,13 @@
                   </div>
                 </div>
                 <br>
-
+                
                 <div class="d-flex flex-row col-12">
                   <div class="col-6 d-flex flex-column gap-1">
                     <h5><b>Category</b><br></h5>
                     <div>Snacks</div>
                   </div>
-
+                  
                   <div class="col-6 d-flex flex-column gap-1">
                     <h5><b>Subcategory</b><br></h5>
                     <div>Junkfood</div>
@@ -362,8 +366,8 @@
 
                 <div class="d-flex flex-column">
                   <h5><b>Description</b></h5>
-                  <div class="description-text">
-                    aygudsguhsdguaygudsguhsdguhysaghisadhiusdhisdhiusdihusdiuhsdhusadhiu</div>
+                  <div class="description-text">aygudsguhsdguaygudsguh</div>
+                </div>
 
                 <div class="col-12 d-flex flex-row" style="padding-top: 20px;">
                   <div class="col-6 d-flex flex-column gap-1">
@@ -380,21 +384,16 @@
 
               <div class="order_summary" style="background-color:  #f5f5f5;">
                 <div class="d-flex flex-column align-items-center p-4" style="gap: 20px;">
-                  <button id="edit_item" class="btn adminBtn " type="button" style="background-color: #e6cc8c;;" data-bs-toggle="modal" data-bs-target="#editItemModal">Edit Item</button>
-                  <button id="edit_variations" type="button" class="btn adminBtn" style="background-color: #e6cc8c;" data-bs-toggle="modal" data-bs-target="#editVariationsModal">Edit Variations</button>
+                  <button id="edit_item" class="btn adminBtn " type="button" style="background-color: #FFC107;"
+                    data-bs-toggle="modal" data-bs-target="#editItemModal">Edit Item</button>
+                  <button id="edit_variations" type="button" class="btn adminBtn" style="background-color: #FFC107;"
+                    data-bs-toggle="modal" data-bs-target="#editVariationsModal">Edit Variations</button>
                   <button id="remove" class="btn adminBtn " type="button" style="background-color: red; color: white;">Remove</button>
                 </div>
               </div>
             </div>
 
-            <div class="p-4 d-flex justify-content-center align-items-center gap-4">
-              <button class="navButton" type="button" id="prev_button">Previous</button>
-              <span>|</span>
-              <div id="page_number" class="paragraphs">Page # out of #</div>
-              <span>|</span>
-              <button class="navButton" type="button" id="next_button">Next</button>
-            </div>
-          </div>
+            
 
           <div class="modal fade" id="editVariationsModal" tabindex="-1" aria-labelledby="editVariationsModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-md modal-dialog-centered">
@@ -408,7 +407,7 @@
                   <form id="editVariationsForm" class="d-flex flex-column gap-3">
                     <div class="d-flex flex-row align-items-center gap-2">
                       <input type="text" class="form-control" style="width: 220px; font-size: 14px;" placeholder="Your variation here..." id="newVariation" name="newVariation">
-                      <button type="button" class="btn small" style="width: 140px; font-size: 16px; background-color: #e6cc8c;" id="addVariationBtn">Add Variation</button>
+                      <button type="button" class="btn small" style="width: 140px; font-size: 16px; background-color: #FFC107;" id="addVariationBtn">Add Variation</button>
                     </div>
 
                     <div class="d-flex flex-row align-items-center gap-2">
@@ -422,7 +421,7 @@
                     </div>
 
                     <div class="d-flex justify-content-center">
-                      <button type="submit" class="btn px-4 py-1" style="background-color: #e6cc8c;">Update Variations</button>
+                      <button type="submit" class="btn px-4 py-1" style="background-color: #FFC107;">Update Variations</button>
                     </div>
                   </form>
                 </div>
@@ -719,7 +718,6 @@
     </footer>
 
   <script src="../js/script.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

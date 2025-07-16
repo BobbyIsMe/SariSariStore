@@ -50,7 +50,8 @@
             <input type="text" class="form-control" placeholder="Search">
             <button class="btn btn-light search-button" type="button" aria-label="Search">
               <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-81.92 -81.92 1187.84 1187.84">
-                <path d="m795.904 750.72 124.992 124.928a32 32 0 0 1-45.248 45.248L750.656 795.904a416 416 0 1 1 45.248-45.248z M480 832a352 352 0 1 0 0-704 352 352 0 0 0 0 704z" />
+                <path
+                  d="m795.904 750.72 124.992 124.928a32 32 0 0 1-45.248 45.248L750.656 795.904a416 416 0 1 1 45.248-45.248z M480 832a352 352 0 1 0 0-704 352 352 0 0 0 0 704z" />
               </svg>
             </button>
           </div>
@@ -64,7 +65,7 @@
               <a class="dropdown-item" href="../Admin/inventoryPage.html">Inventory</a>
               <a class="dropdown-item" href="../Admin/staffPage.html">Staff</a>
               <a class="dropdown-item" id="authLink" href="#" onclick="signoutClick(event)">Logout</a>
-          </ul>
+            </ul>
           </div>
 
         </div>
@@ -84,8 +85,7 @@
             </svg>
           </button>
 
-          <button class="btn nav-icon" onclick="window.location.href='../Orders/order.html'"
-                        aria-label="Order">
+          <button class="btn nav-icon" onclick="window.location.href='../Orders/order.html'" aria-label="Order">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <path d="M16 8H17.1597C18.1999 8 19.0664 8.79732
                         19.1528 9.83391L19.8195 17.8339
@@ -231,27 +231,35 @@
           <div class="d-flex gap-2 mb-3">
             <button class="btn btn-light filter-btn" id="allButton" onclick="filterProducts('all')">All</button>
             <button class="btn btn-light filter-btn" id="newButton" onclick="filterProducts('new')">New</button>
-            <button class="btn btn-light filter-btn" id="filteredButton" onclick="filterProducts('filtered')">Filtered</button>
+            <button class="btn btn-light filter-btn" id="filteredButton"
+              onclick="filterProducts('filtered')">Filtered</button>
           </div>
 
           <div class="product_list d-flex flex-wrap gap-4">
-            
+
             <div class="product_card">
-              <div class="image"><img src="" alt="Product" style="width: 100%; height: 100%;"></div>
-              <div class="category text-muted" style="font-size: 10px;">Junkfood</div>
-              <div class="name">Mang Juan | Chicharon</div>
-              <div class="price"><strong>₱12.00</strong></div>
-              <button class="add_to_cart">Add to Cart</button>
+              <a href="itemDescription.html">
+                <div class="image"><img src="../../img/bembi.jpg" alt="img"></div>
+                <div class="category" style="font-size: 10px;">Student</div>
+                <a>
+                  <div class="name">Bembi | USC</div>
+                  <div class="price"><strong>₱2.00</strong></div>
+                  <button class="add_to_cart"> Add to Cart</button>
+                </a>
             </div>
 
             <div class="product_card">
-              <div class="image"><img src="" alt="Product" style="width: 100%; height: 100%;"></div>
-              <div class="category text-muted" style="font-size: 10px;">Junkfood</div>
-              <div class="name">Nova | BBQ</div>
-              <div class="price"><strong>₱10.00</strong></div>
-              <button class="add_to_cart">Add to Cart</button>
+              <a href="itemDescription.html">
+                <div class="image"><img src="../../img/bembi.jpg" alt="img"></div>
+                <div class="category" style="font-size: 10px;">Student</div>
+                <a>
+                  <div class="name">Bembi | USC</div>
+                  <div class="price"><strong>₱2.00</strong></div>
+                  <button class="add_to_cart"> Add to Cart</button>
+                </a>
             </div>
             
+
           </div>
         </section>
       </div>
