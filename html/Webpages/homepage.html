@@ -47,9 +47,11 @@
                     <div class="dropdown ms-auto">
                         <button id="profile_dropdown" class="btn btn-outline-secondary dropdown-toggle" type="button"
                             data-bs-toggle="dropdown">Profile</button>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <a class="dropdown-item" id="authLink" href="#" onclick="signoutClick(event)">Logout</a>
-                        </ul>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <a class="dropdown-item" href="../Admin/inventoryPage.html">Inventory</a>
+                                <a class="dropdown-item" href="../Admin/staffPage.html">Staff</a>
+                                <a class="dropdown-item" id="authLink" href="#" onclick="signoutClick(event)">Logout</a>
+                            </ul>
                     </div>
                 </div>
 
@@ -206,7 +208,7 @@
                         <section class="top_selling">
                             <div class="d-flex flex-row justify-content-between align-items-center me-3">
                                 <h4><b>Top Selling Products</b></h4>
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#topSellingModal">See More</a>
+                                <a href="../Webpages/category.html">See More</a>
                             </div>
 
                             <div class="product_list">
@@ -272,7 +274,7 @@
                         <section class="restocked">
                             <div class="d-flex flex-row justify-content-between align-items-center me-3">
                                 <h4><b>Restocked Items</b></h4>
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#restockedModal">See More</a>
+                                <a href="../Webpages/category.html">See More</a>
                             </div>
 
                             <div class="product_list">
@@ -292,8 +294,8 @@
                     </div>
 
                     <div class="modal fade" id="restockedModal" tabindex="-1" aria-labelledby="restockedLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content p-4" style="max-width: 900px; margin: auto;">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content p-4" style="max-width: 1300px; margin: auto;">
                                 <div class="modal-header border-0">
                                     <h5 class="modal-title" id="restockedLabel">Restocked Items</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -318,121 +320,7 @@
             </div>
         </main>
 
-        <div class="modal fade" id="topSellingModal" tabindex="-1" aria-labelledby="topSellingLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content p-4" style="max-width: 800px; margin: auto;">
-                    <div class="modal-header border-0">
-                        <h5 class="modal-title" id="topSellingLabel">Top Selling Products</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
-                    <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
-                        <div class="d-flex flex-wrap gap-4 justify-content-center">
-                            <div class="product_card">
-                                <a href="itemDescription.html">
-                                    <div class="image"><img src="../../img/bembi.jpg" alt="img"></div>
-                                    <div class="category" style="font-size: 10px;">Student</div>
-                                    <a>
-                                        <div class="name">Bembi | USC</div>
-                                        <div class="price"><strong>₱2.00</strong></div>
-                                        <button class="add_to_cart"> Add to Cart</button>
-                                    </a>
-                            </div>
-
-                            <div class="product_card">
-                                <a href="itemDescription.html">
-                                    <div class="image"><img src="" alt="img"></div>
-                                    <div class="category" style="font-size: 10px;">Student</div>
-                                    <a>
-                                        <div class="name">Mang Juan | Chicharon</div>
-                                        <div class="price"><strong>₱2.00</strong></div>
-                                        <button class="add_to_cart">Add to Cart</button>
-                                    </a>
-                            </div>
-
-                            <div class="product_card">
-                                <a href="itemDescription.html">
-                                    <div class="image"><img src="" alt="img"></div>
-                                    <div class="category" style="font-size: 10px;">Student</div>
-                                    <a>
-                                        <div class="name">Mang Juan | Chicharon</div>
-                                        <div class="price"><strong>₱2.00</strong></div>
-                                        <button class="add_to_cart">Add to Cart</button>
-                                    </a>
-                            </div>
-
-                            <div class="product_card">
-                                <a href="itemDescription.html">
-                                    <div class="image"><img src="" alt="img"></div>
-                                    <div class="category" style="font-size: 10px;">Student</div>
-                                    <a>
-                                        <div class="name">Mang Juan | Chicharon</div>
-                                        <div class="price"><strong>₱2.00</strong></div>
-                                        <button class="add_to_cart">Add to Cart</button>
-                                    </a>
-                            </div>
-                            <div class="product_card">
-                                <a href="itemDescription.html">
-                                    <div class="image"><img src="" alt="img"></div>
-                                    <div class="category" style="font-size: 10px;">Student</div>
-                                    <a>
-                                        <div class="name">Mang Juan | Chicharon</div>
-                                        <div class="price"><strong>₱2.00</strong></div>
-                                        <button class="add_to_cart">Add to Cart</button>
-                                    </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-            <div class="modal fade" id="restockedModal" tabindex="-1" aria-labelledby="restockedLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered">
-                    <div class="modal-content p-4" style="width: 900px; height: 500px;">
-                        <div class="modal-header border-0">
-                            <h5 class="modal-title" id="restockedLabel">Restocked Items</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-
-                        <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
-                            <div class="d-flex flex-wrap gap-4 justify-content-center">
-                                <div class="product_card" style="width: 220px; min-height: 340px;">
-                                    <div class="image"><img src="" alt="img"></div>
-                                    <div class="category" style="font-size: 10px;">Student</div>
-                                    <div class="name">Mang Juan | Chicharon</div>
-                                    <div class="price"><strong>₱2.00</strong></div>
-                                    <button disabled class="add_to_cart">Add to Cart</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal fade" id="topSellingModal" tabindex="-1" aria-labelledby="topSellingLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered">
-                    <div class="modal-content p-4" style="width: 900px; height: 500px;">
-                        <div class="modal-header border-0">
-                            <h5 class="modal-title" id="topSellingLabel">Top Selling Products</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-
-                        <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
-                            <div class="d-flex flex-wrap gap-4 justify-content-center">
-                                <div class="product_card" style="width: 220px; min-height: 340px;">
-                                    <div class="image"><img src="../../img/bembi.jpg" alt="img"></div>
-                                    <div class="category" style="font-size: 10px;">Student</div>
-                                    <div class="name">Bembi | USC</div>
-                                    <div class="price"><strong>₱2.00</strong></div>
-                                    <button class="add_to_cart">Add to Cart</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+        
         <footer class="footer mt-auto">
             <div class="container d-flex flex-row justify-content-between p-4">
                 <div><a href="../../Webpages/aboutUs.html"><b>About Us</b></a></div>
