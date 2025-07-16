@@ -15,17 +15,18 @@ if (!$result || $result->num_rows === 0) {
     exit;
 }
 
-$stmt = $con->prepare("DELETE FROM Categories WHERE category_id = ?");
-$stmt->bind_param('i', $category_id);
+try {
+    $stmt = $con->prepare("DELETE FROM Categories WHERE category_id = ?");
+    $stmt->bind_param('i', $category_id);
+    $stmt->execute();
 
-if (!$stmt->execute()) {
-    if (strpos($stmt->error, 'foreign key constraint fails') !== false) {
+    echo json_encode(['status' => 200, 'message' => 'Category deleted successfully.']);
+
+} catch (Exception $e) {
+    if (strpos($e->getMessage(), 'foreign key constraint fails') !== false) {
         echo json_encode(['status' => 400, 'message' => 'Cannot remove category with products.']);
     } else {
-        echo json_encode(['status' => 500, 'message' => 'Failed to remove category.']);
+        echo json_encode(['status' => 500, 'message' => 'Database error: ' . $e->getMessage()]);
     }
-} else {
-    echo json_encode(['status' => 200, 'message' => 'Category removed successfully.']);
 }
-$stmt->close();
 ?>

@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION["user_id"]) && !isset($_SESSION["staff_type"]) || $_SESSION["staff_type"] != "inventory") {
+    header("Location: ../Signin/Login.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,6 +17,9 @@
   <link rel="stylesheet" href="../../css/webpageBody.css">
   <link rel="stylesheet" href="../../css/cart.css">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="text/javascript" src="../../js/auth.js"></script>
+  <script type="text/javascript" src="../../js/load_sidebar.js"></script>
+  <script type="text/javascript" src="../../js/manage_inventory.js" defer></script>
   <style>
     * {
       font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -22,14 +32,12 @@
       white-space: normal;
     }
 
-    #edit_item,
-    #edit_variations,
+    #editItem,
+    #editVariations,
     #remove {
       width: 200px;
-      
+
     }
-
-
   </style>
 </head>
 
@@ -38,7 +46,7 @@
 
     <div class="header">
       <div class="container-fluid d-flex flex-row align-items-center text-center py-2" style="gap: 40px;">
-        <a href="../Webpages/homepage.html" class="text-decoration-none">
+        <a href="../Webpages/homepage.php" class="text-decoration-none">
           <h5 class="mb-0"><b>Cerina's Sari2Store</b></h5>
         </a>
         <div class="d-flex flex-grow-1">
@@ -57,17 +65,21 @@
           <div class="dropdown ms-auto">
             <button id="profile_dropdown" class="btn btn-outline-secondary dropdown-toggle" type="button"
               data-bs-toggle="dropdown">Profile</button>
-              <ul class="dropdown-menu dropdown-menu-end">
-                <a class="dropdown-item" href="../Admin/inventoryPage.html">Inventory</a>
-                <a class="dropdown-item" href="../Admin/staffPage.html">Staff</a>
-                <a class="dropdown-item" id="authLink" href="#" onclick="signoutClick(event)">Logout</a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <?php ?>
+              <?php if (isset($_SESSION['staff_type']) && $_SESSION['staff_type'] == 'staff'): ?>
+                <a class="dropdown-item" id="adminLink" href="../Admin/staffPage.php">Staff</a>
+              <?php elseif (isset($_SESSION['staff_type']) && $_SESSION['staff_type'] == 'inventory'): ?>
+                <a class="dropdown-item" id="adminLink" href="../Admin/inventoryPage.php">Inventory</a>
+              <?php endif; ?>
+              <a class="dropdown-item" id="authLink" onclick="signoutClick(event)">Logout</a>
             </ul>
           </div>
-          
+
         </div>
 
         <div class="nav-icons d-flex gap-3 ms-3">
-          <button class="btn nav-icon" onclick="window.location.href='../Cart/cart.html'" aria-label="Cart">
+          <button class="btn nav-icon" onclick="window.location.href='../Cart/cart.php'" aria-label="Cart">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <path d="M6.29977 5H21L19 12H7.37671M20 16H8L6 3H3
                           M9 20C9 20.5523 8.55228 21 8 21
@@ -82,7 +94,7 @@
             </svg>
           </button>
 
-          <button class="btn nav-icon" onclick="window.location.href='../Webpages/itemDescription.html'" aria-label="Reservation">
+          <button class="btn nav-icon" onclick="window.location.href='../Webpages/itemDescription.php'" aria-label="Reservation">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <path d="M16 8H17.1597C18.1999 8 19.0664 8.79732
                       19.1528 9.83391L19.8195 17.8339
@@ -158,11 +170,11 @@
                     </div>
 
                     <div class="p-4 d-flex justify-content-center align-items-center gap-4">
-                      <button class="navButton" type="button" id="prev_button">Previous</button>
+                      <button class="navButton" type="button" id="notification_prev_button">Previous</button>
                       <span>|</span>
-                      <div id="page_number" class="paragraphs">Page # out of #</div>
+                      <div id="notification_page_number" class="paragraphs">Page # out of #</div>
                       <span>|</span>
-                      <button class="navButton" type="button" id="next_button">Next</button>
+                      <button class="navButton" type="button" id="notification_next_button">Next</button>
                     </div>
                   </div>
                 </div>
@@ -173,47 +185,13 @@
       </div>
     </div>
 
-      <main class="flex-fill">
-        <div class="d-flex align-items-stretch justify-content-center" style="min-height: 100vh;">
-          <div class="col-2 p-2" style="background-color: white; flex-shrink: 0;">
+    <main class="flex-fill">
+      <div class="d-flex align-items-stretch justify-content-center" style="min-height: 100vh;">
+        <div class="col-2 p-2" style="background-color: white; flex-shrink: 0;">
           <aside class="item_nav flex-column align-items-start text-start">
             <h6>Categories</h6>
             <hr>
-            <details class="category">
-              <summary>School Supplies</summary>
-              <ul class="subcategory list-unstyled ms-3">
-                <li><a href="../Webpages/category.html" onclick="updateCategory('School Supplies', 'Filler')">Filler</a></li>
-              </ul>
-            </details>
-
-            <details class="category">
-              <summary>Softdrinks</summary>
-              <ul class="subcategory list-unstyled ms-3">
-                <li><a href="../Webpages/category.html" onclick="updateCategory('Softdrinks', 'Juice')">Juice</a></li>
-              </ul>
-            </details>
-
-            <details class="category">
-              <summary>Powdered Drinks</summary>
-              <ul class="subcategory list-unstyled ms-3">
-                <li><a href="../Webpages/category.html" onclick="updateCategory('Powdered Drinks', 'Coffee')">Coffee</a></li>
-              </ul>
-            </details>
-            
-            <details class="category">
-              <summary>Snacks</summary>
-              <ul class="subcategory list-unstyled ms-3">
-                <li><a href="../Webpages/category.html" onclick="updateCategory('Snacks', 'Junkfood')">Junkfood</a></li>
-                <li><a href="../Webpages/category.html" onclick="updateCategory('Snacks', 'Biscuits')">Biscuits</a></li>
-              </ul>
-            </details>
-
-            <details class="category">
-              <summary>Hygiene</summary>
-              <ul class="subcategory list-unstyled ms-3">
-                <li><a href="../Webpages/category.html" onclick="updateCategory('Hygiene', 'Soap')">Soap</a></li>
-              </ul>
-            </details>
+            <div id="sidebar"></div>
           </aside>
         </div>
 
@@ -222,215 +200,98 @@
             <h3>Inventory</h3>
             <div class="col-12 d-flex flex-row align-items-center">
               <div class="col-8 d-flex align-items-center gap-2">
+                <button id="all" class="btn adminBtn " type="button">All</button>
+                <span class="d-flex align-items-center px-2">|</span>
                 <button id="recent" class="btn adminBtn " type="button">Recent</button>
                 <span class="d-flex align-items-center px-2">|</span>
-                <button id="search_item" class="btn adminBtn" type="button" data-bs-toggle="modal" data-bs-target="#filterItemModal">Filter</button>
-                <span class="d-flex align-items-center px-2">|</span>
-                <button id="search_item" class="btn adminBtn" type="button" data-bs-toggle="modal" data-bs-target="#searchItemModal">Search Item</button>
+                <button id="filter_button" class="btn adminBtn" type="button" data-bs-toggle="modal" data-bs-target="#filterItemModal">Filter</button>
+                <!-- <span class="d-flex align-items-center px-2">|</span> -->
+                <!-- <button id="search_item" class="btn adminBtn" type="button" data-bs-toggle="modal" data-bs-target="#searchItemModal">Search Item</button> -->
               </div>
 
               <div class="col-4 d-flex gap-2">
-                <button id="addItemBtn" class="btn adminBtn " type="button" data-bs-toggle="modal" data-bs-target="#addItemModal">Add Item</button>
+                <button id="addItemBtn" class="btn adminBtn " type="button" data-bs-toggle="modal" data-bs-target="#addItemModal" onclick="addItem()">Add Item</button>
                 <span class="d-flex align-items-center px-2">|</span>
-                <button id="edit_category" class="btn adminBtn" type="button" data-bs-toggle="modal" data-bs-target="#editCategoriesModal">Edit Category</button>
+                <button class="btn adminBtn" type="button" data-bs-toggle="modal" data-bs-target="#editCategoriesModal" onclick="loadDefault()">Edit Category</button>
               </div>
 
             </div>
 
-          <div class="modal fade" id="searchItemModal" tabindex="-1" aria-labelledby="searchItemModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-md modal-dialog-centered">
-              <div class="modal-content p-4">
-                <div class="modal-header border-0">
-                  <h5 class="modal-title" id="searchItemModalLabel">Search Item</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                
-                <div class="modal-body">
-                  <form id="searchItemForm" class="d-flex flex-column gap-3">
-                    <label for="searchInput" class="form-label mb-0"><b>Item Name:</b></label>
-                    <input type="text" id="searchInput" class="form-control" placeholder="Enter item name...">
-                    
-                    <div class="d-flex justify-content-center">
-                      <button type="submit" class="btn px-4 py-1" style="background-color: #e6cc8c;">Search</button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-
-            <div class="cart-container"
-              style="display: flex; gap: 20px; padding: 20px; background: #f5f5f5; justify-content: center; align-items: center; ">
-              <div class="item_image" style="width: 300px; height: 400px;">
-                <img src="" alt="img">
-              </div>
-
-              <div class="cart_items">
-                <div>
-                  <h4><b>Product Details</b></h4>
-                </div>
-                <br>
-
-                <div class="d-flex flex-row col-12">
-                  <div class="col-6 d-flex flex-column gap-1">
-                    <h5><b>Name</b><br></h5>
-                    <div>Mang Juan | Chicharon</div>
+            <div class="modal fade" id="searchItemModal" tabindex="-1" aria-labelledby="searchItemModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-md modal-dialog-centered">
+                <div class="modal-content p-4">
+                  <div class="modal-header border-0">
+                    <h5 class="modal-title" id="searchItemModalLabel">Search Item</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
 
-                  <div class="col-6 d-flex flex-column gap-1">
-                    <h5><b>Item ID</b><br></h5>
-                    <div>1</div>
-                  </div>
-                </div>
-                <br>
-                
-                <div class="d-flex flex-row col-12">
-                  <div class="col-6 d-flex flex-column gap-1">
-                    <h5><b>Category</b><br></h5>
-                    <div>Snacks</div>
-                  </div>
-                  
-                  <div class="col-6 d-flex flex-column gap-1">
-                    <h5><b>Subcategory</b><br></h5>
-                    <div>Junkfood</div>
-                  </div>
-                </div>
-                <br>
+                  <div class="modal-body">
+                    <form id="searchItemForm" class="d-flex flex-column gap-3">
+                      <label for="searchInput" class="form-label mb-0"><b>Item Name:</b></label>
+                      <input type="text" id="searchInput" class="form-control" placeholder="Enter item name...">
 
-                <div class="d-flex flex-column">
-                  <h5><b>Description</b></h5>
-                  <div class="description-text">aygudsguhsdguaygudsguh</div>
-                </div>
-
-                <div class="col-12 d-flex flex-row" style="padding-top: 20px;">
-                  <div class="col-6 d-flex flex-column gap-1">
-                    <h5><b>Price</b><br></h5>
-                    <div>12.00</div>
+                      <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn px-4 py-1" style="background-color: #e6cc8c;">Search</button>
+                      </div>
+                    </form>
                   </div>
-
-                  <div class="col-6 d-flex flex-column gap-1">
-                    <h5><b>Current Quantity</b><br></h5>
-                    <div>1</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="order_summary" style="background-color:  #f5f5f5;">
-                <div class="d-flex flex-column align-items-center p-4" style="gap: 20px;">
-                  <button id="edit_item" class="btn adminBtn " type="button" style="background-color: #FFC107;"
-                    data-bs-toggle="modal" data-bs-target="#editItemModal">Edit Item</button>
-                  <button id="edit_variations" type="button" class="btn adminBtn" style="background-color: #FFC107;"
-                    data-bs-toggle="modal" data-bs-target="#editVariationsModal">Edit Variations</button>
-                  <button id="remove" class="btn adminBtn " type="button" style="background-color: red; color: white;">Remove</button>
                 </div>
               </div>
             </div>
 
-            <div class="cart-container"
-              style="display: flex; gap: 20px; padding: 20px; background: #f5f5f5; justify-content: center; align-items: center; ">
-              <div class="item_image" style="width: 300px; height: 400px;">
-                <img src="" alt="img">
+
+
+            <div id="product_list"></div>
+            <div class="p-4 d-flex justify-content-center align-items-center gap-4">
+              <button class="navButton" type="button" id="prev_button">
+                Previous
+              </button>
+              <span>|</span>
+              <div id="page_number" class="paragraphs">
+                Page # out of #
               </div>
-
-              <div class="cart_items">
-                <div>
-                  <h4><b>Product Details</b></h4>
-                </div>
-                <br>
-
-                <div class="d-flex flex-row col-12">
-                  <div class="col-6 d-flex flex-column gap-1">
-                    <h5><b>Name</b><br></h5>
-                    <div>Mang Juan | Chicharon</div>
-                  </div>
-
-                  <div class="col-6 d-flex flex-column gap-1">
-                    <h5><b>Item ID</b><br></h5>
-                    <div>1</div>
-                  </div>
-                </div>
-                <br>
-                
-                <div class="d-flex flex-row col-12">
-                  <div class="col-6 d-flex flex-column gap-1">
-                    <h5><b>Category</b><br></h5>
-                    <div>Snacks</div>
-                  </div>
-                  
-                  <div class="col-6 d-flex flex-column gap-1">
-                    <h5><b>Subcategory</b><br></h5>
-                    <div>Junkfood</div>
-                  </div>
-                </div>
-                <br>
-
-                <div class="d-flex flex-column">
-                  <h5><b>Description</b></h5>
-                  <div class="description-text">aygudsguhsdguaygudsguh</div>
-                </div>
-
-                <div class="col-12 d-flex flex-row" style="padding-top: 20px;">
-                  <div class="col-6 d-flex flex-column gap-1">
-                    <h5><b>Price</b><br></h5>
-                    <div>12.00</div>
-                  </div>
-
-                  <div class="col-6 d-flex flex-column gap-1">
-                    <h5><b>Current Quantity</b><br></h5>
-                    <div>1</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="order_summary" style="background-color:  #f5f5f5;">
-                <div class="d-flex flex-column align-items-center p-4" style="gap: 20px;">
-                  <button id="edit_item" class="btn adminBtn " type="button" style="background-color: #FFC107;"
-                    data-bs-toggle="modal" data-bs-target="#editItemModal">Edit Item</button>
-                  <button id="edit_variations" type="button" class="btn adminBtn" style="background-color: #FFC107;"
-                    data-bs-toggle="modal" data-bs-target="#editVariationsModal">Edit Variations</button>
-                  <button id="remove" class="btn adminBtn " type="button" style="background-color: red; color: white;">Remove</button>
-                </div>
-              </div>
+              <span>|</span>
+              <button class="navButton" type="button" id="next_button">
+                Next
+              </button>
             </div>
 
-            
 
-          <div class="modal fade" id="editVariationsModal" tabindex="-1" aria-labelledby="editVariationsModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-md modal-dialog-centered">
-              <div class="modal-content p-4">
-                <div class="modal-header border-0">
-                  <h5 class="modal-title" id="editVariationsModalLabel">Edit Variations</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <div class="modal-body">
-                  <form id="editVariationsForm" class="d-flex flex-column gap-3">
-                    <div class="d-flex flex-row align-items-center gap-2">
-                      <input type="text" class="form-control" style="width: 220px; font-size: 14px;" placeholder="Your variation here..." id="newVariation" name="newVariation">
-                      <button type="button" class="btn small" style="width: 140px; font-size: 16px; background-color: #FFC107;" id="addVariationBtn">Add Variation</button>
-                    </div>
-
-                    <div class="d-flex flex-row align-items-center gap-2">
-                      <input type="text" class="form-control" style="width: 220px; font-size: 14px;" placeholder="Flavor 1" id="newFlavor" name="newFlavor">
-                      <button type="button" class="btn btn-danger small" style="width: 140px;">Remove</button>
-                    </div>
-
-                    <div class="d-flex flex-row align-items-center gap-2">
-                      <input type="text" class="form-control" style="width: 220px; font-size: 14px;" placeholder="Flavor 2" id="newFlavor" name="newFlavor">
-                      <button type="button" class="btn btn-danger small" style="width: 140px;">Remove</button>
-                    </div>
-
-                    <div class="d-flex justify-content-center">
-                      <button type="submit" class="btn px-4 py-1" style="background-color: #FFC107;">Update Variations</button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
         </main>
       </div>
     </main>
+
+    <div class="modal fade" id="editVariationsModal" tabindex="-1" aria-labelledby="editVariationsModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content p-4">
+          <div class="modal-header border-0">
+            <h5 class="modal-title" id="editVariationsModalLabel">Edit Variations</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+            <div style="width: 100px; padding-bottom: 10px;">
+              <label for="editVariationId" class="form-label">Item ID:</label>
+              <input type="text" class="form-control" id="edit_variation_id" name="product_id" readonly>
+            </div>
+            <form id="edit_variations_form" class="d-flex flex-column gap-3" method="POST" onsubmit="onSubmitEditVariations(event)">
+              <div class="d-flex flex-row align-items-center gap-2">
+                <input type="text" class="form-control" style="width: 220px; font-size: 14px;" placeholder="Your variation here..." id="variation_name" name="variation_name">
+                <button type="button" class="btn small" style="width: 140px; font-size: 16px; background-color: #FFC107;" id="addVariationBtn" onclick="onSubmitAddVariation()">Add Variation</button>
+              </div>
+
+              <div id="edit_variations">
+
+              </div>
+
+              <div class="d-flex justify-content-center">
+                <button type="submit" class="btn px-4 py-1" style="background-color: #FFC107;">Update Variations</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="modal fade" id="editItemModal" tabindex="-1" aria-labelledby="editItemModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-xl modal-dialog-centered">
@@ -440,284 +301,248 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
 
-        <div class="modal-body">
-          <form id="editItemForm">
-            <div class="d-flex gap-4">
-              <div style="width: 400px;">
-                <div style="width: 100%; height: 250px; border: 1px solid #ccc; display: flex; justify-content: center; align-items: center;">
-                  <span>Image Placeholder</span>
+          <div class="modal-body">
+            <form id="edit_item_form" method="POST" onsubmit="onSubmitEditItem(event)">
+              <div class="d-flex gap-4">
+                <div style="width: 400px;">
+                  <img id="edit_image" src="" alt="Image Placeholder" style="width: 300px; height: 300px; object-fit: contain; border: 1px solid #ccc;" />
+                  <input type="file" id="edit_product_image" name="image" accept="image/*"
+                    onchange="previewSelectedImage(event, 'edit_image')" style="display: none;" />
+                  <button type="button" class="btn btn-warning mt-2 w-100" onclick="document.getElementById('edit_product_image').click()">Change Image</button>
                 </div>
-                <button type="button" class="btn btn-warning mt-2 w-100">Add Image</button>
+
+                <div class="flex-grow-1">
+                  <div class="mb-3 d-flex gap-3">
+                    <div class="flex-grow-1">
+                      <label for="editItemName" class="form-label">Name:</label>
+                      <input type="text" class="form-control" id="edit_product_name" name="item_name" required>
+                    </div>
+
+                    <div class="flex-grow-1">
+                      <label for="editItemBrand" class="form-label">Brand:</label>
+                      <input type="text" class="form-control" id="edit_product_brand" name="brand" required>
+                    </div>
+
+                    <div style="width: 100px;">
+                      <label for="editItemId" class="form-label">Item ID:</label>
+                      <input type="text" class="form-control" id="edit_product_id" name="product_id" readonly>
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="editItemDescription" class="form-label">Description:</label>
+                    <textarea class="form-control" id="edit_product_details" name="item_details" rows="3" required></textarea>
+                  </div>
+
+                  <div class="mb-3 d-flex gap-3">
+                    <div class="flex-grow-1">
+                      <label for="editItemPrices" class="form-label">Prices:</label>
+                      <input type="text" class="form-control" id="edit_product_price" name="price" required>
+                    </div>
+
+                    <div class="flex-grow-1">
+                      <label for="editItemQty" class="form-label">Qty In Stock</label>
+                      <input type="text" class="form-control" id="edit_product_stock" name="stock_qty" required>
+                    </div>
+
+                    <div style="width: 150px;">
+                      <label for="editItemCategory" class="form-label">Category:</label>
+                      <select class="form-select" id="edit_product_category" required>
+                      </select>
+                    </div>
+
+                    <div style="width: 150px;">
+                      <label for="editItemSubcategory" class="form-label">Subcategory:</label>
+                      <select class="form-select" id="edit_product_subcategory" name="category_id" required>
+                      </select>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-warning">Update Item</button>
+                </div>
               </div>
-
-              <div class="flex-grow-1">
-                <div class="mb-3 d-flex gap-3">
-                  <div class="flex-grow-1">
-                    <label for="editItemName" class="form-label">Name:</label>
-                    <input type="text" class="form-control" id="editItemName" name="editItemName" required>
-                  </div>
-
-                  <div class="flex-grow-1">
-                    <label for="editItemBrand" class="form-label">Brand:</label>
-                    <input type="text" class="form-control" id="editItemBrand" name="editItemBrand" required>
-                  </div>
-
-                  <div style="width: 100px;">
-                    <label for="editItemId" class="form-label">Item ID:</label>
-                    <input type="text" class="form-control" id="editItemId" name="editItemId" readonly>
-                  </div>
-                </div>
-
-                <div class="mb-3">
-                  <label for="editItemDescription" class="form-label">Description:</label>
-                  <textarea class="form-control" id="editItemDescription" name="editItemDescription" rows="3" required></textarea>
-                </div>
-
-                <div class="mb-3 d-flex gap-3">
-                  <div class="flex-grow-1">
-                    <label for="editItemPrices" class="form-label">Prices:</label>
-                    <input type="text" class="form-control" id="editItemPrices" name="editItemPrices" required>
-                  </div>
-
-                  <div class="flex-grow-1">
-                    <label for="editItemQty" class="form-label">Qty In Stock</label>
-                    <input type="text" class="form-control" id="editItemQty" name="editItemQty" required>
-                  </div>
-                  
-                  <div style="width: 150px;">
-                    <label for="editItemCategory" class="form-label">Category:</label>
-                    <select class="form-select" id="editItemCategory" name="editItemCategory" required>
-                      <option value="Snacks">School Supplies</option>
-                      <option value="School Supplies">Softdrinks</option>
-                      <option value="Softdrinks">Powdered Drinks</option>
-                      <option value="Powdered Drinks">Snacks</option>
-                      <option value="Hygiene"> </option>
-                    </select>
-                  </div>
-
-                  <div style="width: 150px;">
-                    <label for="editItemSubcategory" class="form-label">Subcategory:</label>
-                    <select class="form-select" id="editItemSubcategory" name="editItemSubcategory" required>
-                      <option value="Snacks">Snacks</option>
-                      <option value="School Supplies">School Supplies</option>
-                      <option value="Softdrinks">Softdrinks</option>
-                      <option value="Powdered Drinks">Powdered Drinks</option>
-                      <option value="Hygiene">Hygiene</option>
-                    </select>
-                  </div>
-                </div>
-                <button type="submit" class="btn btn-warning">Update Item</button>
-              </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="modal fade" id="editCategoriesModal" tabindex="-1" aria-labelledby="editCategoriesModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content p-4" style="max-width: 650px;">
-        <div class="modal-body">
-          <form id="editCategoriesForm" class="d-flex flex-column gap-3">
-            <div class="d-flex flex-row flex-wrap align-items-center gap-2">
-              <input type="text" class="form-control" style="width: 200px; font-size: 14px;" placeholder="Category Name">
-              <input type="text" class="form-control" style="width: 200px; font-size: 14px;" placeholder="Subcategory Name">
-              <button type="button" class="btn small" style="width: 140px; font-size: 14px; white-space: nowrap; background-color: #e6cc8c;">Add Category</button>
-            </div>
+    <div class="modal fade" id="editCategoriesModal" tabindex="-1" aria-labelledby="editCategoriesModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content p-4" style="max-width: 650px;">
+          <div class="modal-body">
+            <form id="edit_categories_form" class="d-flex flex-column gap-3" method="POST" onsubmit="onSubmitEditCategories(event)">
+              <div class="d-flex flex-row flex-wrap align-items-center gap-2">
+                <input type="text" class="form-control" style="width: 200px; font-size: 14px;" placeholder="Category Name" name="category" id="add_category">
+                <input type="text" class="form-control" style="width: 200px; font-size: 14px;" placeholder="Subcategory Name" name="subcategory" id="add_subcategory">
+                <button type="button" class="btn small" style="width: 140px; font-size: 14px; white-space: nowrap; background-color: #e6cc8c;" onclick="onSubmitAddCategory()">Add Category</button>
+              </div>
 
-            <hr class="my-2">
-            <h6><b>Category</b></h6>
-            <select class="form-select" style="font-size: 14px; width: 200px;" required>
-              <option value="">Select a category</option>
-              <option>School Supplies</option>
-              <option>Softdrinks</option>
-              <option>Powdered Drinks</option>
-              <option>Snacks</option>
-              <option>Hygiene</option>
-            </select>
+              <hr class="my-2">
+              <h6><b>Category</b></h6>
+              <select class="form-select" style="font-size: 14px; width: 200px;" id="edit_category" required>
+              </select>
 
-            <div class="d-flex flex-row flex-wrap align-items-center gap-2">
-              <input type="text" class="form-control" style="width: 200px; font-size: 14px;" placeholder="Category Name" readonly>
-              <input type="text" class="form-control" style="width: 200px; font-size: 14px;" placeholder="Subcategory Name" readonly>
-              <button type="button" class="btn btn-danger small" style="width: 140px; font-size: 14px; white-space: nowrap;">Remove</button>
-            </div>
+              <div id="edit_subcategories">
 
-            <div class="d-flex flex-row flex-wrap align-items-center gap-2">
-              <input type="text" class="form-control" style="width: 200px; font-size: 14px;" placeholder="Category Name" readonly>
-              <input type="text" class="form-control" style="width: 200px; font-size: 14px;" placeholder="Subcategory Name" readonly>
-              <button type="button" class="btn btn-danger small" style="width: 140px; font-size: 14px; white-space: nowrap;">Remove</button>
-            </div>
+              </div>
 
-            <div class="d-flex justify-content-center mt-2">
-              <button type="submit" class="btn px-4 py-1" style="background-color: #e6cc8c; white-space: nowrap;">Update Categories</button>
-            </div>
-          </form>
+              <div class="d-flex justify-content-center mt-2">
+                <button type="submit" class="btn px-4 py-1" style="background-color: #e6cc8c; white-space: nowrap;">Update Categories</button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="modal fade" id="addItemModal" tabindex="-1" aria-labelledby="addItemModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-      <div class="modal-content p-4">
-        <div class="modal-header border-0">
-          <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
+    <div class="modal fade" id="addItemModal" tabindex="-1" aria-labelledby="addItemModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content p-4">
+          <div class="modal-header border-0">
+            <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
 
-        <div class="modal-body">
-          <form id="addItemForm">
-            <div class="d-flex gap-4">
-              <div style="width: 400px;">
-                <div style="width: 100%; height: 250px; border: 1px solid #ccc; display: flex; justify-content: center; align-items: center;">
-                  <span>Image Placeholder</span>
+          <div class="modal-body">
+            <form id="add_item_form" method="POST" onsubmit="onSubmitAddItem(event)">
+              <div class="d-flex gap-4">
+                <div style="width: 400px;">
+                  <img id="previewImage" src="" alt="Image Placeholder" style="width: 300px; height: 300px; object-fit: contain; border: 1px solid #ccc;" />
+                  <input type="file" id="image" name="image" accept="image/*"
+                    onchange="previewSelectedImage(event, 'previewImage')" style="display: none;" />
+                  <button type="button" class="btn btn-warning mt-2 w-100" onclick="document.getElementById('image').click()">Add Image</button>
                 </div>
-                <button type="button" class="btn btn-warning mt-2 w-100">Add Image</button>
+
+                <div class="flex-grow-1">
+                  <div class="mb-3 d-flex gap-3">
+                    <div class="flex-grow-1">
+                      <label for="itemName" class="form-label">Name:</label>
+                      <input type="text" class="form-control" id="itemName" name="item_name" required>
+                    </div>
+
+                    <div class="flex-grow-1">
+                      <label for="itemBrand" class="form-label">Brand:</label>
+                      <input type="text" class="form-control" id="itemBrand" name="brand" required>
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="itemDescription" class="form-label">Description:</label>
+                    <textarea class="form-control" id="itemDescription" name="item_details" rows="3" required></textarea>
+                  </div>
+
+                  <div class="mb-3 d-flex gap-3">
+                    <div class="flex-grow-1">
+                      <label for="itemPrices" class="form-label">Price:</label>
+                      <input type="text" class="form-control" id="itemPrices" name="price" required>
+                    </div>
+
+                    <div class="flex-grow-1">
+                      <label for="itemQty" class="form-label">Qty In Stock</label>
+                      <input type="text" class="form-control" id="itemQty" name="stock_qty" required>
+                    </div>
+
+                    <div style="width: 150px;">
+                      <label for="itemCategory" class="form-label">Category:</label>
+                      <select class="form-select" id="add_product_category" required>
+                      </select>
+                    </div>
+
+                    <div style="width: 150px;">
+                      <label for="itemSubcategory" class="form-label">Subcategory:</label>
+                      <select class="form-select" name="category_id" id="add_product_subcategory" required>
+                      </select>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-warning">Add Item</button>
+                </div>
               </div>
-
-              <div class="flex-grow-1">
-                <div class="mb-3 d-flex gap-3">
-                  <div class="flex-grow-1">
-                    <label for="itemName" class="form-label">Name:</label>
-                    <input type="text" class="form-control" id="itemName" name="itemName" required>
-                  </div>
-
-                  <div class="flex-grow-1">
-                    <label for="itemBrand" class="form-label">Brand:</label>
-                    <input type="text" class="form-control" id="itemBrand" name="itemBrand" required>
-                  </div>
-                </div>
-
-                <div class="mb-3">
-                  <label for="itemDescription" class="form-label">Description:</label>
-                  <textarea class="form-control" id="itemDescription" name="itemDescription" rows="3" required></textarea>
-                </div>
-
-                <div class="mb-3 d-flex gap-3">
-                  <div class="flex-grow-1">
-                    <label for="itemPrices" class="form-label">Prices:</label>
-                    <input type="text" class="form-control" id="itemPrices" name="itemPrices" required>
-                  </div>
-
-                  <div class="flex-grow-1">
-                    <label for="itemQty" class="form-label">Qty In Stock</label>
-                    <input type="text" class="form-control" id="itemQty" name="itemQty" required>
-                  </div>
-
-                  <div style="width: 150px;">
-                    <label for="itemCategory" class="form-label">Category:</label>
-                    <select class="form-select" id="itemCategory" name="itemCategory" required>
-                      <option value="Snacks">School Supplies</option>
-                      <option value="School Supplies">Softdrinks</option>
-                      <option value="Softdrinks">Powdered Drinks</option>
-                      <option value="Powdered Drinks">Snacks</option>
-                      <option value="Hygiene"> </option>
-                    </select>
-                  </div>
-
-                  <div style="width: 150px;">
-                    <label for="itemSubcategory" class="form-label">Subcategory:</label>
-                    <select class="form-select" id="itemSubcategory" name="itemSubcategory" required>
-                      <option value="Snacks">Snacks</option>
-                      <option value="School Supplies">School Supplies</option>
-                      <option value="Softdrinks">Softdrinks</option>
-                      <option value="Powdered Drinks">Powdered Drinks</option>
-                      <option value="Hygiene">Hygiene</option>
-                    </select>
-                  </div>
-                </div>
-                <button type="submit" class="btn btn-warning">Add Item</button>
-              </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="modal fade" id="filterItemModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content p-4">
-        <div class="modal-header border-0">
-          <h5 class="modal-title" id="filterItemModalLabel">Filter Item</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
+    <div class="modal fade" id="filterItemModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content p-4">
+          <div class="modal-header border-0">
+            <h5 class="modal-title" id="filterItemModalLabel">Filter Item</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
 
-        <div class="modal-body">
-          <form id="filterItemForm">
-            <div class="d-flex gap-4">
-              <div class="flex-grow-1">
-                <div class="mb-3 d-flex gap-3">
-                  <div class="flex-grow-1">
-                    <label for="itemName" class="form-label">Item:</label>
-                    <input type="text" class="form-control" id="itemName" name="itemName" required>
+          <div class="modal-body">
+            <form id="filter_form" method="GET" onsubmit="onSubmitFilter(event)">
+              <div class="d-flex gap-4">
+                <div class="flex-grow-1">
+                  <div class="mb-3 d-flex gap-3">
+                    <div class="flex-grow-1">
+                      <label for="itemName" class="form-label">Item:</label>
+                      <input type="text" class="form-control" id="itemName" name="item_name" value="">
+                    </div>
+
+                    <div class="flex-grow-1">
+                      <label for="itemBrand" class="form-label">Brand:</label>
+                      <input type="text" class="form-control" id="itemBrand" name="brand" value="">
+                    </div>
                   </div>
 
-                  <div class="flex-grow-1">
-                    <label for="itemBrand" class="form-label">Brand:</label>
-                    <input type="text" class="form-control" id="itemBrand" name="itemBrand" required>
+                  <div class="mb-3 d-flex gap-3">
+                    <div class="flex-grow-1">
+                      <label for="itemCategory" class="form-label">Category:</label>
+                      <input type="text" class="form-control" id="itemName" name="category" value="">
+                    </div>
+
+                    <div class="flex-grow-1">
+                      <label for="itemSubcategory" class="form-label">Subcategory:</label>
+                      <input type="text" class="form-control" id="itemBrand" name="subcategory" value="">
+                    </div>
                   </div>
+                  <div class="mb-3 d-flex gap-3">
+
+                    <div class="flex-grow-1">
+                      <label for="itemStockQuantity" class="form-label">Stock Quantity:</label>
+                      <select class="form-select" id="itemCategory" name="stock_qty" >
+                        <option value="">Select Option</option>
+                        <option value="DESC">Highest Stock</option>
+                        <option value="ASC">Lowest Stock</option>
+                      </select>
+                    </div>
+
+                    <div class="flex-grow-1">
+                      <label for="itemTotalSales" class="form-label">Total Sales:</label>
+                      <select class="form-select" id="itemSubcategory" name="total_sales">
+                        <option value="">Select Option</option>
+                        <option value="DESC">Highest Sales</option>
+                        <option value="ASC">Lowest Sales</option>
+                      </select>
+                    </div>
+
+                    <div class="flex-grow-1">
+                      <label for="itemDateRestock" class="form-label">Date Restocked</label>
+                      <select class="form-select" id="itemSubcategory" name="date_restocked">
+                        <option value="">Select Option</option>
+                        <option value="DESC">Recent</option>
+                        <option value="ASC">Oldest</option>
+                      </select>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-warning">Filter</button>
                 </div>
-                
-                <div class="mb-3 d-flex gap-3">
-                  <div class="flex-grow-1">
-                    <label for="itemCategory" class="form-label">Category:</label>
-                    <input type="text" class="form-control" id="itemName" name="itemName" required>
-                  </div>
-
-                  <div class="flex-grow-1">
-                    <label for="itemSubcategory" class="form-label">Subcategory:</label>
-                    <input type="text" class="form-control" id="itemBrand" name="itemBrand" required>
-                  </div>
-                </div>
-                <div class="mb-3 d-flex gap-3">
-                  
-                  <div class="flex-grow-1">
-                    <label for="itemStockQuantity" class="form-label">Stock Quantity:</label>
-                    <select class="form-select" id="itemCategory" name="itemCategory" required>
-                      <option value="Select">Select Option</option>
-                      <option value="HighestStock">Highest Stock</option>
-                      <option value="LowestStock">Lowest Stock</option>
-                    </select>
-                  </div>
-
-                  <div class="flex-grow-1">
-                    <label for="itemTotalSales" class="form-label">Total Sales:</label>
-                    <select class="form-select" id="itemSubcategory" name="itemSubcategory" required>
-                      <option value="Select">Select Option</option>
-                      <option value="HighestSales">Highest Sales</option>
-                      <option value="LowestSales">Lowest Sales</option>
-                    </select>
-                  </div>
-                  
-                  <div class="flex-grow-1">
-                    <label for="itemDateRestock" class="form-label">Date Restocked</label>
-                    <select class="form-select" id="itemSubcategory" name="itemSubcategory" required>
-                      <option value="Select">Select Option</option>
-                      <option value="Recent">Recent</option>
-                      <option value="Oldest">Oldest</option>
-                    </select>
-                  </div>
-                </div>
-                <button type="submit" class="btn btn-warning">Filter</button>
               </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-     <footer class="footer mt-auto">
+    <footer class="footer mt-auto">
       <div class="container d-flex flex-row justify-content-between p-4">
-        <div><a href="../Webpages/aboutUs.html"><b>About Us</b></a></div>
-        <div><a href="../Webpages/contactUs.html"><b>Contact Us</b></a></div>
+        <div><a href="../Webpages/aboutUs.php"><b>About Us</b></a></div>
+        <div><a href="../Webpages/contactUs.php"><b>Contact Us</b></a></div>
         <div>Copyright © <b>2025</b>. All rights reserved.</div>
       </div>
     </footer>
-
-  <script src="../js/script.js"></script>
 </body>
 
 </html>

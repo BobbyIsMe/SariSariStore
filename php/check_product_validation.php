@@ -8,9 +8,9 @@ function checkProductValidation($con, $filter, $values, $params)
     $stmt = $con->prepare("
     SELECT ca.cart_id, p.product_id, c.variation_id, (p.stock_qty - c.item_qty) AS quantity
     FROM Carts ca
-    LEFT JOIN Cart_Items c ON ca.cart_id = c.cart_id
-    LEFT JOIN Products p ON c.product_id = p.product_id
-    LEFT JOIN Variations v ON c.variation_id = v.variation_id
+    JOIN Cart_Items c ON ca.cart_id = c.cart_id
+    JOIN Products p ON c.product_id = p.product_id
+    JOIN Variations v ON c.variation_id = v.variation_id
     WHERE " . $filter);
     if(!empty($params))
     $stmt->bind_param($values, $params);

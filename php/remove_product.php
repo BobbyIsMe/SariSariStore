@@ -28,6 +28,14 @@ try {
     }
     $stmt->close();
     echo(json_encode(['status' => 200, 'message' => 'Product removed successfully.']));
+
+    $stmt = $con->prepare("SELECT image FROM Products WHERE product_id = ?");
+    $stmt->bind_param("i", $product_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if (!$result || $result->num_rows === 0) {
+            unlink("../img/" . $result->fetch_assoc()['image']);
+    }
     // $orders = checkProductValidation($con, " ca.type = 'order' AND ca.status = 'pending'", '', []);
     // $cart_id_list = [];
 

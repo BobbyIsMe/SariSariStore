@@ -47,7 +47,7 @@ if ($isValid) {
             $status = 200;
             $retVal = "Success.";
             $_SESSION['user_id'] = $obj->user_id;
-            $_SESSION['admin'] = $obj->admin;
+            $_SESSION['staff_type'] = $obj->staff_type;
         }
     }
 }

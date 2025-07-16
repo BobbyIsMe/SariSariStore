@@ -10,6 +10,10 @@
   <link rel="stylesheet" href="../../css/webpageBody.css">
   <link rel="stylesheet" href="../../css/category.css">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="text/javascript" src="../../js/auth.js"></script>
+  <script type="text/javascript" src="../../js/load_sidebar.js"></script>
+  <script type="text/javascript" src="../../js/products_display.js" defer></script>
+  <script type="text/javascript" src="../../js/products_category.js" defer></script>
   <style>
     * {
       font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -41,7 +45,7 @@
   <div class="d-flex flex-column min-vh-100">
     <div class="header">
       <div class="container-fluid d-flex flex-row align-items-center text-center py-2" style="gap: 40px;">
-        <a href="../Webpages/homepage.html" class="text-decoration-none">
+        <a href="../Webpages/homepage.php" class="text-decoration-none">
           <h5 class="mb-0"><b>Cerina's Sari2Store</b></h5>
         </a>
         <div class="d-flex flex-grow-1">
@@ -62,15 +66,19 @@
               Profile
             </button>
             <ul class="dropdown-menu dropdown-menu-end">
-              <a class="dropdown-item" href="../Admin/inventoryPage.html">Inventory</a>
-              <a class="dropdown-item" href="../Admin/staffPage.html">Staff</a>
-              <a class="dropdown-item" id="authLink" href="#" onclick="signoutClick(event)">Logout</a>
+              <?php session_start(); ?>
+              <?php if (isset($_SESSION['staff_type']) && $_SESSION['staff_type'] == 'staff'): ?>
+                <a class="dropdown-item" id="adminLink" href="../Admin/staffPage.php">Staff</a>
+              <?php elseif (isset($_SESSION['staff_type']) && $_SESSION['staff_type'] == 'inventory'): ?>
+                <a class="dropdown-item" id="adminLink" href="../Admin/inventoryPage.php">Inventory</a>
+              <?php endif; ?>
+              <a class="dropdown-item" id="authLink" onclick="signoutClick(event)">Logout</a>
             </ul>
           </div>
 
         </div>
         <div class="nav-icons d-flex gap-3 ms-3">
-          <button class="btn nav-icon" onclick="window.location.href='../Cart/cart.html'" aria-label="Cart">
+          <button class="btn nav-icon" onclick="window.location.href='../Cart/cart.php'" aria-label="Cart">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <path d="M6.29977 5H21L19 12H7.37671M20 16H8L6 3H3
                         M9 20C9 20.5523 8.55228 21 8 21
@@ -85,7 +93,7 @@
             </svg>
           </button>
 
-          <button class="btn nav-icon" onclick="window.location.href='../Orders/order.html'" aria-label="Order">
+          <button class="btn nav-icon" onclick="window.location.href='../Orders/order.php'" aria-label="Order">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <path d="M16 8H17.1597C18.1999 8 19.0664 8.79732
                         19.1528 9.83391L19.8195 17.8339
@@ -161,15 +169,15 @@
                     </div>
 
                     <div class="p-4 d-flex justify-content-center align-items-center gap-4">
-                      <button class="navButton" type="button" id="prev_button">
+                      <button class="navButton" type="button" id="notification_prev_button">
                         Previous
                       </button>
                       <span>|</span>
-                      <div id="page_number" class="paragraphs">
+                      <div id="notification_page_number" class="paragraphs">
                         Page # out of #
                       </div>
                       <span>|</span>
-                      <button class="navButton" type="button" id="next_button">
+                      <button class="navButton" type="button" id="notification_next_button">
                         Next
                       </button>
                     </div>
@@ -191,89 +199,119 @@
           <aside class="item_nav flex-column align-items-start text-start">
             <h6>Categories</h6>
             <hr>
-            <details class="category">
-              <summary>School Supplies</summary>
-              <ul class="subcategory list-unstyled ms-3">
-                <li><a href="#" onclick="updateCategory('School Supplies', 'Filler')">Filler</a></li>
-              </ul>
-            </details>
-            <details class="category">
-              <summary>Softdrinks</summary>
-              <ul class="subcategory list-unstyled ms-3">
-                <li><a href="#" onclick="updateCategory('Softdrinks', 'Juice')">Juice</a></li>
-              </ul>
-            </details>
-            <details class="category">
-              <summary>Powdered Drinks</summary>
-              <ul class="subcategory list-unstyled ms-3">
-                <li><a href="#" onclick="updateCategory('Powdered Drinks', 'Coffee')">Coffee</a></li>
-              </ul>
-            </details>
-            <details class="category">
-              <summary>Snacks</summary>
-              <ul class="subcategory list-unstyled ms-3">
-                <li><a href="#" onclick="updateCategory('Snacks', 'Junkfood')">Junkfood</a></li>
-                <li><a href="#" onclick="updateCategory('Snacks', 'Biscuits')">Biscuits</a></li>
-              </ul>
-            </details>
-            <details class="category">
-              <summary>Hygiene</summary>
-              <ul class="subcategory list-unstyled ms-3">
-                <li><a href="#" onclick="updateCategory('Hygiene', 'Soap')">Soap</a></li>
-              </ul>
-            </details>
+            <div id="sidebar"></div>
           </aside>
         </div>
 
         <section class="body_container flex-grow-1 p-4">
-          <h4 id="categoryHeading"><b>Selected Category</b></h4>
+          <h4><b id="category_title">Selected Category</b></h4>
 
           <div class="d-flex gap-2 mb-3">
-            <button class="btn btn-light filter-btn" id="allButton" onclick="filterProducts('all')">All</button>
-            <button class="btn btn-light filter-btn" id="newButton" onclick="filterProducts('new')">New</button>
-            <button class="btn btn-light filter-btn" id="filteredButton"
-              onclick="filterProducts('filtered')">Filtered</button>
+            <button class="btn btn-light filter-btn" id="all">All</button>
+            <button class="btn btn-light filter-btn" id="recent">New</button>
+            <button class="btn btn-light filter-btn" id="filter_button"
+              data-bs-toggle="modal" data-bs-target="#filterItemModal">Filtered</button>
           </div>
 
-          <div class="product_list d-flex flex-wrap gap-4">
-
-            <div class="product_card">
-              <a href="itemDescription.html">
-                <div class="image"><img src="../../img/bembi.jpg" alt="img"></div>
-                <div class="category" style="font-size: 10px;">Student</div>
-                <a>
-                  <div class="name">Bembi | USC</div>
-                  <div class="price"><strong>₱2.00</strong></div>
-                  <button class="add_to_cart"> Add to Cart</button>
-                </a>
+          <div class="product_list d-flex flex-wrap gap-4" id="products_list">
+          </div>
+          <div class="p-4 d-flex justify-content-center align-items-center gap-4">
+            <button class="navButton" type="button" id="prev_button">
+              Previous
+            </button>
+            <span>|</span>
+            <div id="page_number" class="paragraphs">
+              Page # out of #
             </div>
-
-            <div class="product_card">
-              <a href="itemDescription.html">
-                <div class="image"><img src="../../img/bembi.jpg" alt="img"></div>
-                <div class="category" style="font-size: 10px;">Student</div>
-                <a>
-                  <div class="name">Bembi | USC</div>
-                  <div class="price"><strong>₱2.00</strong></div>
-                  <button class="add_to_cart"> Add to Cart</button>
-                </a>
-            </div>
-            
-
+            <span>|</span>
+            <button class="navButton" type="button" id="next_button">
+              Next
+            </button>
           </div>
         </section>
+      </div>
+
+      <div class="modal fade" id="filterItemModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content p-4">
+            <div class="modal-header border-0">
+              <h5 class="modal-title" id="filterItemModalLabel">Filter Item</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+              <form id="filter_form" method="GET" onsubmit="onSubmitFilter(event)">
+                <div class="d-flex gap-4">
+                  <div class="flex-grow-1">
+                    <div class="mb-3 d-flex gap-3">
+                      <div class="flex-grow-1">
+                        <label for="itemName" class="form-label">Item:</label>
+                        <input type="text" class="form-control" id="itemName" name="item_name" value="">
+                      </div>
+
+                      <div class="flex-grow-1">
+                        <label for="itemBrand" class="form-label">Brand:</label>
+                        <input type="text" class="form-control" id="itemBrand" name="brand" value="">
+                      </div>
+                    </div>
+
+                    <div class="mb-3 d-flex gap-3">
+                      <div class="flex-grow-1">
+                        <label for="itemCategory" class="form-label">Category:</label>
+                        <input type="text" class="form-control" id="itemName" name="category" value="">
+                      </div>
+
+                      <div class="flex-grow-1">
+                        <label for="itemSubcategory" class="form-label">Subcategory:</label>
+                        <input type="text" class="form-control" id="itemBrand" name="subcategory" value="">
+                      </div>
+                    </div>
+                    <div class="mb-3 d-flex gap-3">
+
+                      <div class="flex-grow-1">
+                        <label for="itemStockQuantity" class="form-label">Stock Quantity:</label>
+                        <select class="form-select" id="itemCategory" name="stock_qty">
+                          <option value="">Select Option</option>
+                          <option value="DESC">Highest Stock</option>
+                          <option value="ASC">Lowest Stock</option>
+                        </select>
+                      </div>
+
+                      <div class="flex-grow-1">
+                        <label for="itemTotalSales" class="form-label">Total Sales:</label>
+                        <select class="form-select" id="itemSubcategory" name="total_sales">
+                          <option value="">Select Option</option>
+                          <option value="DESC">Highest Sales</option>
+                          <option value="ASC">Lowest Sales</option>
+                        </select>
+                      </div>
+
+                      <div class="flex-grow-1">
+                        <label for="itemDateRestock" class="form-label">Date Restocked</label>
+                        <select class="form-select" id="itemSubcategory" name="date_restocked">
+                          <option value="">Select Option</option>
+                          <option value="DESC">Recent</option>
+                          <option value="ASC">Oldest</option>
+                        </select>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-warning">Filter</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
 
     <footer class="footer mt-auto">
       <div class="container d-flex flex-row justify-content-between p-4">
-        <div><a href="aboutUs.html"><b>About Us</b></a></div>
-        <div><a href="contactUs.html"><b>Contact Us</b></a></div>
+        <div><a href="aboutUs.php"><b>About Us</b></a></div>
+        <div><a href="contactUs.php"><b>Contact Us</b></a></div>
         <div>Copyright © <b>2025</b>. All rights reserved.</div>
       </div>
     </footer>
-
-    <script src="../../js/script.js"></script>
 
   </div>
 </body>

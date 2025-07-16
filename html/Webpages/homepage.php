@@ -8,8 +8,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../css/navbarFooter.css">
     <link rel="stylesheet" href="../../css/webpageBody.css">
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../../js/auth.js"></script>
+    <script type="text/javascript" src="../../js/load_sidebar.js"></script>
+    <script type="text/javascript" src="../../js/products_display.js" defer></script>
+    <script type="text/javascript" src="../../js/products_homepage.js" defer></script>
     <style>
         * {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -47,11 +51,15 @@
                     <div class="dropdown ms-auto">
                         <button id="profile_dropdown" class="btn btn-outline-secondary dropdown-toggle" type="button"
                             data-bs-toggle="dropdown">Profile</button>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="../Admin/inventoryPage.html">Inventory</a>
-                                <a class="dropdown-item" href="../Admin/staffPage.html">Staff</a>
-                                <a class="dropdown-item" id="authLink" href="#" onclick="signoutClick(event)">Logout</a>
-                            </ul>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <?php session_start(); ?>
+                            <?php if (isset($_SESSION['staff_type']) && $_SESSION['staff_type'] == 'staff'): ?>
+                                <a class="dropdown-item" id="adminLink" href="../Admin/staffPage.php">Staff</a>
+                            <?php elseif (isset($_SESSION['staff_type']) && $_SESSION['staff_type'] == 'inventory'): ?>
+                                <a class="dropdown-item" id="adminLink" href="../Admin/inventoryPage.php">Inventory</a>
+                            <?php endif; ?>
+                            <a class="dropdown-item" id="authLink" onclick="signoutClick(event)">Logout</a>
+                        </ul>
                     </div>
                 </div>
 
@@ -71,7 +79,7 @@
                         </svg>
                     </button>
 
-                    <button class="btn nav-icon" onclick="window.location.href='itemDescription.html'"aria-label="Reservation">
+                    <button class="btn nav-icon" onclick="window.location.href='itemDescription.html'" aria-label="Reservation">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <path d="M16 8H17.1597C18.1999 8 19.0664 8.79732
                                     19.1528 9.83391L19.8195 17.8339
@@ -98,7 +106,7 @@
                                     C19.8596 18.3002 20.3896 16.8702 19.7296 15.7702
                                     L18.5796 13.8602C18.2796 13.3402 18.0196 12.4102 18.0196 11.8002
                                     V8.91016C18.0196 5.61016 15.3196 2.91016 12.0196 2.91016Z" />
-                                    
+
                                 <path d="M13.8699 3.19994C13.5599 3.10994 13.2399 3.03994 12.9099 2.99994
                                     C11.9499 2.87994 11.0299 2.94994 10.1699 3.19994
                                     C10.4599 2.45994 11.1799 1.93994 12.0199 1.93994
@@ -111,12 +119,12 @@
                             <div class="notification-badge">3</div>
                         </button>
 
-                        <div class="modal fade" id="notificationModal" tabindex="-1"aria-labelledby="notificationModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content p-3">
                                     <div class="modal-header border-0">
                                         <h5 class="modal-title" id="notificationModalLabel">Notifications</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"aria-label="Close"></button>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body" style=" overflow-y: auto;">
                                         <div class="notification_card d-flex mb-3">
@@ -166,40 +174,7 @@
                     <aside class="item_nav flex-column align-items-start text-start">
                         <h6>Categories</h6>
                         <hr>
-                        <details class="category">
-                            <summary>School Supplies</summary>
-                            <ul class="subcategory list-unstyled ms-3">
-                                <li><a href="../Webpages/category.html" onclick="updateCategory('School Supplies', 'Filler')">Filler</a></li>
-                            </ul>
-                        </details>
-
-                        <details class="category">
-                            <summary>Softdrinks</summary>
-                            <ul class="subcategory list-unstyled ms-3">
-                                <li><a href="../Webpages/category.html" onclick="updateCategory('Softdrinks', 'Juice')">Juice</a></li>
-                            </ul>
-                        </details>
-                        <details class="category">
-                            <summary>Powdered Drinks</summary>
-                            <ul class="subcategory list-unstyled ms-3">
-                                <li><a href="../Webpages/category.html" onclick="updateCategory('Powdered Drinks', 'Coffee')">Coffee</a></li>
-                            </ul>
-                        </details>
-
-                        <details class="category">
-                            <summary>Snacks</summary>
-                            <ul class="subcategory list-unstyled ms-3">
-                                <li><a href="../Webpages/category.html" onclick="updateCategory('Snacks', 'Junkfood')">Junkfood</a></li>
-                                <li><a href="../Webpages/category.html" onclick="updateCategory('Snacks', 'Biscuits')">Biscuits</a></li>
-                            </ul>
-                        </details>
-
-                        <details class="category">
-                            <summary>Hygiene</summary>
-                            <ul class="subcategory list-unstyled ms-3">
-                                <li><a href="#" onclick="updateCategory('Hygiene', 'Soap')">Soap</a></li>
-                            </ul>
-                        </details>
+                        <div id="sidebar"></div>
                     </aside>
                 </div>
 
@@ -208,89 +183,24 @@
                         <section class="top_selling">
                             <div class="d-flex flex-row justify-content-between  align-items-center me-3">
                                 <h4><b>Top Selling Products</b></h4>
-                                <a href="../Webpages/category.html">See More</a>
+                                <a href="../Webpages/category.php?total_sales=DESC">See More</a>
                             </div>
 
-                            <div class="product_list" >
-                                <div class="product_card">
-                                    <a href="itemDescription.html">
-                                        <div class="image"><img src="../../img/bembi.jpg" alt="img"></div>
-                                        <div class="category" style="font-size: 10px;">Student</div>
-                                        <a>
-                                            <div class="name">Bembi | USC</div>
-                                            <div class="price"><strong>₱2.00</strong></div>
-                                            <button class="add_to_cart"> Add to Cart</button>
-                                        </a>
-                                </div>
+                            <div id="top_selling" class="product_list">
 
-                                <div class="product_card">
-                                    <a href="itemDescription.html">
-                                        <div class="image"><img src="" alt="img"></div>
-                                        <div class="category" style="font-size: 10px;">Student</div>
-                                        <a>
-                                            <div class="name">Mang Juan | Chicharon</div>
-                                            <div class="price"><strong>₱2.00</strong></div>
-                                            <button class="add_to_cart">Add to Cart</button>
-                                        </a>
-                                </div>
-
-                                <div class="product_card">
-                                    <a href="itemDescription.html">
-                                        <div class="image"><img src="" alt="img"></div>
-                                        <div class="category" style="font-size: 10px;">Student</div>
-                                        <a>
-                                            <div class="name">Mang Juan | Chicharon</div>
-                                            <div class="price"><strong>₱2.00</strong></div>
-                                            <button class="add_to_cart">Add to Cart</button>
-                                        </a>
-                                </div>
-
-                                <div class="product_card">
-                                    <a href="itemDescription.html">
-                                        <div class="image"><img src="" alt="img"></div>
-                                        <div class="category" style="font-size: 10px;">Student</div>
-                                        <a>
-                                            <div class="name">Mang Juan | Chicharon</div>
-                                            <div class="price"><strong>₱2.00</strong></div>
-                                            <button class="add_to_cart">Add to Cart</button>
-                                        </a>
-                                </div>
-                                <div class="product_card">
-                                    <a href="itemDescription.html">
-                                        <div class="image"><img src="" alt="img"></div>
-                                        <div class="category" style="font-size: 10px;">Student</div>
-                                        <a>
-                                            <div class="name">Mang Juan | Chicharon</div>
-                                            <div class="price"><strong>₱2.00</strong></div>
-                                            <button class="add_to_cart">Add to Cart</button>
-                                        </a>
-                                </div>
-                                
                             </div>
                         </section>
-                    </div> 
+                    </div>
                     <br>
 
                     <div class="object_container" style="flex-grow: 1;">
                         <section class="restocked">
                             <div class="d-flex flex-row justify-content-between align-items-center me-3">
                                 <h4><b>Restocked Items</b></h4>
-                                <a href="../Webpages/category.html">See More</a>
+                                <a href="../Webpages/category.php?date_restocked=DESC">See More</a>
                             </div>
 
-                            <div class="product_list " >
-                                <div class="product_card">
-                                    <a href="itemDescription.html">
-                                        <div class="image"><img src="" alt="img"></div>
-                                        <div class="category" style="font-size: 10px;">Student</div>
-                                    </a>
-                                    <a>
-                                        <div class="name">Mang Juan | Chicharon</div>
-                                        <div class="price"><strong>₱2.00</strong></div>
-                                        <button disabled class="add_to_cart">Add to Cart</button>
-                                    </a>
-                                </div>
-                                
+                            <div id="restocked_items" class="product_list">
                             </div>
                         </section>
                     </div>
@@ -321,8 +231,7 @@
                 </section>
             </div>
         </main>
-
-        
+            <script type="text/javascript" src="../../js/session.js"></script>
         <footer class="footer mt-auto">
             <div class="container d-flex flex-row justify-content-between p-4">
                 <div><a href="../../Webpages/aboutUs.html"><b>About Us</b></a></div>
@@ -331,6 +240,7 @@
             </div>
         </footer>
 
-    <script src="../../js/script.js"></script>
+        <script src="../../js/script.js"></script>
 </body>
+
 </html>

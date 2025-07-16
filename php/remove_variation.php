@@ -1,7 +1,7 @@
 <?php
 include_once('db_connect.php');
 include_once('admin_status.php');
-requireAdmin($con, 'staff');
+requireAdmin($con, 'inventory');
 
 $variation_id = $_POST['variation_id'] ?? null;
 

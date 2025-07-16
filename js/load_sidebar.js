@@ -11,7 +11,7 @@ function loadSidebar() {
             }
 
             Object.entries(sidebarData).forEach(([category, subcategories]) => {
-                const subListHTML = `
+                subListHTML = `
             <details class="category">
             <summary>${category}</summary>
             `;

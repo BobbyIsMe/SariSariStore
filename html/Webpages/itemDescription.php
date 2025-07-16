@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="../../css/webpageBody.css">
     <link rel="stylesheet" href="../../css/itemDescription.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../../js/auth.js"></script>
+    <script type="text/javascript" src="../../js/load_sidebar.js"></script>
+    <script type="text/javascript" src="../../js/products_display.js" defer></script>
+    <script type="text/javascript" src="../../js/item_page.js" defer></script>
     <style>
         * {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -32,7 +36,7 @@
 
         <div class="header">
             <div class="container-fluid d-flex flex-row align-items-center text-center py-2" style="gap: 40px;">
-                <a href="../Webpages/homepage.html" class="text-decoration-none">
+                <a href="../Webpages/homepage.php" class="text-decoration-none">
                     <h5 class="mb-0"><b>Cerina's Sari2Store</b></h5>
                 </a>
                 <div class="d-flex flex-grow-1">
@@ -40,8 +44,8 @@
                         <input type="text" class="form-control" placeholder="Search">
                         <button class="btn btn-light search-button" type="button" aria-label="Search">
                             <svg class="search-icon" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="-81.92 -81.92 1187.84 1187.84">
-                                    <path d="m795.904 750.72 124.992 124.928a32 32 0 0 1-45.248 
+                                viewBox="-81.92 -81.92 1187.84 1187.84">
+                                <path d="m795.904 750.72 124.992 124.928a32 32 0 0 1-45.248 
                                     45.248L750.656 795.904a416 416 0 1 1 45.248-45.248z
                                     M480 832a352 352 0 1 0 0-704 352 352 0 0 0 0 704z" />
                             </svg>
@@ -51,15 +55,19 @@
                     <div class="dropdown ms-auto">
                         <button id="profile_dropdown" class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">Profile</button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <a class="dropdown-item" href="../Admin/inventoryPage.html">Inventory</a>
-                            <a class="dropdown-item" href="../Admin/staffPage.html">Staff</a>
-                            <a class="dropdown-item" id="authLink" href="#" onclick="signoutClick(event)">Logout</a>
+                            <?php session_start(); ?>
+                            <?php if (isset($_SESSION['staff_type']) && $_SESSION['staff_type'] == 'staff'): ?>
+                                <a class="dropdown-item" id="adminLink" href="../Admin/staffPage.php">Staff</a>
+                            <?php elseif (isset($_SESSION['staff_type']) && $_SESSION['staff_type'] == 'inventory'): ?>
+                                <a class="dropdown-item" id="adminLink" href="../Admin/inventoryPage.php">Inventory</a>
+                            <?php endif; ?>
+                            <a class="dropdown-item" id="authLink" onclick="signoutClick(event)">Logout</a>
                         </ul>
                     </div>
 
                 </div>
                 <div class="nav-icons d-flex gap-3 ms-3">
-                    <button class="btn nav-icon" onclick="window.location.href='../Cart/cart.html'" aria-label="Cart">
+                    <button class="btn nav-icon" onclick="window.location.href='../Cart/cart.php'" aria-label="Cart">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <path d="M6.29977 5H21L19 12H7.37671M20 16H8L6 3H3
                                     M9 20C9 20.5523 8.55228 21 8 21
@@ -74,7 +82,7 @@
                         </svg>
                     </button>
 
-                    <button class="btn nav-icon" onclick="window.location.href='../Orders/order.html'" aria-label="Order">
+                    <button class="btn nav-icon" onclick="window.location.href='../Orders/order.php'" aria-label="Order">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <path d="M16 8H17.1597C18.1999 8 19.0664 8.79732
                                     19.1528 9.83391L19.8195 17.8339
@@ -99,13 +107,13 @@
                                     C19.8596 18.3002 20.3896 16.8702 19.7296 15.7702
                                     L18.5796 13.8602C18.2796 13.3402 18.0196 12.4102 18.0196 11.8002
                                     V8.91016C18.0196 5.61016 15.3196 2.91016 12.0196 2.91016Z" />
-                                
-                                    <path d="M13.8699 3.19994C13.5599 3.10994 13.2399 3.03994 12.9099 2.99994
+
+                                <path d="M13.8699 3.19994C13.5599 3.10994 13.2399 3.03994 12.9099 2.99994
                                     C11.9499 2.87994 11.0299 2.94994 10.1699 3.19994
                                     C10.4599 2.45994 11.1799 1.93994 12.0199 1.93994
                                     C12.8599 1.93994 13.5799 2.45994 13.8699 3.19994Z" />
-                                
-                                    <path opacity="0.4" d="M15.0195 19.0601C15.0195 20.7101 13.6695 22.0601
+
+                                <path opacity="0.4" d="M15.0195 19.0601C15.0195 20.7101 13.6695 22.0601
                                     12.0195 22.0601C11.1995 22.0601 10.4395 21.7201
                                     9.89953 21.1801C9.35953 20.6401 9.01953 19.8801 9.01953 19.0601" />
                             </svg>
@@ -171,41 +179,7 @@
                     <aside class="item_nav flex-column align-items-start text-start">
                         <h6>Categories</h6>
                         <hr>
-                        <details class="category">
-                            <summary>School Supplies</summary>
-                            <ul class="subcategory list-unstyled ms-3">
-                                <li><a href="../Webpages/category.html" onclick="updateCategory('School Supplies', 'Filler')">Filler</a></li>
-                            </ul>
-                        </details>
-
-                        <details class="category">
-                            <summary>Softdrinks</summary>
-                            <ul class="subcategory list-unstyled ms-3">
-                                <li><a href="../Webpages/category.html" onclick="updateCategory('Softdrinks', 'Juice')">Juice</a></li>
-                            </ul>
-                        </details>
-
-                        <details class="category">
-                            <summary>Powdered Drinks</summary>
-                            <ul class="subcategory list-unstyled ms-3">
-                                <li><a href="../Webpages/category.html" onclick="updateCategory('Powdered Drinks', 'Coffee')">Coffee</a></li>
-                            </ul>
-                        </details>
-
-                        <details class="category">
-                        <summary>Snacks</summary>
-                            <ul class="subcategory list-unstyled ms-3">
-                                <li><a href="../Webpages/category.html" onclick="updateCategory('Snacks', 'Junkfood')">Junkfood</a></li>
-                                <li><a href="../Webpages/category.html" onclick="updateCategory('Snacks', 'Biscuits')">Biscuits</a></li>
-                            </ul>
-                        </details>
-
-                        <details class="category">
-                            <summary>Hygiene</summary>
-                            <ul class="subcategory list-unstyled ms-3">
-                                <li><a href="../Webpages/category.html" onclick="updateCategory('Hygiene', 'Soap')">Soap</a></li>
-                            </ul>
-                        </details>
+                        <div id="sidebar"></div>
                     </aside>
                 </div>
 
@@ -214,36 +188,33 @@
                         <div style="border-bottom: 1px solid black; padding: 40px; ;">
                             <div class="d-flex align-items-center justify-content-center" style="background-color: rgb(255, 255, 255); gap: 50px; ">
                                 <div class="item_desc">
-                                    <img src="" alt="img">
+                                    <img src="" alt="img" id="image" style="width: 100%; height: 100%; object-fit: contain;">
                                 </div>
 
                                 <div>
                                     <div class="product_card" style="width: 300px; height: 100%;">
-                                        <div class="category" style="font-size: 10px;">Junkfood</div>
-                                        <div class="name">Mang Juan | Chicharon</div>
-                                        <div class="price"><strong>₱12.00</strong></div>
+                                        <div class="category" style="font-size: 10px;" id="category"></div>
+                                        <div class="name" id="item_name"></div>
+                                        <div class="price" id="price"><strong></strong></div>
                                         <br>
-                                        <div class="desc">James Cameron Nur Abello 11820033 Cabancalan, Cebu</div>
+                                        <div class="desc" id="item_details"></div>
                                         <br>
 
                                         <div class="product_controls">
                                             <div class="quantity_control w-100">
-                                                <button>-</button>
-                                                <input type="text" value="1" readonly />
-                                                <button>+</button>
+                                                <button id="decrease_button">-</button>
+                                                <input type="text" id="item_qty" value="1" readonly />
+                                                <button id="increase_button">+</button>
                                             </div>
 
                                             <div class="flex-grow-1">
                                                 <label for="itemVariation" class="form-label">Item Variation:</label>
-                                                <select class="form-select" id="itemVariation" name="itemVariation" required title="Select Option" style="width: 100%;">
-                                                    <option value="Select" title="Select Option">Select Option</option>
-                                                    <option value="#">Mang Juan Suka't Sili</option>
-                                                    <option value="#">Mang Juan Chilimansi</option>
+                                                <select class="form-select" id="variations_dropdown" name="itemVariation" required title="Select Option" style="width: 100%;">
                                                 </select>
                                             </div>
 
-                                            <div class="price">₱12.00</div>
-                                            <button class="add_to_cart" >Add To Cart</button>
+                                            <div class="price" id="subtotal"></div>
+                                            <button class="add_to_cart" id="add_product">Add To Cart</button>
                                         </div>
                                     </div>
                                 </div>
@@ -252,47 +223,28 @@
 
                         <section style=" margin-top: 30px;">
                             <div class="d-flex flex-row justify-content-between align-items-center me-3">
-                                <h4><b>More Items</b></h4>
-                                <a href="../Webpages/category.html">See More</a>
+                                <h4><b id="category_title">More Items</b></h4>
+                                <a href="" id="see_more">See More</a>
                             </div>
 
-                            <div class="d-flex flex-row" style="gap: 40px">
-                                <div class="product_list">
-                                    <div class="product_card">
-                                        <div class="image"><img src="" alt="img"></div>
-                                        <div class="category" style="font-size: 10px;">Junkfood</div>
-                                        <div class="name">Mang Juan | Chicharon</div>
-                                        <div class="price"><strong>₱12.00</strong></div>
-                                        <button class="add_to_cart">Add to Cart</button>
-                                    </div>
-                                </div>
-
-                                <div class="product_list">
-                                    <div class="product_card">
-                                        <div class="image"><img src="" alt="img"></div>
-                                        <div class="category" style="font-size: 10px;">Junkfood</div>
-                                        <div class="name">Mang Juan | Chicharon</div>
-                                        <div class="price"><strong>₱12.00</strong></div>
-                                        <button class="add_to_cart">Add to Cart</button>
-                                    </div>
-                                </div>
+                            <div class="d-flex flex-row" style="gap: 40px" id="products_list">
+                                
                             </div>
                         </section>
                 </main>
             </div>
         </main>
 
-           
+
 
         <footer class="footer mt-auto">
             <div class="container d-flex flex-row justify-content-between p-4">
-                <div><a href="aboutUs.html"><b>About Us</b></a></div>
-                <div><a href="contactUs.html"><b>Contact Us</b></a></div>
+                <div><a href="aboutUs.php"><b>About Us</b></a></div>
+                <div><a href="contactUs.php"><b>Contact Us</b></a></div>
                 <div>Copyright © <b>2025</b>. All rights reserved.</div>
             </div>
         </footer>
     </div>
-
-    <script src="../../js/script.js"></script>
 </body>
+
 </html>

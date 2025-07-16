@@ -4,14 +4,12 @@ include_once('db_connect.php');
 include_once('admin_status.php');
 requireAdmin($con, 'inventory');
 
-$edit = $_GET['edit'] ?? null;
+$edit = $_POST['edit'] ?? null;
 
 if (!isset($edit) || !in_array($edit, ['add', 'edit'])) {
     echo json_encode(['status' => 400, 'message' => 'Add or edit only.']);
     exit();
 }
-
-$stmt->close();
 
 if ($edit === 'add') {
     $category = $_POST['category'] ?? null;
@@ -32,34 +30,30 @@ if ($edit === 'add') {
         echo json_encode(['status' => 500, 'message' => 'Failed to add category.']);
     }
 } else if ($edit === 'edit') {
-    $category_list = $_POST['category_list'] ?? null;
+    $category_json = $_POST['category_list'] ?? null;
+    $category_list = json_decode($category_json, true);
     if (!isset($category_list) || empty($category_list)) {
-        echo json_encode(['status' => 400, 'message' => 'Category ID is required for editing.']);
+        echo json_encode(['status' => 400, 'message' => 'Category is empty.']);
         exit();
     }
 
-    $category_cases = "";
     $subcategory_cases = "";
     $ids = [];
     $params = [];
     $values = "";
 
     foreach ($category_list as $item) {
-        if (!isset($item['category_id'], $item['category'], $item['subcategory'])) continue;
+        if (!isset($item['category_id'], $item['subcategory'])) continue;
 
         $category_id = (int)$item['category_id'];
-        $category = $item['category'];
         $subcategory = $item['subcategory'];
 
-        $category_cases .= "WHEN ? THEN ? ";
         $subcategory_cases .= "WHEN ? THEN ? ";
 
         $params[] = $category_id;
-        $params[] = $category;
-        $params[] = $category_id;
         $params[] = $subcategory;
 
-        $values .= "isis";
+        $values .= "is";
 
         $ids[] = $category_id;
     }
@@ -71,11 +65,12 @@ if ($edit === 'add') {
     $stmt = $con->prepare("
     UPDATE Categories
     SET
-    category = CASE category_id $category_cases END,
-    subcategory = CASE category_id $subcategory_cases END
+    subcategory = CASE category_id $subcategory_cases END 
     WHERE category_id IN ($placeholders)
     ");
     $stmt->bind_param($values, ...$params);
     $stmt->execute();
     $stmt->close();
+
+    echo json_encode(['status' => 200, 'message' => 'Category edited successfully.']);
 }
