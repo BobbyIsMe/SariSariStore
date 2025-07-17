@@ -19,6 +19,7 @@ try {
     $stmt = $con->prepare("DELETE FROM Categories WHERE category_id = ?");
     $stmt->bind_param('i', $category_id);
     $stmt->execute();
+    $stmt->close();
 
     echo json_encode(['status' => 200, 'message' => 'Category deleted successfully.']);
 

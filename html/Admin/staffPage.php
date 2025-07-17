@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION["user_id"]) && !isset($_SESSION["staff_type"]) || $_SESSION["staff_type"] != "staff") {
+    header("Location: ../Signin/Login.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,6 +17,10 @@
     <link rel="stylesheet" href="../../css/webpageBody.css">
     <link rel="stylesheet" href="../../css/cart.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../../js/auth.js"></script>
+    <script type="text/javascript" src="../../js/load_sidebar.js" defer></script>
+    <script type="text/javascript" src="../../js/notifications_controller.js" defer></script>
+    <script type="text/javascript" src="../../js/manage_orders.js" defer></script>
     <style>
         * {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -34,14 +45,14 @@
 
         <div class="header">
             <div class="container-fluid d-flex flex-row align-items-center text-center py-2" style="gap: 40px;">
-                <a href="../Webpages/homepage.html" class="text-decoration-none">
+                <a href="../Webpages/homepage.php" class="text-decoration-none">
                     <h5 class="mb-0"><b>Cerina's Sari2Store</b></h5>
                 </a>
                 <div class="d-flex flex-grow-1">
 
                     <div class="col-10 d-flex flex-row">
-                        <input type="text" class="form-control" placeholder="Search">
-                        <button class="btn btn-light search-button" type="button" aria-label="Search">
+                        <input type="text" class="form-control" id="search_input" placeholder="Search">
+                        <button class="btn btn-light search-button" type="button" id="search_button" aria-label="Search">
                             <svg class="search-icon" xmlns="http://www.w3.org/2000/svg"
                                 viewBox="-81.92 -81.92 1187.84 1187.84">
                                 <path d="m795.904 750.72 124.992 124.928a32 32 0 0 1-45.248 
@@ -54,16 +65,20 @@
                     <div class="dropdown ms-auto">
                         <button id="profile_dropdown" class="btn btn-outline-secondary dropdown-toggle" type="button"
                             data-bs-toggle="dropdown">Profile</button>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="../Admin/inventoryPage.html">Inventory</a>
-                                <a class="dropdown-item" href="../Admin/staffPage.html">Staff</a>
-                                <a class="dropdown-item" id="authLink" href="#" onclick="signoutClick(event)">Logout</a>
-                            </ul>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <?php ?>
+                            <?php if (isset($_SESSION['staff_type']) && $_SESSION['staff_type'] == 'staff'): ?>
+                                <a class="dropdown-item" id="adminLink" href="../Admin/staffPage.php">Staff</a>
+                            <?php elseif (isset($_SESSION['staff_type']) && $_SESSION['staff_type'] == 'inventory'): ?>
+                                <a class="dropdown-item" id="adminLink" href="../Admin/inventoryPage.php">Inventory</a>
+                            <?php endif; ?>
+                            <a class="dropdown-item" id="authLink" onclick="signoutClick(event)">Logout</a>
+                        </ul>
                     </div>
                 </div>
 
                 <div class="nav-icons d-flex gap-3 ms-3">
-                    <button class="btn nav-icon" onclick="window.location.href='../Cart/cart.html'" aria-label="Cart">
+                    <button class="btn nav-icon" onclick="window.location.href='../Cart/cart.php'" aria-label="Cart">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <path d="M6.29977 5H21L19 12H7.37671M20 16H8L6 3H3
                                     M9 20C9 20.5523 8.55228 21 8 21
@@ -78,7 +93,7 @@
                         </svg>
                     </button>
 
-                    <button class="btn nav-icon" onclick="window.location.href='../../Webpages/itemDescription.html'"aria-label="Reservation">
+                    <button class="btn nav-icon" onclick="window.location.href='../Orders/order.php'" aria-label="Reservation">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <path d="M16 8H17.1597C18.1999 8 19.0664 8.79732
                                     19.1528 9.83391L19.8195 17.8339
@@ -94,71 +109,43 @@
                     </button>
 
                     <div class="dropdown">
-                        <button class="btn nav-icon d-flex flex-row" aria-label="Notifications" type="button"
-                            id="notificationDropdown" data-bs-toggle="modal" aria-expanded="false"
-                            data-bs-target="#notificationModal">
+                        <button class="btn nav-icon d-flex flex-row" aria-label="Notifications" type="button" id="notifications" data-bs-toggle="modal" aria-expanded="false" data-bs-target="#notificationModal">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                 <path d="M12.0196 2.91016C8.7096 2.91016 6.0196 5.60016 6.0196 8.91016
-                                        V11.8002C6.0196 12.4102 5.7596 13.3402 5.4496 13.8602
-                                        L4.2996 15.7702C3.5896 16.9502 4.0796 18.2602 5.3796 18.7002
-                                        C9.6896 20.1402 14.3396 20.1402 18.6496 18.7002
-                                        C19.8596 18.3002 20.3896 16.8702 19.7296 15.7702
-                                        L18.5796 13.8602C18.2796 13.3402 18.0196 12.4102 18.0196 11.8002
-                                        V8.91016C18.0196 5.61016 15.3196 2.91016 12.0196 2.91016Z" />
+                          V11.8002C6.0196 12.4102 5.7596 13.3402 5.4496 13.8602
+                          L4.2996 15.7702C3.5896 16.9502 4.0796 18.2602 5.3796 18.7002
+                          C9.6896 20.1402 14.3396 20.1402 18.6496 18.7002
+                          C19.8596 18.3002 20.3896 16.8702 19.7296 15.7702
+                          L18.5796 13.8602C18.2796 13.3402 18.0196 12.4102 18.0196 11.8002
+                          V8.91016C18.0196 5.61016 15.3196 2.91016 12.0196 2.91016Z" />
 
                                 <path d="M13.8699 3.19994C13.5599 3.10994 13.2399 3.03994 12.9099 2.99994
-                                        C11.9499 2.87994 11.0299 2.94994 10.1699 3.19994
-                                        C10.4599 2.45994 11.1799 1.93994 12.0199 1.93994
-                                        C12.8599 1.93994 13.5799 2.45994 13.8699 3.19994Z" />
+                          C11.9499 2.87994 11.0299 2.94994 10.1699 3.19994
+                          C10.4599 2.45994 11.1799 1.93994 12.0199 1.93994
+                          C12.8599 1.93994 13.5799 2.45994 13.8699 3.19994Z" />
 
                                 <path opacity="0.4" d="M15.0195 19.0601C15.0195 20.7101 13.6695 22.0601
-                                        12.0195 22.0601C11.1995 22.0601 10.4395 21.7201
-                                        9.89953 21.1801C9.35953 20.6401 9.01953 19.8801 9.01953 19.0601" />
+                          12.0195 22.0601C11.1995 22.0601 10.4395 21.7201
+                          9.89953 21.1801C9.35953 20.6401 9.01953 19.8801 9.01953 19.0601" />
                             </svg>
-                            <div class="notification-badge">3</div>
+                            <div id="notification_count"></div>
                         </button>
 
-                        <div class="modal fade" id="notificationModal" tabindex="-1"aria-labelledby="notificationModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content p-3">
                                     <div class="modal-header border-0">
                                         <h5 class="modal-title" id="notificationModalLabel">Notifications</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"aria-label="Close"></button>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-
                                     <div class="modal-body" style=" overflow-y: auto;">
-                                        <div class="notification_card d-flex mb-3">
-                                            <div class="col-1" style="background-color: red;"></div>
-                                            <div class="d-flex flex-column flex-grow-1">
-                                                <div class="fw-bold">Order ID# 3</div>
-                                                <div class="notification_message">Your reservation has been rejected
-                                                </div>
-                                                <small class="text-muted">3/5/25 1:40 AM</small>
-                                            </div>
-                                        </div>
-                                        <div class="notification_card d-flex mb-3">
-                                            <div class="col-1" style="background-color: rgb(217, 255, 0);"></div>
-                                            <div class="d-flex flex-column flex-grow-1">
-                                                <div class="fw-bold">Order ID# 3</div>
-                                                <div class="notification_message">Your reservation has been approvedjdsiahdshdsahdshdsahdiashiudashudashuids</div>
-                                                <small class="text-muted">3/5/25 10:01 AM</small>
-                                            </div>
-                                        </div>
-                                        <div class="notification_card d-flex mb-3">
-                                            <div class="col-1" style="background-color: rgb(185, 185, 185);"></div>
-                                            <div class="d-flex flex-column flex-grow-1">
-                                                <div class="fw-bold">Order ID# 3</div>
-                                                <div class="notification_message">Your reservation has been closed</div>
-                                                <small class="text-muted">3/5/25 12:00 PM</small>
-                                            </div>
-                                        </div>
-
+                                        <div id="notifications_popup"></div>
                                         <div class="p-4 d-flex justify-content-center align-items-center gap-4">
-                                            <button class="navButton" type="button" id="prev_button">Previous</button>
+                                            <button class="navButton" type="button" id="notif_prev_button">Previous</button>
                                             <span>|</span>
-                                            <div id="page_number" class="paragraphs">Page # out of #</div>
+                                            <div id="notif_page_number" class="paragraphs">Page # out of #</div>
                                             <span>|</span>
-                                            <button class="navButton" type="button" id="next_button">Next</button>
+                                            <button class="navButton" type="button" id="notif_next_button">Next</button>
                                         </div>
                                     </div>
                                 </div>
@@ -175,41 +162,7 @@
                     <aside class="item_nav flex-column align-items-start text-start">
                         <h6>Categories</h6>
                         <hr>
-                        <details class="category">
-                            <summary>School Supplies</summary>
-                            <ul class="subcategory list-unstyled ms-3">
-                                <li><a href="../Webpages/category.html" onclick="updateCategory('School Supplies', 'Filler')">Filler</a></li>
-                            </ul>
-                        </details>
-
-                        <details class="category">
-                            <summary>Softdrinks</summary>
-                            <ul class="subcategory list-unstyled ms-3">
-                                <li><a href="../Webpages/category.html" onclick="updateCategory('Softdrinks', 'Juice')">Juice</a></li>
-                            </ul>
-                        </details>
-
-                        <details class="category">
-                            <summary>Powdered Drinks</summary>
-                            <ul class="subcategory list-unstyled ms-3">
-                                <li><a href="../Webpages/category.html" onclick="updateCategory('Powdered Drinks', 'Coffee')">Coffee</a></li>
-                            </ul>
-                        </details>
-                        
-                        <details class="category">
-                            <summary>Snacks</summary>
-                            <ul class="subcategory list-unstyled ms-3">
-                                <li><a href="../Webpages/category.html" onclick="updateCategory('Snacks', 'Junkfood')">Junkfood</a></li>
-                                <li><a href="../Webpages/category.html" onclick="updateCategory('Snacks', 'Biscuits')">Biscuits</a></li>
-                            </ul>
-                        </details>
-
-                        <details class="category">
-                            <summary>Hygiene</summary>
-                            <ul class="subcategory list-unstyled ms-3">
-                                <li><a href="../Webpages/category.html" onclick="updateCategory('Hygiene', 'Soap')">Soap</a></li>
-                            </ul>
-                        </details>
+                        <div id="sidebar"></div>
                     </aside>
                 </div>
 
@@ -222,133 +175,15 @@
                                 <select class="form-select border-0" id="status_dropdown" name="rent_status" required>
                                     <option value="status">Status</option>
                                     <option value="pending">Pending</option>
+                                    <option value="pending">Approved</option>
                                     <option value="rejected">Rejected</option>
                                     <option value="closed">Closed</option>
                                 </select>
                             </div>
                         </div>
 
-                        <div class="cart-container" style="display: flex; gap: 20px; padding: 20px; background: #f5f5f5;">
-                            <div class="cart_items">
-                                <div>
-                                    <h6>Cart ID</h6>
-                                </div>
-                                <br>
-                                <div>Name: sadsdasd</div>
-                                <br>
+                        <div id="orders_list"></div>
 
-                                <div class="d-flex flex-row col-12">
-                                    <div class="col-4">Reserved: 5/2/2021 12:00 PM</div>
-                                    <div class="col-4">Received: 5/3/2021 12:00 PM</div>
-                                    <div class="col-4">Deadline: 5/4/2021 12:00 PM</div>
-                                </div>
-
-                                <div class="cart_item">
-                                    <div style="flex: 1;">
-                                        <div class="category" style="font-size: 12px; color: gray;">Junkfood</div>
-                                        <div class="name" style="font-weight: bold;">Mang Juan | Chicharon</div>
-                                    </div>
-
-                                    <div style="width: 80px; text-align: right;">₱12.00</div>
-                                    <div>1 pcs</div>
-                                </div>
-
-                                <div class="cart_item">
-                                    <div style="flex: 1;">
-                                        <div class="category" style="font-size: 12px; color: gray;">Softdrink</div>
-                                        <div class="name" style="font-weight: bold;">Coke| Softdrink</div>
-                                    </div>
-
-                                    <div style="width: 80px; text-align: right;">₱24.00</div>
-                                    <div>2 pcs</div>
-                                </div>
-
-                                <div class="d-flex justify-content-center align-items-center mt-3">
-                                    <button type="button" class="btn seeMoreBtn" data-bs-toggle="modal" data-bs-target="#seeMoreModal">See More</button>
-                                </div>
-                            </div>
-
-                            <div class="order_summary">
-                                <div class="dropdown">
-                                    <select class="form-select border-0" id="status_dropdown" name="rent_status" required>
-                                        <option value="status">Status</option>
-                                        <option value="closed">Approved</option>
-                                        <option value="rejected">Rejected</option>
-                                        <option value="closed">Closed</option>
-                                    </select>
-                                </div>
-
-                                <br><br><br>
-
-                                <div class="d-flex flex-column align-items-center ">
-                                    <div class="" style="border-top: solid black 1px;">
-                                        <label for="check_in_date" class="form-label">Check-in Date</label>
-                                        <input type="date" class="paragraphs form-control" id="rent_check_in_date" name="check_in_date" required>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="cart-container" style="display: flex; gap: 20px; padding: 20px; background: #f5f5f5;">
-                            <div class="cart_items">
-                                <div>
-                                    <h6>Cart ID</h6>
-                                </div>
-                                <br>
-                                <div>Name: sadsdasd</div>
-                                <br>
-                                <div class="d-flex flex-row col-12">
-                                    <div class="col-4">Reserved: 5/2/2021 12:00 PM</div>
-                                    <div class="col-4">Received: 5/3/2021 12:00 PM</div>
-                                    <div class="col-4">Deadline: 5/4/2021 12:00 PM</div>
-                                </div>
-
-                                <div class="cart_item">
-                                    <div style="flex: 1;">
-                                        <div class="category" style="font-size: 12px; color: gray;">Junkfood</div>
-                                        <div class="name" style="font-weight: bold;">Mang Juan | Chicharon</div>
-                                    </div>
-
-                                    <div style="width: 80px; text-align: right;">₱12.00</div>
-                                    <div>1 pcs</div>
-                                </div>
-
-                                <div class="cart_item">
-                                    <div style="flex: 1;">
-                                        <div class="category" style="font-size: 12px; color: gray;">Softdrink</div>
-                                        <div class="name" style="font-weight: bold;">Coke| Softdrink</div>
-                                    </div>
-
-                                    <div style="width: 80px; text-align: right;">₱24.00</div>
-                                    <div>2 pcs</div>
-                                </div>
-
-                                <div class="d-flex justify-content-center align-items-center mt-3">
-                                    <button type="button" class="btn seeMoreBtn" data-bs-toggle="modal" data-bs-target="#seeMoreModal">See More
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="order_summary">
-                                <div class="dropdown">
-                                    <select class="form-select border-0" id="status_dropdown" name="rent_status" required>
-                                        <option value="status">Status</option>
-                                        <option value="closed">Approved</option>
-                                        <option value="rejected">Rejected</option>
-                                        <option value="closed">Closed</option>
-                                    </select>
-                                </div>
-
-                                <br><br><br>
-
-                                <div class="d-flex flex-column align-items-center ">
-                                    <div class="" style="border-top: solid black 1px;">
-                                        <label for="check_in_date" class="form-label">Check-in Date</label>
-                                        <input type="date" class="paragraphs form-control" id="rent_check_in_date" name="check_in_date" required>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="modal fade" id="seeMoreModal" tabindex="-1" aria-labelledby="seeMoreModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
@@ -358,29 +193,8 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
 
-                                    <div class="modal-body">
-                                        <div class="order-item d-flex justify-content-between align-items-center border-bottom pb-2 mb-2">
-                                            <div>
-                                                <div class="category" style="font-size: 12px; color: gray;">Junkfood</div>
-                                                <div class="name fw-bold">Mang Juan | Chicharon</div>
-                                            </div>
-
-                                            <div class="text-end">
-                                                <div>₱12.00</div>
-                                                <div>1 pcs</div>
-                                            </div>
-                                        </div>
-
-                                        <div class="order-item d-flex justify-content-between align-items-center border-bottom pb-2 mb-2">
-                                            <div>
-                                                <div class="category" style="font-size: 12px; color: gray;">Softdrink</div>
-                                                <div class="name fw-bold">Coke | Softdrink</div>
-                                            </div>
-                                            <div class="text-end">
-                                                <div>₱24.00</div>
-                                                <div>2 pcs</div>
-                                            </div>
-                                        </div>
+                                    <div class="modal-body" id="order_items_list">
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -400,8 +214,8 @@
 
         <footer class="footer mt-auto">
             <div class="container d-flex flex-row justify-content-between p-4">
-                <div><a href="../Webpages/aboutUs.html"><b>About Us</b></a></div>
-                <div><a href="../Webpages/contactUs.html"><b>Contact Us</b></a></div>
+                <div><a href="../Webpages/aboutUs.php"><b>About Us</b></a></div>
+                <div><a href="../Webpages/contactUs.php"><b>Contact Us</b></a></div>
                 <div>Copyright © <b>2025</b>. All rights reserved.</div>
             </div>
         </footer>
@@ -409,4 +223,5 @@
 
     <script src="../../js/script.js"></script>
 </body>
+
 </html>

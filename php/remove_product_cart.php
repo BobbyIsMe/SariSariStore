@@ -15,7 +15,7 @@ if (!isset($product_id)) {
 
 $stmt = $con->prepare("
     DELETE FROM Cart_Items
-    WHERE cart_id = (SELECT cart_id FROM Carts WHERE user_id = ? AND type = 'cart') 
+    WHERE cart_id = (SELECT cart_id FROM Carts WHERE user_id = ? AND type = 'cart' AND status IN ('pending', 'rejected')) 
     AND product_id = ?
 ");
 $stmt->bind_param('ii', $user_id, $product_id);

@@ -45,7 +45,8 @@ document.getElementById("reserve").addEventListener("click", () => {
         .then(res => res.json())
         .then(data => {
             if (data.status === 200) {
-                window.location.replace("../html/Orders/order.php");
+                alert(data.message);
+                window.location.replace("../../html/Orders/order.php");
             } else {
                 alert(data.message);
             }
@@ -129,7 +130,7 @@ function loadCart() {
             `;
                 detailsBody.innerHTML += `
             <div class="summary_item">
-                                    <div>${item.brand} | ${item.item_name}</div>
+                                    <div><strong>${item.item_qty}x</strong> ${item.brand} | ${item.item_name} (${item.variation_name})</div>
                                     <div>₱${item.subtotal}</div>
                                 </div>
             `;

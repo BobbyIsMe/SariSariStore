@@ -11,8 +11,9 @@
     <link rel="stylesheet" href="../../css/cart.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="../../js/auth.js"></script>
-    <script type="text/javascript" src="../../js/load_sidebar.js"></script>
+    <script type="text/javascript" src="../../js/load_sidebar.js" defer></script>
     <script type="text/javascript" src="../../js/cart_controller.js" defer></script>
+    <script type="text/javascript" src="../../js/notifications_controller.js" defer></script>
     <style>
         * {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -37,8 +38,8 @@
                 <div class="d-flex flex-grow-1">
 
                     <div class="col-10 d-flex flex-row">
-                        <input type="text" class="form-control" placeholder="Search">
-                        <button class="btn btn-light search-button" type="button" aria-label="Search">
+                        <input type="text" class="form-control" id="search_input" placeholder="Search">
+                        <button class="btn btn-light search-button" type="button" id="search_button" aria-label="Search">
                             <svg class="search-icon" xmlns="http://www.w3.org/2000/svg"
                                 viewBox="-81.92 -81.92 1187.84 1187.84">
                                 <path d="m795.904 750.72 124.992 124.928a32 32 0 0 1-45.248 
@@ -98,7 +99,7 @@
 
                     <div class="dropdown">
                         <button class="btn nav-icon d-flex flex-row" aria-label="Notifications" type="button"
-                            id="notificationDropdown" data-bs-toggle="modal" aria-expanded="false"
+                            id="notifications" data-bs-toggle="modal" aria-expanded="false"
                             data-bs-target="#notificationModal">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                 <path d="M12.0196 2.91016C8.7096 2.91016 6.0196 5.60016 6.0196 8.91016
@@ -116,59 +117,24 @@
                         12.0195 22.0601C11.1995 22.0601 10.4395 21.7201
                         9.89953 21.1801C9.35953 20.6401 9.01953 19.8801 9.01953 19.0601" />
                             </svg>
-                            <div class="notification-badge">3</div>
+                            <div id="notification_count"></div>
                         </button>
 
-                        <div class="modal fade" id="notificationModal" tabindex="-1"
-                            aria-labelledby="notificationModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content p-3">
                                     <div class="modal-header border-0">
                                         <h5 class="modal-title" id="notificationModalLabel">Notifications</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body" style=" overflow-y: auto;">
-                                        <div class="notification_card d-flex mb-3">
-                                            <div class="col-1" style="background-color: red;"></div>
-                                            <div class="d-flex flex-column flex-grow-1">
-                                                <div class="fw-bold">Order ID# 3</div>
-                                                <div class="notification_message">Your reservation has been rejected
-                                                </div>
-                                                <small class="text-muted">3/5/25 1:40 AM</small>
-                                            </div>
-                                        </div>
-                                        <div class="notification_card d-flex mb-3">
-                                            <div class="col-1" style="background-color: rgb(217, 255, 0);"></div>
-                                            <div class="d-flex flex-column flex-grow-1">
-                                                <div class="fw-bold">Order ID# 3</div>
-                                                <div class="notification_message">Your reservation has been
-                                                    approvedjdsiahdshdsahdshdsahdiashiudashudashuidshaiudhsaiudhsauidhsauidhsauidhsuaihdasuihdsuiahdas
-                                                </div>
-                                                <small class="text-muted">3/5/25 10:01 AM</small>
-                                            </div>
-                                        </div>
-                                        <div class="notification_card d-flex mb-3">
-                                            <div class="col-1" style="background-color: rgb(185, 185, 185);"></div>
-                                            <div class="d-flex flex-column flex-grow-1">
-                                                <div class="fw-bold">Order ID# 3</div>
-                                                <div class="notification_message">Your reservation has been closed</div>
-                                                <small class="text-muted">3/5/25 12:00 PM</small>
-                                            </div>
-                                        </div>
-
+                                        <div id="notifications_popup"></div>
                                         <div class="p-4 d-flex justify-content-center align-items-center gap-4">
-                                            <button class="navButton" type="button" id="prev_button">
-                                                Previous
-                                            </button>
+                                            <button class="navButton" type="button" id="notif_prev_button">Previous</button>
                                             <span>|</span>
-                                            <div id="page_number" class="paragraphs">
-                                                Page # out of #
-                                            </div>
+                                            <div id="notif_page_number" class="paragraphs">Page # out of #</div>
                                             <span>|</span>
-                                            <button class="navButton" type="button" id="next_button">
-                                                Next
-                                            </button>
+                                            <button class="navButton" type="button" id="notif_next_button">Next</button>
                                         </div>
                                     </div>
                                 </div>
@@ -233,7 +199,7 @@
                 </main>
             </div>
         </main>
-
+        <script type="text/javascript" src="../../js/session.js"></script>
         <footer class="footer mt-auto">
             <div class="container d-flex flex-row justify-content-between p-4">
                 <div><a href="../Webpages/aboutUs.php"><b>About Us</b></a></div>

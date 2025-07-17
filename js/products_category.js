@@ -43,7 +43,7 @@ document.getElementById("recent").addEventListener("click", function (event) {
         }
     );
     history.replaceState(null, "", "?" + newParams.toString());
-    recent = "ASC";
+    recent = "DESC";
     page = 1;
     updateTitle();
     loadPage(1, true);
@@ -78,7 +78,6 @@ document.getElementById("next_button").addEventListener("click", () => {
 
 function updateTitle() {
     const urlParams = new URLSearchParams(window.location.search);
-    console.log(urlParams);
     if (urlParams.has("recent")) {
         document.getElementById("category_title").textContent = 'New';
     } else if ([...urlParams].length >= 1) {

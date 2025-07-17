@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             document.getElementById("subtotal").textContent = `₱${Number(quantity * data.price).toFixed(2)}`;
 
-            document.getElementById("see_more").href = "../Webpages/category.php?category=" + data.category + "&subcategory=" + data.subcategory;
+            document.getElementById("see_more").href = "../Webpages/category.php?category=" + data.category;
 
             const dropdown = document.getElementById("variations_dropdown");
             fetch("../../php/get_variations.php" + "?product_id=" + urlParams.get("product_id"))

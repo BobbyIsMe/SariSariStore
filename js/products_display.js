@@ -30,6 +30,7 @@ function loadPage(page, all, id = null) {
     if (stock_qty != null && stock_qty != "") query += `&stock_qty=${stock_qty}`;
     if (item_name != null && item_name != "") query += `&item_name=${item_name}`;
     if (total_sales != null && total_sales != "") query += `&total_sales=${total_sales}`;
+    if (recent != null && recent != "") query += `&recent=${recent}`;
     if (date_restocked != null && date_restocked != "") query += `&date_restocked=${date_restocked}`;
 
     const tableBody = document.getElementById(id != null ? id : "products_list");
