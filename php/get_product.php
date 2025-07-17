@@ -25,7 +25,7 @@ if ($result && $result->num_rows > 0) {
         'brand' => $row['brand'],
         'stock_qty' => $row['stock_qty'],
         'price' => $row['price'],
-        'item_details' => $row['item_details']
+        'item_details' => nl2br(htmlspecialchars($row['item_details']))
     ]);
 } else {
     echo json_encode(['status' => 404, 'message' => 'Product not found.', 'product_id' => null]);

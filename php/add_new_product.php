@@ -101,7 +101,7 @@ if ($edit === 'add') {
 
     try {
         $stmt = $con->prepare("
-        SELECT image, price 
+        SELECT image, price, stock_qty 
         FROM Products 
         WHERE product_id = ?");
         $stmt->bind_param('i', $product_id);
@@ -115,6 +115,7 @@ if ($edit === 'add') {
         $row = $result->fetch_assoc();
         $image_old_name = $row['image'];
         $old_price = $row['price'];
+        $old_qty = $row['stock_qty'];
 
         if ($old_price != $price) {
             $stmt = $con->prepare("
@@ -146,7 +147,7 @@ if ($edit === 'add') {
         }
         $stmt = $con->prepare("
         UPDATE Products 
-        SET " . $img . "item_name = ?, category_id = ?, brand = ?, stock_qty = ?, item_details = ?, price = ?, date_time_restocked = NOW()
+        SET " . $img . "item_name = ?, category_id = ?, brand = ?, stock_qty = ?, item_details = ?, price = ?" . ($old_qty != $stock_qty ? ", date_time_restocked = CURRENT_TIMESTAMP" : "") . "
         WHERE product_id = ?
         ");
         $stmt->bind_param($params, ...$values);

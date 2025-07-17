@@ -21,7 +21,7 @@
 
     <div class="header">
       <div class="container-fluid d-flex flex-row align-items-center text-center py-2" style="gap: 40px;">
-                <a href="../Webpages/homepage.html" class="text-decoration-none">
+                <a href="../Webpages/homepage.php" class="text-decoration-none">
                   <h5 class="mb-0"><b>Cerina's Sari2Store</b></h5>
                 </a>
                 <div class="d-flex flex-grow-1">
@@ -50,15 +50,15 @@
                             Profile
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                          <a class="dropdown-item" href="../Admin/inventoryPage.html">Inventory</a>
-                          <a class="dropdown-item" href="../Admin/staffPage.html">Staff</a>
+                          <a class="dropdown-item" href="../Admin/inventoryPage.php">Inventory</a>
+                          <a class="dropdown-item" href="../Admin/staffPage.php">Staff</a>
                           <a class="dropdown-item" id="authLink" href="#" onclick="signoutClick(event)">Logout</a>
                       </ul>
                     </div>
 
                 </div>
                 <div class="nav-icons d-flex gap-3 ms-3">
-                <button class="btn nav-icon" onclick="window.location.href='../Cart/cart.html'" aria-label="Cart">
+                <button class="btn nav-icon" onclick="window.location.href='../Cart/cart.php'" aria-label="Cart">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path
                         d="M6.29977 5H21L19 12H7.37671M20 16H8L6 3H3
@@ -75,7 +75,7 @@
                     </svg>
                 </button>
 
-                <button class="btn nav-icon" onclick="window.location.href='../Orders/order.html'"
+                <button class="btn nav-icon" onclick="window.location.href='../Orders/order.php'"
                         aria-label="Order">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path
@@ -234,8 +234,8 @@
 
     <footer class="footer mt-auto">
       <div class="container d-flex flex-row justify-content-between p-4">
-        <div><a href="aboutUs.html"><b>About Us</b></a></div>
-        <div><a href="contactUs.html"><b>Contact Us</b></a></div>
+        <div><a href="aboutUs.php"><b>About Us</b></a></div>
+        <div><a href="contactUs.php"><b>Contact Us</b></a></div>
         <div>Copyright © <b>2025</b>. All rights reserved.</div>
       </div>
     </footer>

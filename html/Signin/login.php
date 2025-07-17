@@ -1,9 +1,9 @@
 <?php
-session_start();
-if (isset($_SESSION["user_id"])) {
-    header("Location: ../../html/Webpages/homepage.php");
-    exit();
-}
+// session_start();
+// if (isset($_SESSION["user_id"])) {
+//     header("Location: ../../html/Webpages/homepage.php");
+//     exit();
+// }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +15,7 @@ if (isset($_SESSION["user_id"])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../css/navbarFooter.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="text/javascript" src="../../js/auth.js"></script>
+    <!-- <script type="text/javascript" src="../../js/auth.js"></script> -->
     <style>
         * {
             font-family: Verdana, Geneva, Tahoma, sans-serif;

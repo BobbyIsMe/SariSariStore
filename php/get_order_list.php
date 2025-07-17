@@ -48,13 +48,13 @@ if ($totalRows == 0) {
 }
 
 $stmt = $con->prepare("
-SELECT ca.cart_id, CONCAT(n.fname, ' ', n.lname) AS name, ca.status, ca.date_time_deadline, ca.date_time_received, ca.date_time_created, ca.total, COUNT(c.cart_id) AS total_items 
+SELECT ca.cart_id, CONCAT(n.fname, ' ', n.lname) AS name, ca.status, ca.date_time_deadline, ca.date_time_received, ca.date_time_created, COUNT(c.cart_id) AS total_items 
 FROM Carts ca
 JOIN Cart_Items c ON ca.cart_id = c.cart_id
 JOIN Users u ON ca.user_id = u.user_id
 JOIN Names n ON u.name_id = n.name_id "
     . $filter . " 
-GROUP BY ca.cart_id, name, ca.status, ca.date_time_deadline, ca.date_time_received, ca.date_time_created, ca.total " . "LIMIT $total OFFSET $offset");
+GROUP BY ca.cart_id, name, ca.status, ca.date_time_deadline, ca.date_time_received, ca.date_time_created " . "LIMIT $total OFFSET $offset");
 if (!empty($params))
     $stmt->bind_param($params, ...$values);
 $stmt->execute();
@@ -68,7 +68,6 @@ while ($row = $result->fetch_assoc()) {
         'date_time_deadline' => $row['date_time_deadline'] !== null ? (new DateTime($row['date_time_deadline']))->format('m/d/y h:i A') : 'TBD',
         'date_time_received' => $row['date_time_received'] !== null ? (new DateTime($row['date_time_received']))->format('m/d/y h:i A') : 'TBD',
         'date_time_created' => (new DateTime($row['date_time_created']))->format('m/d/y h:i A'),
-        'total' => $row['total'],
         'total_items' => $row['total_items']
     ];
     $results++;

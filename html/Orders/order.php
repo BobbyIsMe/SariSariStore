@@ -10,10 +10,10 @@
     <link rel="stylesheet" href="../../css/webpageBody.css">
     <link rel="stylesheet" href="../../css/cart.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="text/javascript" src="../../js/auth.js"></script>
+    <!-- <script type="text/javascript" src="../../js/auth.js"></script>
     <script type="text/javascript" src="../../js/load_sidebar.js" defer></script>
     <script type="text/javascript" src="../../js/order_controller.js" defer></script>
-    <script type="text/javascript" src="../../js/notifications_controller.js" defer></script>
+    <script type="text/javascript" src="../../js/notifications_controller.js" defer></script> -->
     <style>
         * {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -55,12 +55,12 @@
                         <button id="profile_dropdown" class="btn btn-outline-secondary dropdown-toggle" type="button"
                             data-bs-toggle="dropdown">Profile</button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <?php session_start(); ?>
+                            <!-- <?php session_start(); ?>
                             <?php if (isset($_SESSION['staff_type']) && $_SESSION['staff_type'] == 'staff'): ?>
                                 <a class="dropdown-item" id="adminLink" href="../Admin/staffPage.php">Staff</a>
                             <?php elseif (isset($_SESSION['staff_type']) && $_SESSION['staff_type'] == 'inventory'): ?>
                                 <a class="dropdown-item" id="adminLink" href="../Admin/inventoryPage.php">Inventory</a>
-                            <?php endif; ?>
+                            <?php endif; ?> -->
                             <a class="dropdown-item" id="authLink" onclick="signoutClick(event)">Logout</a>
                         </ul>
                     </div>
@@ -157,7 +157,14 @@
                     <aside class="item_nav flex-column align-items-start text-start">
                         <h6>Categories</h6>
                         <hr>
-                        <div id="sidebar"></div>
+                        <div id="sidebar">
+                            <details class="category">
+                                <summary>${category}</summary>
+                                <ul class="subcategory">
+                                    <a href="../Webpages/category.php?category=${category}&subcategory=${item.subcategory}">• ${item.subcategory}</a>
+                                </ul>
+                            </details>
+                        </div>
                     </aside>
                 </div>
 
@@ -170,6 +177,46 @@
                             <div class="cart_items">
                                 <h4><b id="order_number">Order</b></h4>
                                 <div id="order_items">
+                                    <div class="cart_item">
+
+                                        <div class="item_image">
+                                            <img src="../../img/bembi.jpg" alt="img" style="width: 100%; height: 100%;">
+                                        </div>
+
+                                        <!-- details-->
+                                        <div style="flex: 1; ">
+                                            <div class="d-flex flex-row g-2"
+                                                style="gap: 20px; font-size: 12px; color: gray;">
+                                                <div class="category">${item.category}</div>
+                                                <div>|</div>
+                                                <div class="category">${item.subcategory}</div>
+                                            </div>
+
+                                            <div class="name" style="font-weight: bold;">${item.brand} | ${item.item_name}</div>
+                                            <div style="font-size: 15px;">
+                                                ${item.variation_name}
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex flex-row align-items-center" style="gap:20px">
+                                            <div style="width: auto; text-align: right;">₱${item.subtotal}</div>
+                                            <div class="d-flex flex-column align-items-center text-center"
+                                                style="gap: 10px; ">
+                                                <div readonly
+                                                    style="height: 15px; width: 100px; font-size: 12PX; color: red; ">
+                                                </div>
+                                                <div>
+                                                    <div>
+                                                        ${item.item_qty} pcs
+                                                    </div>
+                                                </div>
+                                                <div style="font-size: 10px; color: gray;">${item.stock_qty} in Stock</div>
+                                            </div>
+                                            <div>
+
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -178,6 +225,10 @@
                                 <h3>Order Details</h3>
                                 <!-- item -->
                                 <div id="order_details">
+                                    <div class="summary_item">
+                                        <div><strong>${item.item_qty}x</strong> ${item.brand} | ${item.item_name} (${item.variation_name})</div>
+                                        <div>₱${item.subtotal}</div>
+                                    </div>
                                 </div>
                                 <br>
                                 <div
@@ -209,7 +260,7 @@
             </div>
         </footer>
     </div>
-    <script type="text/javascript" src="../../js/session.js"></script>
+    <!-- <script type="text/javascript" src="../../js/session.js"></script> -->
 </body>
 
 </html>

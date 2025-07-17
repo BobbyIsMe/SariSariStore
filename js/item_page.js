@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // document.getElementById("stock_qty").textContent = (data.stock_quantity > 0) ? 1 : 0;
             document.getElementById("price").textContent = `₱${data.price}`;
              document.getElementById("price").value = data.price;
-            document.getElementById("item_details").textContent = data.item_details;
+            document.getElementById("item_details").innerHTML = data.item_details;
 
             document.getElementById("add_product").textContent = (stock_quantity > 0) ? "Add to Cart" : "Out of Stock";
             document.getElementById("add_product").disabled = (stock_quantity === 0);

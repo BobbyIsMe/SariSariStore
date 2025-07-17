@@ -10,11 +10,11 @@
   <link rel="stylesheet" href="../../css/webpageBody.css">
   <link rel="stylesheet" href="../../css/category.css">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script type="text/javascript" src="../../js/auth.js"></script>
+  <!-- <script type="text/javascript" src="../../js/auth.js"></script>
   <script type="text/javascript" src="../../js/load_sidebar.js" defer></script>
   <script type="text/javascript" src="../../js/products_display.js" defer></script>
   <script type="text/javascript" src="../../js/products_category.js" defer></script>
-  <script type="text/javascript" src="../../js/notifications_controller.js" defer></script>
+  <script type="text/javascript" src="../../js/notifications_controller.js" defer></script> -->
   <style>
     * {
       font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -67,12 +67,12 @@
               Profile
             </button>
             <ul class="dropdown-menu dropdown-menu-end">
-              <?php session_start(); ?>
+              <!-- <?php session_start(); ?>
               <?php if (isset($_SESSION['staff_type']) && $_SESSION['staff_type'] == 'staff'): ?>
                 <a class="dropdown-item" id="adminLink" href="../Admin/staffPage.php">Staff</a>
               <?php elseif (isset($_SESSION['staff_type']) && $_SESSION['staff_type'] == 'inventory'): ?>
                 <a class="dropdown-item" id="adminLink" href="../Admin/inventoryPage.php">Inventory</a>
-              <?php endif; ?>
+              <?php endif; ?> -->
               <a class="dropdown-item" id="authLink" onclick="signoutClick(event)">Logout</a>
             </ul>
           </div>
@@ -166,7 +166,14 @@
           <aside class="item_nav flex-column align-items-start text-start">
             <h6>Categories</h6>
             <hr>
-            <div id="sidebar"></div>
+            <div id="sidebar">
+              <details class="category">
+                <summary>${category}</summary>
+                <ul class="subcategory">
+                  <a href="../Webpages/category.php?category=${category}&subcategory=${item.subcategory}">• ${item.subcategory}</a>
+                </ul>
+              </details>
+            </div>
           </aside>
         </div>
 
@@ -181,6 +188,18 @@
           </div>
 
           <div class="product_list d-flex flex-wrap gap-4" id="products_list">
+            <div class="product_card">
+              <a href="../../html/Webpages/itemDescription.php?product_id=${product.product_id}">
+                <div class="image"><img src="../../img/bembi.jpg" alt="img"></div>
+              </a>
+              <div class="category" style="font-size: 10px;">${product.category} | ${product.subcategory}</div>
+              <a>
+                <div class="name">${product.brand} | ${product.item_name}</div>
+                <div class="price"><strong>₱${product.price}</strong></div>
+                <button class="add_to_cart" style="width: 100%; margin-top: 5px;">${in_stock ? "Add to Cart" : "Out of Stock"}</button>
+              </a>
+
+            </div>
           </div>
           <div class="p-4 d-flex justify-content-center align-items-center gap-4">
             <button class="navButton" type="button" id="prev_button">

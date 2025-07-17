@@ -10,11 +10,11 @@
     <link rel="stylesheet" href="../../css/webpageBody.css">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="text/javascript" src="../../js/auth.js"></script>
+    <!-- <script type="text/javascript" src="../../js/auth.js"></script>
     <script type="text/javascript" src="../../js/load_sidebar.js" defer></script>
     <script type="text/javascript" src="../../js/products_display.js" defer></script>
     <script type="text/javascript" src="../../js/products_homepage.js" defer></script>
-    <script type="text/javascript" src="../../js/notifications_controller.js" defer></script>
+    <script type="text/javascript" src="../../js/notifications_controller.js" defer></script> -->
     <style>
         * {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -53,12 +53,12 @@
                         <button id="profile_dropdown" class="btn btn-outline-secondary dropdown-toggle" type="button"
                             data-bs-toggle="dropdown">Profile</button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <?php session_start(); ?>
+                            <!-- <?php session_start(); ?>
                             <?php if (isset($_SESSION['staff_type']) && $_SESSION['staff_type'] == 'staff'): ?>
                                 <a class="dropdown-item" id="adminLink" href="../Admin/staffPage.php">Staff</a>
                             <?php elseif (isset($_SESSION['staff_type']) && $_SESSION['staff_type'] == 'inventory'): ?>
                                 <a class="dropdown-item" id="adminLink" href="../Admin/inventoryPage.php">Inventory</a>
-                            <?php endif; ?>
+                            <?php endif; ?> -->
                             <a class="dropdown-item" id="authLink" onclick="signoutClick(event)">Logout</a>
                         </ul>
                     </div>
@@ -151,7 +151,14 @@
                     <aside class="item_nav flex-column align-items-start text-start">
                         <h6>Categories</h6>
                         <hr>
-                        <div id="sidebar"></div>
+                        <div id="sidebar">
+                            <details class="category">
+                                <summary>${category}</summary>
+                                <ul class="subcategory">
+                                    <a href="../Webpages/category.php?category=${category}&subcategory=${item.subcategory}">• ${item.subcategory}</a>
+                                </ul>
+                            </details>
+                        </div>
                     </aside>
                 </div>
 
@@ -164,7 +171,18 @@
                             </div>
 
                             <div id="top_selling" class="product_list">
+                                <div class="product_card">
+                                    <a href="../../html/Webpages/itemDescription.php?product_id=${product.product_id}">
+                                        <div class="image"><img src="../../img/bembi.jpg" alt="img"></div>
+                                    </a>
+                                    <div class="category" style="font-size: 10px;">${product.category} | ${product.subcategory}</div>
+                                    <a>
+                                        <div class="name">${product.brand} | ${product.item_name}</div>
+                                        <div class="price"><strong>₱${product.price}</strong></div>
+                                        <button class="add_to_cart" style="width: 100%; margin-top: 5px;">${in_stock ? "Add to Cart" : "Out of Stock"}</button>
+                                    </a>
 
+                                </div>
                             </div>
                         </section>
                     </div>
@@ -178,6 +196,18 @@
                             </div>
 
                             <div id="restocked_items" class="product_list">
+                                <div class="product_card">
+                                    <a href="../../html/Webpages/itemDescription.php?product_id=${product.product_id}">
+                                        <div class="image"><img src="../../img/bembi.jpg" alt="img"></div>
+                                    </a>
+                                    <div class="category" style="font-size: 10px;">${product.category} | ${product.subcategory}</div>
+                                    <a>
+                                        <div class="name">${product.brand} | ${product.item_name}</div>
+                                        <div class="price"><strong>₱${product.price}</strong></div>
+                                        <button class="add_to_cart" style="width: 100%; margin-top: 5px;">${in_stock ? "Add to Cart" : "Out of Stock"}</button>
+                                    </a>
+
+                                </div>
                             </div>
                         </section>
                     </div>
@@ -185,16 +215,14 @@
                 </section>
             </div>
         </main>
-            <script type="text/javascript" src="../../js/session.js"></script>
+        <script type="text/javascript" src="../../js/session.js"></script>
         <footer class="footer mt-auto">
             <div class="container d-flex flex-row justify-content-between p-4">
-                <div><a href="../../Webpages/aboutUs.php"><b>About Us</b></a></div>
-                <div><a href="../../Webpages/contactUs.php"><b>Contact Us</b></a></div>
+                <div><a href="../../html/Webpages/aboutUs.php"><b>About Us</b></a></div>
+                <div><a href="../../html/Webpages/contactUs.php"><b>Contact Us</b></a></div>
                 <div>Copyright © <b>2025</b>. All rights reserved.</div>
             </div>
         </footer>
-
-        <script src="../../js/script.js"></script>
 </body>
 
 </html>

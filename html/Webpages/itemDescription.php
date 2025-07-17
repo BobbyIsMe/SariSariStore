@@ -1,21 +1,21 @@
 <?php
-include_once("../../php/db_connect.php");
-$product_id = $_GET['product_id'] ?? null;
+// include_once("../../php/db_connect.php");
+// $product_id = $_GET['product_id'] ?? null;
 
-$stmt = $con->prepare("
-SELECT item_name,brand FROM Products WHERE product_id = ? LIMIT 1");
-$stmt->bind_param('i', $product_id);
-$stmt->execute();
-$result = $stmt->get_result();
-$stmt->close();
-if (!$result || $result->num_rows === 0) {
-    header("Location: ../../html/Webpages/homepage.php");
-    exit();
-}
+// $stmt = $con->prepare("
+// SELECT item_name,brand FROM Products WHERE product_id = ? LIMIT 1");
+// $stmt->bind_param('i', $product_id);
+// $stmt->execute();
+// $result = $stmt->get_result();
+// $stmt->close();
+// if (!$result || $result->num_rows === 0) {
+//     header("Location: ../../html/Webpages/homepage.php");
+//     exit();
+// }
 
-$row = $result->fetch_assoc();
-$item_name = $row['item_name'];
-$brand = $row['brand'];
+// $row = $result->fetch_assoc();
+// $item_name = $row['item_name'];
+// $brand = $row['brand'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,11 +29,11 @@ $brand = $row['brand'];
     <link rel="stylesheet" href="../../css/webpageBody.css">
     <link rel="stylesheet" href="../../css/itemDescription.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="text/javascript" src="../../js/auth.js"></script>
+    <!-- <script type="text/javascript" src="../../js/auth.js"></script>
     <script type="text/javascript" src="../../js/load_sidebar.js" defer></script>
     <script type="text/javascript" src="../../js/products_display.js" defer></script>
     <script type="text/javascript" src="../../js/item_page.js" defer></script>
-    <script type="text/javascript" src="../../js/notifications_controller.js" defer></script>
+    <script type="text/javascript" src="../../js/notifications_controller.js" defer></script> -->
     <style>
         * {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -76,11 +76,11 @@ $brand = $row['brand'];
                         <button id="profile_dropdown" class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">Profile</button>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <?php ?>
-                            <?php if (isset($_SESSION['staff_type']) && $_SESSION['staff_type'] == 'staff'): ?>
+                            <!-- <?php if (isset($_SESSION['staff_type']) && $_SESSION['staff_type'] == 'staff'): ?>
                                 <a class="dropdown-item" id="adminLink" href="../Admin/staffPage.php">Staff</a>
                             <?php elseif (isset($_SESSION['staff_type']) && $_SESSION['staff_type'] == 'inventory'): ?>
                                 <a class="dropdown-item" id="adminLink" href="../Admin/inventoryPage.php">Inventory</a>
-                            <?php endif; ?>
+                            <?php endif; ?> -->
                             <a class="dropdown-item" id="authLink" onclick="signoutClick(event)">Logout</a>
                         </ul>
                     </div>
@@ -171,7 +171,14 @@ $brand = $row['brand'];
                     <aside class="item_nav flex-column align-items-start text-start">
                         <h6>Categories</h6>
                         <hr>
-                        <div id="sidebar"></div>
+                        <div id="sidebar">
+                            <details class="category">
+                                <summary>${category}</summary>
+                                <ul class="subcategory">
+                                    <a href="../Webpages/category.php?category=${category}&subcategory=${item.subcategory}">• ${item.subcategory}</a>
+                                </ul>
+                            </details>
+                        </div>
                     </aside>
                 </div>
 
@@ -185,11 +192,11 @@ $brand = $row['brand'];
 
                                 <div>
                                     <div class="product_card" style="width: 300px; height: 100%;">
-                                        <div class="category" style="font-size: 10px;" id="category"></div>
-                                        <div class="name" id="item_name"></div>
-                                        <div class="price" id="price"><strong></strong></div>
+                                        <div class="category" style="font-size: 10px;" id="category">category_placeholder | subcategory_placeholder</div>
+                                        <div class="name" id="item_name">name_placeholder</div>
+                                        <div class="price" id="price"><strong>price_placeholder</strong></div>
                                         <br>
-                                        <div class="desc" id="item_details"></div>
+                                        <div class="desc" id="item_details">desc_placeholder</div>
                                         <br>
 
                                         <div class="product_controls">
@@ -202,10 +209,11 @@ $brand = $row['brand'];
                                             <div class="flex-grow-1">
                                                 <label for="itemVariation" class="form-label">Item Variation:</label>
                                                 <select class="form-select" id="variations_dropdown" name="itemVariation" required title="Select Option" style="width: 100%;">
+                                                    <option value="">Select Option</option>
                                                 </select>
                                             </div>
 
-                                            <div class="price" id="subtotal"></div>
+                                            <div class="price" id="subtotal">subtotal_placeholder</div>
                                             <button class="add_to_cart" id="add_product">Add To Cart</button>
                                         </div>
                                     </div>
@@ -220,7 +228,18 @@ $brand = $row['brand'];
                             </div>
 
                             <div class="d-flex flex-row" style="gap: 40px" id="products_list">
+                                <div class="product_card">
+                                    <a href="../../html/Webpages/itemDescription.php?product_id=${product.product_id}">
+                                        <div class="image"><img src="../../img/bembi.jpg" alt="img"></div>
+                                    </a>
+                                    <div class="category" style="font-size: 10px;">${product.category} | ${product.subcategory}</div>
+                                    <a>
+                                        <div class="name">${product.brand} | ${product.item_name}</div>
+                                        <div class="price"><strong>₱${product.price}</strong></div>
+                                        <button class="add_to_cart" style="width: 100%; margin-top: 5px;">${in_stock ? "Add to Cart" : "Out of Stock"}</button>
+                                    </a>
 
+                                </div>
                             </div>
                         </section>
                 </main>

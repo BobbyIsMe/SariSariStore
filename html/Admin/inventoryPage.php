@@ -1,9 +1,9 @@
 <?php
-session_start();
-if (!isset($_SESSION["user_id"]) && !isset($_SESSION["staff_type"]) || $_SESSION["staff_type"] != "inventory") {
-  header("Location: ../Signin/Login.php");
-  exit();
-}
+// session_start();
+// if (!isset($_SESSION["user_id"]) && !isset($_SESSION["staff_type"]) || $_SESSION["staff_type"] != "inventory") {
+//   header("Location: ../Signin/Login.php");
+//   exit();
+// }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,10 +17,10 @@ if (!isset($_SESSION["user_id"]) && !isset($_SESSION["staff_type"]) || $_SESSION
   <link rel="stylesheet" href="../../css/webpageBody.css">
   <link rel="stylesheet" href="../../css/cart.css">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script type="text/javascript" src="../../js/auth.js"></script>
+  <!-- <script type="text/javascript" src="../../js/auth.js"></script>
   <script type="text/javascript" src="../../js/load_sidebar.js" defer></script>
   <script type="text/javascript" src="../../js/manage_inventory.js" defer></script>
-  <script type="text/javascript" src="../../js/notifications_controller.js" defer></script>
+  <script type="text/javascript" src="../../js/notifications_controller.js" defer></script> -->
   <style>
     * {
       font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -67,12 +67,12 @@ if (!isset($_SESSION["user_id"]) && !isset($_SESSION["staff_type"]) || $_SESSION
             <button id="profile_dropdown" class="btn btn-outline-secondary dropdown-toggle" type="button"
               data-bs-toggle="dropdown">Profile</button>
             <ul class="dropdown-menu dropdown-menu-end">
-              <?php ?>
+              <!-- <?php ?>
               <?php if (isset($_SESSION['staff_type']) && $_SESSION['staff_type'] == 'staff'): ?>
                 <a class="dropdown-item" id="adminLink" href="../Admin/staffPage.php">Staff</a>
               <?php elseif (isset($_SESSION['staff_type']) && $_SESSION['staff_type'] == 'inventory'): ?>
                 <a class="dropdown-item" id="adminLink" href="../Admin/inventoryPage.php">Inventory</a>
-              <?php endif; ?>
+              <?php endif; ?> -->
               <a class="dropdown-item" id="authLink" onclick="signoutClick(event)">Logout</a>
             </ul>
           </div>
@@ -111,7 +111,7 @@ if (!isset($_SESSION["user_id"]) && !isset($_SESSION["staff_type"]) || $_SESSION
           </button>
 
           <div class="dropdown">
-            <button class="btn nav-icon d-flex flex-row" aria-label="Notifications" type="button" id="notifications"  data-bs-toggle="modal" aria-expanded="false" data-bs-target="#notificationModal">
+            <button class="btn nav-icon d-flex flex-row" aria-label="Notifications" type="button" id="notifications" data-bs-toggle="modal" aria-expanded="false" data-bs-target="#notificationModal">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <path d="M12.0196 2.91016C8.7096 2.91016 6.0196 5.60016 6.0196 8.91016
                           V11.8002C6.0196 12.4102 5.7596 13.3402 5.4496 13.8602
@@ -214,7 +214,91 @@ if (!isset($_SESSION["user_id"]) && !isset($_SESSION["staff_type"]) || $_SESSION
 
 
 
-            <div id="product_list"></div>
+            <div id="product_list">
+              <div class="cart-container"
+                style="display: flex; gap: 20px; padding: 20px; background: #f5f5f5; justify-content: center; align-items: center; ">
+                <div class="item_image" style="width: 300px; height: 400px;">
+                  <img src="../../img/${product.image}" alt="img" style="width: 100%; height: 100%; object-fit: contain;">
+                </div>
+                <!-- cart items-->
+                <div class="cart_items">
+                  <div>
+                    <h4><b>Product Details</b></h4>
+                  </div>
+
+                  <br>
+                  <div class="d-flex flex-row col-12">
+                    <div class="col-6 d-flex flex-column gap-1">
+                      <h5><b>Name</b><br></h5>
+                      <div>${product.brand} | ${product.item_name}</div>
+                    </div>
+                    <div class="col-6 d-flex flex-column gap-1">
+                      <h5><b>Item ID</b><br></h5>
+                      <div>${product.product_id}</div>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="d-flex flex-row col-12">
+                    <div class="col-6 d-flex flex-column gap-1">
+                      <h5><b>Category</b><br></h5>
+                      <div>${product.category}</div>
+                    </div>
+                    <div class="col-6 d-flex flex-column gap-1">
+                      <h5><b>Subcategory</b><br></h5>
+                      <div>${product.subcategory}</div>
+                    </div>
+                  </div>
+
+
+                  <br>
+
+                  <div class="d-flex flex-column">
+                    <h5><b>Description</b></h5>
+                    <div class="description-text">
+                      ${product.item_details}
+                    </div>
+                  </div>
+
+                  <div class="col-12 d-flex flex-row" style="padding-top: 20px;">
+                    <div class="col-6 d-flex flex-column gap-1">
+                      <h5><b>Price</b><br></h5>
+                      <div>₱${product.price}</div>
+                    </div>
+                    <div class="col-6 d-flex flex-column gap-1">
+                      <h5><b>Current Quantity</b><br></h5>
+                      <div>${product.stock_qty}</div>
+                    </div>
+
+                  </div>
+
+
+
+
+
+                </div>
+
+                <!--order summary-->
+                <div class="order_summary" style="background-color:  #f5f5f5;">
+
+                  <div class="d-flex flex-column align-items-center p-4" style="gap: 20px;">
+
+                    <button id="editItem" class="btn adminBtn " type="button" style="background-color: #e6cc8c;;"
+                      data-bs-toggle="modal" data-bs-target="#editItemModal">
+                      Edit Item
+                    </button>
+                    <button id="editVariations" type="button" class="btn adminBtn" style="background-color: #e6cc8c;"
+                      data-bs-toggle="modal" data-bs-target="#editVariationsModal">
+                      Edit Variations
+                    </button>
+                    <button id="remove" class="btn adminBtn " type="button" style="background-color: red; color: white;">
+                      Remove
+                    </button>
+                  </div>
+
+
+                </div>
+              </div>
+            </div>
             <div class="p-4 d-flex justify-content-center align-items-center gap-4">
               <button class="navButton" type="button" id="prev_button">
                 Previous
@@ -254,7 +338,11 @@ if (!isset($_SESSION["user_id"]) && !isset($_SESSION["staff_type"]) || $_SESSION
               </div>
 
               <div id="edit_variations">
-
+                <div class="d-flex flex-row align-items-center gap-2 variation_row">
+                  <input type="text" class="form-control" style="width: 220px; font-size: 14px;"
+                    value="${variation.variation_name}" name="newVariation" data-id="${variation.variation_id}" required>
+                  <button type="button" class="btn btn-danger small" style="width: 140px;">Remove</button>
+                </div><br>
               </div>
 
               <div class="d-flex justify-content-center">
@@ -356,7 +444,12 @@ if (!isset($_SESSION["user_id"]) && !isset($_SESSION["staff_type"]) || $_SESSION
               </select>
 
               <div id="edit_subcategories">
-
+                <div class="d-flex flex-row flex-wrap align-items-center gap-2 subcategory_row">
+                  <input type="text" class="form-control" style="width: 200px; font-size: 14px;"
+                    value="${item.subcategory}" placeholder="Subcategory Name" data-id="${item.category_id}" required>
+                  <button type="button" class="btn btn-danger small"
+                    style="width: 140px; font-size: 14px; white-space: nowrap;">Remove</button>
+                </div><br>
               </div>
 
               <div class="d-flex justify-content-center mt-2">
