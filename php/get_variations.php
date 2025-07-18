@@ -17,7 +17,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 $variations = [];
 if(!$result || $result->num_rows === 0) {
-    echo json_encode(['status' => 404, 'message' => 'No variations found.', $variations => null]);
+    echo json_encode(['status' => 404, 'message' => 'No variations found.', 'variations' => $variations]);
     exit();
 }
 

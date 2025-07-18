@@ -1,3 +1,10 @@
+<?php
+// session_start();
+// if (isset($_SESSION["user_id"])) {
+//     header("Location: ../../html/Webpages/homepage.php");
+//     exit();
+// }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,6 +15,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../css/navbarFooter.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- <script type="text/javascript" src="../../js/auth.js"></script> -->
     <style>
         * {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -44,19 +52,19 @@
         <main class="flex-fill">
             <div class="d-flex align-items-center justify-content-center p-4" style="min-height: 70vh;">
                 <div class="login-card text-center">
-                    <form>
+                    <form id="signinForm" method="POST" onsubmit="signinSubmit(event)">
                         <h4 class="mb-3"><b>LOGIN</b></h4>
                         <div class="mb-5">
-                            <input type="text" class="form-control" placeholder="">
+                            <input type="text" class="form-control" placeholder="" name="phone_number">
                             <label>Mobile Number</label>
                         </div>
                         <div class="mb-4">
-                            <input type="password" class="form-control" placeholder="">
+                            <input type="password" class="form-control" placeholder="" name="password">
                             <label>Password</label>
                         </div>
-                        <button class="btn login-btn"><b>LOGIN</b></button>
+                        <button class="btn login-btn" type="submit"><b>LOGIN</b></button>
                     </form>
-                    <p class="mt-2 mb-0">No account? Register <a href="registration.html">Here</a></p>
+                    <p class="mt-2 mb-0">No account? Register <a href="registration.php">Here</a></p>
                 </div>
             </div>
         </main>

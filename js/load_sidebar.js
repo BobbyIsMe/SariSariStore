@@ -11,7 +11,7 @@ function loadSidebar() {
             }
 
             Object.entries(sidebarData).forEach(([category, subcategories]) => {
-                const subListHTML = `
+                subListHTML = `
             <details class="category">
             <summary>${category}</summary>
             `;
@@ -32,6 +32,28 @@ function loadSidebar() {
         .catch(err => console.error("Failed to fetch sidebar categories:", err));
 }
 
+const searchInput = document.getElementById('search_input');
+const searchButton = document.getElementById('search_button');
+
 document.addEventListener('DOMContentLoaded', () => {
     loadSidebar();
+    const urlParams = new URLSearchParams(window.location.search);
+    if(urlParams.has("item_name") && [...urlParams].length === 1) {
+        searchInput.value = urlParams.get("item_name");
+    }
 });
+
+function handleSearch() {
+    const query = searchInput.value.trim();
+    if (query !== '') {
+        window.location.href = `../../html/Webpages/category.php?item_name=${query}`;
+    }
+}
+
+searchInput.addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') {
+        handleSearch();
+    }
+});
+
+searchButton.addEventListener('click', handleSearch);

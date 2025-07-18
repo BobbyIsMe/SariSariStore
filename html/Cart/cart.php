@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="../../css/webpageBody.css">
     <link rel="stylesheet" href="../../css/cart.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- <script type="text/javascript" src="../../js/auth.js"></script>
+    <script type="text/javascript" src="../../js/load_sidebar.js" defer></script>
+    <script type="text/javascript" src="../../js/cart_controller.js" defer></script>
+    <script type="text/javascript" src="../../js/notifications_controller.js" defer></script> -->
     <style>
         * {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -28,14 +32,14 @@
 
         <div class="header">
             <div class="container-fluid d-flex flex-row align-items-center text-center py-2" style="gap: 40px;">
-                <a href="../Webpages/homepage.html" class="text-decoration-none">
+                <a href="../Webpages/homepage.php" class="text-decoration-none">
                     <h5 class="mb-0"><b>Cerina's Sari2Store</b></h5>
                 </a>
                 <div class="d-flex flex-grow-1">
 
                     <div class="col-10 d-flex flex-row">
-                        <input type="text" class="form-control" placeholder="Search">
-                        <button class="btn btn-light search-button" type="button" aria-label="Search">
+                        <input type="text" class="form-control" id="search_input" placeholder="Search">
+                        <button class="btn btn-light search-button" type="button" id="search_button" aria-label="Search">
                             <svg class="search-icon" xmlns="http://www.w3.org/2000/svg"
                                 viewBox="-81.92 -81.92 1187.84 1187.84">
                                 <path d="m795.904 750.72 124.992 124.928a32 32 0 0 1-45.248 
@@ -50,15 +54,19 @@
                         <button id="profile_dropdown" class="btn btn-outline-secondary dropdown-toggle" type="button"
                             data-bs-toggle="dropdown">Profile</button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <a class="dropdown-item" href="../Admin/inventoryPage.html">Inventory</a>
-                            <a class="dropdown-item" href="../Admin/staffPage.html">Staff</a>
-                            <a class="dropdown-item" id="authLink" href="#" onclick="signoutClick(event)">Logout</a>
+                            <!-- <?php session_start(); ?>
+                            <?php if (isset($_SESSION['staff_type']) && $_SESSION['staff_type'] == 'staff'): ?>
+                                <a class="dropdown-item" id="adminLink" href="../Admin/staffPage.php">Staff</a>
+                            <?php elseif (isset($_SESSION['staff_type']) && $_SESSION['staff_type'] == 'inventory'): ?>
+                                <a class="dropdown-item" id="adminLink" href="../Admin/inventoryPage.php">Inventory</a>
+                            <?php endif; ?> -->
+                            <a class="dropdown-item" id="authLink" onclick="signoutClick(event)">Logout</a>
                         </ul>
                     </div>
 
                 </div>
                 <div class="nav-icons d-flex gap-3 ms-3">
-                    <button class="btn nav-icon" onclick="window.location.href='../Cart/cart.html'" aria-label="Cart">
+                    <button class="btn nav-icon" onclick="window.location.href='../Cart/cart.php'" aria-label="Cart">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <path d="M6.29977 5H21L19 12H7.37671M20 16H8L6 3H3
                         M9 20C9 20.5523 8.55228 21 8 21
@@ -73,7 +81,7 @@
                         </svg>
                     </button>
 
-                    <button class="btn nav-icon" onclick="window.location.href='../Orders/order.html'"
+                    <button class="btn nav-icon" onclick="window.location.href='../Orders/order.php'"
                         aria-label="Order">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <path d="M16 8H17.1597C18.1999 8 19.0664 8.79732
@@ -91,7 +99,7 @@
 
                     <div class="dropdown">
                         <button class="btn nav-icon d-flex flex-row" aria-label="Notifications" type="button"
-                            id="notificationDropdown" data-bs-toggle="modal" aria-expanded="false"
+                            id="notifications" data-bs-toggle="modal" aria-expanded="false"
                             data-bs-target="#notificationModal">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                 <path d="M12.0196 2.91016C8.7096 2.91016 6.0196 5.60016 6.0196 8.91016
@@ -109,59 +117,24 @@
                         12.0195 22.0601C11.1995 22.0601 10.4395 21.7201
                         9.89953 21.1801C9.35953 20.6401 9.01953 19.8801 9.01953 19.0601" />
                             </svg>
-                            <div class="notification-badge">3</div>
+                            <div id="notification_count"></div>
                         </button>
 
-                        <div class="modal fade" id="notificationModal" tabindex="-1"
-                            aria-labelledby="notificationModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content p-3">
                                     <div class="modal-header border-0">
                                         <h5 class="modal-title" id="notificationModalLabel">Notifications</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body" style=" overflow-y: auto;">
-                                        <div class="notification_card d-flex mb-3">
-                                            <div class="col-1" style="background-color: red;"></div>
-                                            <div class="d-flex flex-column flex-grow-1">
-                                                <div class="fw-bold">Order ID# 3</div>
-                                                <div class="notification_message">Your reservation has been rejected
-                                                </div>
-                                                <small class="text-muted">3/5/25 1:40 AM</small>
-                                            </div>
-                                        </div>
-                                        <div class="notification_card d-flex mb-3">
-                                            <div class="col-1" style="background-color: rgb(217, 255, 0);"></div>
-                                            <div class="d-flex flex-column flex-grow-1">
-                                                <div class="fw-bold">Order ID# 3</div>
-                                                <div class="notification_message">Your reservation has been
-                                                    approvedjdsiahdshdsahdshdsahdiashiudashudashuidshaiudhsaiudhsauidhsauidhsauidhsuaihdasuihdsuiahdas
-                                                </div>
-                                                <small class="text-muted">3/5/25 10:01 AM</small>
-                                            </div>
-                                        </div>
-                                        <div class="notification_card d-flex mb-3">
-                                            <div class="col-1" style="background-color: rgb(185, 185, 185);"></div>
-                                            <div class="d-flex flex-column flex-grow-1">
-                                                <div class="fw-bold">Order ID# 3</div>
-                                                <div class="notification_message">Your reservation has been closed</div>
-                                                <small class="text-muted">3/5/25 12:00 PM</small>
-                                            </div>
-                                        </div>
-
+                                        <div id="notifications_popup"></div>
                                         <div class="p-4 d-flex justify-content-center align-items-center gap-4">
-                                            <button class="navButton" type="button" id="prev_button">
-                                                Previous
-                                            </button>
+                                            <button class="navButton" type="button" id="notif_prev_button">Previous</button>
                                             <span>|</span>
-                                            <div id="page_number" class="paragraphs">
-                                                Page # out of #
-                                            </div>
+                                            <div id="notif_page_number" class="paragraphs">Page # out of #</div>
                                             <span>|</span>
-                                            <button class="navButton" type="button" id="next_button">
-                                                Next
-                                            </button>
+                                            <button class="navButton" type="button" id="notif_next_button">Next</button>
                                         </div>
                                     </div>
                                 </div>
@@ -183,43 +156,14 @@
                     <aside class="item_nav flex-column align-items-start text-start">
                         <h6>Categories</h6>
                         <hr>
-                        <details class="category">
-                            <summary>School Supplies</summary>
-                            <ul class="subcategory list-unstyled ms-3">
-                                <li><a href="../../Webpages/category.html"
-                                        onclick="updateCategory('School Supplies', 'Filler')">Filler</a></li>
-                            </ul>
-                        </details>
-                        <details class="category">
-                            <summary>Softdrinks</summary>
-                            <ul class="subcategory list-unstyled ms-3">
-                                <li><a href="../../Webpages/category.html"
-                                        onclick="updateCategory('Softdrinks', 'Juice')">Juice</a></li>
-                            </ul>
-                        </details>
-                        <details class="category">
-                            <summary>Powdered Drinks</summary>
-                            <ul class="subcategory list-unstyled ms-3">
-                                <li><a href="../../Webpages/category.html"
-                                        onclick="updateCategory('Powdered Drinks', 'Coffee')">Coffee</a></li>
-                            </ul>
-                        </details>
-                        <details class="category">
-                            <summary>Snacks</summary>
-                            <ul class="subcategory list-unstyled ms-3">
-                                <li><a href="../../Webpages/category.html"
-                                        onclick="updateCategory('Snacks', 'Junkfood')">Junkfood</a></li>
-                                <li><a href="../../Webpages/category.html"
-                                        onclick="updateCategory('Snacks', 'Biscuits')">Biscuits</a></li>
-                            </ul>
-                        </details>
-                        <details class="category">
-                            <summary>Hygiene</summary>
-                            <ul class="subcategory list-unstyled ms-3">
-                                <li><a href="../../Webpages/category.html"
-                                        onclick="updateCategory('Hygiene', 'Soap')">Soap</a></li>
-                            </ul>
-                        </details>
+                        <div id="sidebar">
+                            <details class="category">
+                                <summary>${category}</summary>
+                                <ul class="subcategory">
+                                    <a href="../Webpages/category.php?category=${category}&subcategory=${item.subcategory}">• ${item.subcategory}</a>
+                                </ul>
+                            </details>
+                        </div>
                     </aside>
                 </div>
 
@@ -230,118 +174,64 @@
 
                             <!-- cart items-->
                             <div class="cart_items">
-                                <h4><b>Cart</b></h4>
+                                <h4><b id="cart_number">Cart</b></h4>
 
                                 <!-- item-->
-                                <div class="cart_item">
+                                <div id="cart_items">
+                                    <div class="cart_item">
 
-                                    <div class="item_image">
-                                        <img src="" alt="img">
-                                    </div>
-
-                                    <!-- details-->
-                                    <div style="flex: 1; ">
-                                        <div class="d-flex flex-row g-2"
-                                            style="gap: 20px; font-size: 12px; color: gray;">
-                                            <div class="category">Snacks</div>
-                                            <div>|</div>
-                                            <div class="category">Junkfood</div>
+                                        <div class="item_image">
+                                            <img src="../../img/${item.image}" alt="img" style="width: 100px; height: 100px;">
                                         </div>
 
-                                        <div class="name" style="font-weight: bold;">Mang Juan | Chicharon</div>
-                                        <div style="font-size: 15px;">
-                                            Chilimansi
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex flex-row align-items-center" style="gap:20px">
-                                        <div style="width: auto; text-align: right;">₱24.00</div>
-                                        <div class="d-flex flex-column align-items-center text-center"
-                                            style="gap: 10px; ">
-                                            <div readonly
-                                                style="height: 12px; width: 200px; font-size: 12PX; color: red; ">
-                                                </div>
-                                            <div>
-
-                                               
-                                                <div class="quantity_control  ">
-                                                    <button>-</button>
-                                                    <input type="text" value="2" readonly />
-                                                    <button>+</button>
-                                                </div>
-
+                                        <!-- details-->
+                                        <div style="flex: 1; ">
+                                            <div class="d-flex flex-row g-2"
+                                                style="gap: 20px; font-size: 12px; color: gray;">
+                                                <div class="category">${item.category}</div>
+                                                <div>|</div>
+                                                <div class="category">${item.subcategory}</div>
                                             </div>
 
-                                            <div style="font-size: 10px; color: gray;">2 in Stock</div>
+                                            <div class="name" style="font-weight: bold;">${item.brand} | ${item.item_name}</div>
+                                            <div style="font-size: 15px;">
+                                                ${item.variation_name}
+                                            </div>
                                         </div>
-                                        <div>
-                                            <button style="background: none; border: none; padding: 0; cursor: pointer;" aria-label="Delete">
-                                                <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M12 2.75C11.0215 2.75 10.1871 3.37503 9.87787 4.24993C9.73983 4.64047 9.31134 4.84517 8.9208 4.70713C8.53026 4.56909 8.32557 4.1406 8.46361 3.75007C8.97804 2.29459 10.3661 1.25 12 1.25C13.634 1.25 15.022 2.29459 15.5365 3.75007C15.6745 4.1406 15.4698 4.56909 15.0793 4.70713C14.6887 4.84517 14.2602 4.64047 14.1222 4.24993C13.813 3.37503 12.9785 2.75 12 2.75Z" fill="#1C274C"/>
-                                                    <path d="M2.75 6C2.75 5.58579 3.08579 5.25 3.5 5.25H20.5001C20.9143 5.25 21.2501 5.58579 21.2501 6C21.2501 6.41421 20.9143 6.75 20.5001 6.75H3.5C3.08579 6.75 2.75 6.41421 2.75 6Z" fill="#1C274C"/>
-                                                    <path d="M5.91508 8.45011C5.88753 8.03681 5.53015 7.72411 5.11686 7.75166C4.70356 7.77921 4.39085 8.13659 4.41841 8.54989L4.88186 15.5016C4.96735 16.7844 5.03641 17.8205 5.19838 18.6336C5.36678 19.4789 5.6532 20.185 6.2448 20.7384C6.83639 21.2919 7.55994 21.5307 8.41459 21.6425C9.23663 21.75 10.2751 21.75 11.5607 21.75H12.4395C13.7251 21.75 14.7635 21.75 15.5856 21.6425C16.4402 21.5307 17.1638 21.2919 17.7554 20.7384C18.347 20.185 18.6334 19.4789 18.8018 18.6336C18.9637 17.8205 19.0328 16.7844 19.1183 15.5016L19.5818 8.54989C19.6093 8.13659 19.2966 7.77921 18.8833 7.75166C18.47 7.72411 18.1126 8.03681 18.0851 8.45011L17.6251 15.3492C17.5353 16.6971 17.4712 17.6349 17.3307 18.3405C17.1943 19.025 17.004 19.3873 16.7306 19.6431C16.4572 19.8988 16.083 20.0647 15.391 20.1552C14.6776 20.2485 13.7376 20.25 12.3868 20.25H11.6134C10.2626 20.25 9.32255 20.2485 8.60915 20.1552C7.91715 20.0647 7.54299 19.8988 7.26957 19.6431C6.99616 19.3873 6.80583 19.025 6.66948 18.3405C6.52891 17.6349 6.46488 16.6971 6.37503 15.3492L5.91508 8.45011Z" fill="#1C274C"/>
-                                                    <path d="M9.42546 10.2537C9.83762 10.2125 10.2051 10.5132 10.2464 10.9254L10.7464 15.9254C10.7876 16.3375 10.4869 16.7051 10.0747 16.7463C9.66256 16.7875 9.29502 16.4868 9.25381 16.0746L8.75381 11.0746C8.71259 10.6625 9.0133 10.2949 9.42546 10.2537Z" fill="#1C274C"/>
-                                                    <path d="M15.2464 11.0746C15.2876 10.6625 14.9869 10.2949 14.5747 10.2537C14.1626 10.2125 13.795 10.5132 13.7538 10.9254L13.2538 15.9254C13.2126 16.3375 13.5133 16.7051 13.9255 16.7463C14.3376 16.7875 14.7051 16.4868 14.7464 16.0746L15.2464 11.0746Z" fill="#1C274C"/>
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+
+                                        <div class="d-flex flex-row align-items-center" style="gap:20px">
+                                            <div style="width: auto; text-align: right;">₱${item.subtotal}</div>
+                                            <div class="d-flex flex-column align-items-center text-center"
+                                                style="gap: 10px; ">
+                                                <div readonly
+                                                    style="height: 12px; width: 200px; font-size: 12PX; color: red; ">
+                                                    "QUANTITY EXCEEDS STOCK"
+                                                </div>
+                                                <div>
 
 
-                                <div class="cart_item">
+                                                    <div class="quantity_control  ">
+                                                        <button>-</button>
+                                                        <input type="text" value="1" readonly />
+                                                        <button>+</button>
+                                                    </div>
 
-                                    <div class="item_image">
-                                        <img src="" alt="img">
-                                    </div>
-
-                                    <!-- details-->
-                                    <div style="flex: 1;">
-                                        <div class="d-flex flex-row g-2"
-                                            style="gap: 20px; font-size: 12px; color: gray;">
-                                            <div class="category">Drinks</div>
-                                            <div>|</div>
-                                            <div class="category">Softdrinks</div>
-                                        </div>
-                                        <div class="name" style="font-weight: bold;">Coke | Softdrink</div>
-                                        <div style="font-size: 15px;">
-                                            Coke Zero
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex flex-row align-items-center" style="gap:20px">
-                                        <div style="width: auto; text-align: right;">₱24.00</div>
-                                        <div class="d-flex flex-column align-items-center text-center"
-                                            style="gap: 10px; ">
-                                            <div readonly
-                                                style="height: 12px; width: 200px; font-size: 12PX; color: red; ">
-                                                QUANTITY EXCEEDS STOCK</div>
-                                            <div>
-
-                                               
-                                                <div class="quantity_control  ">
-                                                    <button>-</button>
-                                                    <input type="text" value="2" readonly />
-                                                    <button>+</button>
                                                 </div>
 
+                                                <div style="font-size: 10px; color: gray;">${item.stock_qty} in Stock</div>
                                             </div>
-
-                                            <div style="font-size: 10px; color: gray;">1 in Stock</div>
-                                        </div>
-                                        <div>
-                                            <button style="background: none; border: none; padding: 0; cursor: pointer;" aria-label="Delete">
-                                                <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M12 2.75C11.0215 2.75 10.1871 3.37503 9.87787 4.24993C9.73983 4.64047 9.31134 4.84517 8.9208 4.70713C8.53026 4.56909 8.32557 4.1406 8.46361 3.75007C8.97804 2.29459 10.3661 1.25 12 1.25C13.634 1.25 15.022 2.29459 15.5365 3.75007C15.6745 4.1406 15.4698 4.56909 15.0793 4.70713C14.6887 4.84517 14.2602 4.64047 14.1222 4.24993C13.813 3.37503 12.9785 2.75 12 2.75Z" fill="#1C274C"></path>
-                                                    <path d="M2.75 6C2.75 5.58579 3.08579 5.25 3.5 5.25H20.5001C20.9143 5.25 21.2501 5.58579 21.2501 6C21.2501 6.41421 20.9143 6.75 20.5001 6.75H3.5C3.08579 6.75 2.75 6.41421 2.75 6Z" fill="#1C274C"></path>
-                                                    <path d="M5.91508 8.45011C5.88753 8.03681 5.53015 7.72411 5.11686 7.75166C4.70356 7.77921 4.39085 8.13659 4.41841 8.54989L4.88186 15.5016C4.96735 16.7844 5.03641 17.8205 5.19838 18.6336C5.36678 19.4789 5.6532 20.185 6.2448 20.7384C6.83639 21.2919 7.55994 21.5307 8.41459 21.6425C9.23663 21.75 10.2751 21.75 11.5607 21.75H12.4395C13.7251 21.75 14.7635 21.75 15.5856 21.6425C16.4402 21.5307 17.1638 21.2919 17.7554 20.7384C18.347 20.185 18.6334 19.4789 18.8018 18.6336C18.9637 17.8205 19.0328 16.7844 19.1183 15.5016L19.5818 8.54989C19.6093 8.13659 19.2966 7.77921 18.8833 7.75166C18.47 7.72411 18.1126 8.03681 18.0851 8.45011L17.6251 15.3492C17.5353 16.6971 17.4712 17.6349 17.3307 18.3405C17.1943 19.025 17.004 19.3873 16.7306 19.6431C16.4572 19.8988 16.083 20.0647 15.391 20.1552C14.6776 20.2485 13.7376 20.25 12.3868 20.25H11.6134C10.2626 20.25 9.32255 20.2485 8.60915 20.1552C7.91715 20.0647 7.54299 19.8988 7.26957 19.6431C6.99616 19.3873 6.80583 19.025 6.66948 18.3405C6.52891 17.6349 6.46488 16.6971 6.37503 15.3492L5.91508 8.45011Z" fill="#1C274C"></path>
-                                                    <path d="M9.42546 10.2537C9.83762 10.2125 10.2051 10.5132 10.2464 10.9254L10.7464 15.9254C10.7876 16.3375 10.4869 16.7051 10.0747 16.7463C9.66256 16.7875 9.29502 16.4868 9.25381 16.0746L8.75381 11.0746C8.71259 10.6625 9.0133 10.2949 9.42546 10.2537Z" fill="#1C274C"></path>
-                                                    <path d="M15.2464 11.0746C15.2876 10.6625 14.9869 10.2949 14.5747 10.2537C14.1626 10.2125 13.795 10.5132 13.7538 10.9254L13.2538 15.9254C13.2126 16.3375 13.5133 16.7051 13.9255 16.7463C14.3376 16.7875 14.7051 16.4868 14.7464 16.0746L15.2464 11.0746Z" fill="#1C274C"></path>
-                                                </svg>
-                                            </button>
+                                            <div>
+                                                <button style="background: none; border: none; cursor: pointer;"><svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M12 2.75C11.0215 2.75 10.1871 3.37503 9.87787 4.24993C9.73983 4.64047 9.31134 4.84517 8.9208 4.70713C8.53026 4.56909 8.32557 4.1406 8.46361 3.75007C8.97804 2.29459 10.3661 1.25 12 1.25C13.634 1.25 15.022 2.29459 15.5365 3.75007C15.6745 4.1406 15.4698 4.56909 15.0793 4.70713C14.6887 4.84517 14.2602 4.64047 14.1222 4.24993C13.813 3.37503 12.9785 2.75 12 2.75Z" fill="#1C274C"></path>
+                                                        <path d="M2.75 6C2.75 5.58579 3.08579 5.25 3.5 5.25H20.5001C20.9143 5.25 21.2501 5.58579 21.2501 6C21.2501 6.41421 20.9143 6.75 20.5001 6.75H3.5C3.08579 6.75 2.75 6.41421 2.75 6Z" fill="#1C274C"></path>
+                                                        <path d="M5.91508 8.45011C5.88753 8.03681 5.53015 7.72411 5.11686 7.75166C4.70356 7.77921 4.39085 8.13659 4.41841 8.54989L4.88186 15.5016C4.96735 16.7844 5.03641 17.8205 5.19838 18.6336C5.36678 19.4789 5.6532 20.185 6.2448 20.7384C6.83639 21.2919 7.55994 21.5307 8.41459 21.6425C9.23663 21.75 10.2751 21.75 11.5607 21.75H12.4395C13.7251 21.75 14.7635 21.75 15.5856 21.6425C16.4402 21.5307 17.1638 21.2919 17.7554 20.7384C18.347 20.185 18.6334 19.4789 18.8018 18.6336C18.9637 17.8205 19.0328 16.7844 19.1183 15.5016L19.5818 8.54989C19.6093 8.13659 19.2966 7.77921 18.8833 7.75166C18.47 7.72411 18.1126 8.03681 18.0851 8.45011L17.6251 15.3492C17.5353 16.6971 17.4712 17.6349 17.3307 18.3405C17.1943 19.025 17.004 19.3873 16.7306 19.6431C16.4572 19.8988 16.083 20.0647 15.391 20.1552C14.6776 20.2485 13.7376 20.25 12.3868 20.25H11.6134C10.2626 20.25 9.32255 20.2485 8.60915 20.1552C7.91715 20.0647 7.54299 19.8988 7.26957 19.6431C6.99616 19.3873 6.80583 19.025 6.66948 18.3405C6.52891 17.6349 6.46488 16.6971 6.37503 15.3492L5.91508 8.45011Z" fill="#1C274C"></path>
+                                                        <path d="M9.42546 10.2537C9.83762 10.2125 10.2051 10.5132 10.2464 10.9254L10.7464 15.9254C10.7876 16.3375 10.4869 16.7051 10.0747 16.7463C9.66256 16.7875 9.29502 16.4868 9.25381 16.0746L8.75381 11.0746C8.71259 10.6625 9.0133 10.2949 9.42546 10.2537Z" fill="#1C274C"></path>
+                                                        <path d="M15.2464 11.0746C15.2876 10.6625 14.9869 10.2949 14.5747 10.2537C14.1626 10.2125 13.795 10.5132 13.7538 10.9254L13.2538 15.9254C13.2126 16.3375 13.5133 16.7051 13.9255 16.7463C14.3376 16.7875 14.7051 16.4868 14.7464 16.0746L15.2464 11.0746Z" fill="#1C274C"></path>
+                                                    </svg>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-
                                 </div>
 
                             </div>
@@ -350,23 +240,20 @@
                             <div class="order_summary">
                                 <h3>Order Details</h3>
                                 <!-- item -->
-                                <div class="summary_item">
-                                    <div>Mang Juan | Chicharon</div>
-                                    <div>₱12.00</div>
+                                <div id="cart_details">
+                                    <div class="summary_item">
+                                        <div><strong>${item.item_qty}x</strong> ${item.brand} | ${item.item_name} (${item.variation_name})</div>
+                                        <div>₱${item.subtotal}</div>
+                                    </div>
                                 </div>
-                                <div class="summary_item">
-                                    <div>Coke | Softdrinks</div>
-                                    <div>₱24.00</div>
-                                </div>
-                                <br>
                                 <div
                                     style="margin-top: 20px; font-weight: bold; display: flex; justify-content: space-between;">
                                     <div>Estimated Total</div>
-                                    <div>₱80.00</div>
+                                    <div id="estimated_total">N/A</div>
                                 </div>
                                 <br>
                                 <button
-                                    class="add_to_cart">
+                                    class="add_to_cart" id="reserve">
                                     Reserve
                                 </button>
                             </div>
@@ -379,11 +266,11 @@
                 </main>
             </div>
         </main>
-
+        <script type="text/javascript" src="../../js/session.js"></script>
         <footer class="footer mt-auto">
             <div class="container d-flex flex-row justify-content-between p-4">
-                <div><a href="../Webpages/aboutUs.html"><b>About Us</b></a></div>
-                <div><a href="../Webpages/contactUs.html"><b>Contact Us</b></a></div>
+                <div><a href="../Webpages/aboutUs.php"><b>About Us</b></a></div>
+                <div><a href="../Webpages/contactUs.php"><b>Contact Us</b></a></div>
                 <div>Copyright © <b>2025</b>. All rights reserved.</div>
             </div>
         </footer>

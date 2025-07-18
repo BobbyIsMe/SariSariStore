@@ -4,7 +4,7 @@ include_once('db_connect.php');
 include_once('admin_status.php');
 requireAdmin($con, 'inventory');
 
-$edit = $_GET['edit'] ?? null;
+$edit = $_POST['edit'] ?? null;
 
 if (!isset($edit) || !in_array($edit, ['add', 'edit'])) {
     echo json_encode(['status' => 400, 'message' => 'Only add/edit variations.']);
@@ -43,9 +43,11 @@ if ($edit === 'add') {
         exit();
     }
     $stmt->close();
+    echo json_encode(['status' => 200, 'message' => 'Variation added successfully.']);
 
 } else if ($edit === 'edit') {
-    $variation_list = $_POST['variation_list'] ?? null;
+    $variation_json = $_POST['variation_list'] ?? null;
+    $variation_list = json_decode($variation_json, true);
 
     if (!is_array($variation_list) || empty($variation_list)) {
         echo json_encode(['status' => 400, 'message' => 'Variation list is required for editing.']);

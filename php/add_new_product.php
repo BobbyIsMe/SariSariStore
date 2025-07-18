@@ -6,27 +6,34 @@ include_once('check_product_validation.php');
 include_once('notify_users.php');
 requireAdmin($con, 'inventory');
 
-$edit = $_GET['edit'] ?? null;
+$edit = $_POST['edit'] ?? null;
 
 if (!isset($edit) || !in_array($edit, ['add', 'edit'])) {
     echo json_encode(['status' => 400, 'message' => 'Only add/edit products.']);
     exit();
 }
 
+
+$item_name = $_POST['item_name'] ?? null;
 $category_id = $_POST['category_id'] ?? null;
 $brand = $_POST['brand'] ?? null;
 $stock_qty = $_POST['stock_qty'] ?? null;
 $item_details = $_POST['item_details'] ?? null;
 $price = $_POST['price'] ?? null;
 $image = $_FILES['image'] ?? null;
-$targetDir = "img/";
+$targetDir = "../img/";
 
-if (!isset($category_id, $brand, $stock_qty, $item_details, $price, $image)) {
+if (!isset($category_id, $brand, $stock_qty, $item_details, $price, $item_name) || (!isset($image) && $edit === 'add')) {
     echo json_encode(['status' => 400, 'message' => 'All fields are required.']);
     exit();
 }
 
-$image_name = pathinfo($file['name'], PATHINFO_FILENAME) . "." . strtolower(pathinfo($image['name'], PATHINFO_EXTENSION));
+$file = $_FILES['image'] ?? null;
+$image_name = '';
+
+if (isset($image))
+    $image_name = time() . "." . strtolower(pathinfo($image['name'], PATHINFO_EXTENSION));
+
 $image_old_name = '';
 
 if (!is_numeric($stock_qty) || $price <= 0) {
@@ -49,8 +56,6 @@ if (!$result || $result->num_rows === 0) {
     exit;
 }
 
-
-$item_name = $_POST['item_name'] ?? null;
 if (!isset($item_name)) {
     echo json_encode(['status' => 400, 'message' => 'Item name is required for editing.']);
     exit();
@@ -59,32 +64,15 @@ if (!isset($item_name)) {
 $params = 'sis';
 $values = [$item_name, $category_id, $brand];
 
-$stmt = $con->prepare("
-    SELECT item_name 
-    FROM Products 
-    WHERE item_name = ? AND category_id = ? AND brand = ?");
-$stmt->bind_param($params, ...$values);
-$stmt->execute();
-$result = $stmt->get_result();
-if ($result && $result->num_rows > 0) {
-    echo json_encode(['status' => 400, 'message' => 'Product already exists in this category.']);
-    exit();
-}
-$stmt->close();
-
 if ($edit === 'add') {
+    checkProduct($con, $params, $values);
     $stmt = $con->prepare("
         INSERT INTO Products (image, item_name, category_id, brand, stock_qty, item_details, price) 
         VALUES (?, ?, ?, ?, ?, ?, ?)
         ");
-    $stmt->bind_param('ssissds', $image_name, $item_name, $category_id, $brand, $stock_qty, $item_details, $price);
+    $stmt->bind_param('ssisisd', $image_name, $item_name, $category_id, $brand, $stock_qty, $item_details, $price);
     if ($stmt->execute()) {
         $stmt->close();
-
-        echo json_encode([
-            'status' => 200,
-            'message' => 'Product added successfully.'
-        ]);
     } else {
         echo json_encode(['status' => 500, 'message' => 'Failed to add product.']);
     }
@@ -95,11 +83,25 @@ if ($edit === 'add') {
         exit();
     }
 
+    $stmt = $con->prepare("
+    SELECT item_name
+    FROM Products
+    WHERE product_id = ?
+    ");
+    $stmt->bind_param('i', $product_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result && $result->num_rows > 0) {
+        if ($result->fetch_assoc()['item_name'] !== $item_name) {
+            $checkProduct($con, $params, $values);
+        }
+    }
+
     $con->begin_transaction();
 
     try {
         $stmt = $con->prepare("
-        SELECT image, price 
+        SELECT image, price, stock_qty 
         FROM Products 
         WHERE product_id = ?");
         $stmt->bind_param('i', $product_id);
@@ -113,31 +115,42 @@ if ($edit === 'add') {
         $row = $result->fetch_assoc();
         $image_old_name = $row['image'];
         $old_price = $row['price'];
+        $old_qty = $row['stock_qty'];
 
-        if($old_price != $price) {
+        if ($old_price != $price) {
             $stmt = $con->prepare("
-            UPDATE Carts 
-            SET subtotal = (item_qty * ?)
-            WHERE product_id = ? AND NOT status = 'closed'
+            UPDATE Carts ca
+            JOIN Cart_Items c ON ca.cart_id = c.cart_id
+            SET c.subtotal = (item_qty * ?)
+            WHERE c.product_id = ? AND NOT ca.status = 'closed'
             ");
             $stmt->bind_param('di', $price, $product_id);
             $stmt->execute();
             $stmt->close();
         }
 
-        if($image_old_name != $image_name) {
+        if ($image_old_name != $image_name && $file !== null) {
             unlink($targetDir . $image_old_name);
         }
 
         // $params .= 'i';
         // $values[] = $product_id;
         // $sql .= " AND product_id != ?";
+        $img = "";
+        $params = 'sisisdi';
+        $values = [$item_name, $category_id, $brand, $stock_qty, $item_details, $price, $product_id];
+
+        if ($file !== null) {
+            $img = " image = ?, ";
+            $params = 'ssisisdi';
+            $values = [$image_name, $item_name, $category_id, $brand, $stock_qty, $item_details, $price, $product_id];
+        }
         $stmt = $con->prepare("
         UPDATE Products 
-        SET image = ?, item_name = ?, category_id = ?, brand = ?, stock_qty = ?, item_details = ?, price = ?, date_time_restocked = NOW()
+        SET " . $img . "item_name = ?, category_id = ?, brand = ?, stock_qty = ?, item_details = ?, price = ?" . ($old_qty != $stock_qty ? ", date_time_restocked = CURRENT_TIMESTAMP" : "") . "
         WHERE product_id = ?
         ");
-        $stmt->bind_param('ssisisdi', $image, $item_name, $category_id, $brand, $stock_qty, $item_details, $price, $product_id);
+        $stmt->bind_param($params, ...$values);
         $stmt->execute();
         if ($stmt->affected_rows === 0) {
             $stmt->close();
@@ -146,43 +159,45 @@ if ($edit === 'add') {
         $stmt->close();
 
         $orders = checkProductValidation($con, " ca.type = 'order' AND ca.status = 'pending'", '', []);
-        $cart_id_list = [];
+        if ($orders !== null || !empty($orders)) {
+            $cart_id_list = [];
 
-        foreach ($orders as $cart_id_invalid => $items) {
-            foreach ($items as $product_id => $item) {
-                if ($item['quantity'] <= 0) {
-                    $cart_id_list[$cart_id_invalid] = true;
-                    break;
+            foreach ($orders as $cart_id_invalid => $items) {
+                foreach ($items as $product_id => $item) {
+                    if ($item['quantity'] < 0) {
+                        $cart_id_list[$cart_id_invalid] = true;
+                        break;
+                    }
                 }
             }
-        }
 
-        $cart_id_list = array_keys($cart_id_list);
+            $cart_id_list = array_keys($cart_id_list);
 
-        if (!empty($cart_id_list)) {
-            $placeholders = implode(',', array_fill(0, count($cart_id_list), '?'));
-            $stmt = $con->prepare("
+            if (!empty($cart_id_list)) {
+                $placeholders = implode(',', array_fill(0, count($cart_id_list), '?'));
+                $stmt = $con->prepare("
             UPDATE Carts 
-            SET status = 'rejected' 
+            SET status = 'rejected', type = 'cart'
             WHERE cart_id IN ($placeholders) AND type = 'order'
             ");
-            $stmt->bind_param(str_repeat('i', count($cart_id_list)), ...$cart_id_list);
-            $stmt->execute();
-            $stmt->close();
+                $stmt->bind_param(str_repeat('i', count($cart_id_list)), ...$cart_id_list);
+                $stmt->execute();
+                $stmt->close();
 
-            $date_time = date('Y-m-d H:i:s');
-            $notifications = [];
+                $date_time = date('Y-m-d H:i:s');
+                $notifications = [];
 
-            foreach ($cart_id_list as $id) {
-                $notifications[] = [
-                    'cart_id' => $id,
-                    'message' => 'Your reservation has been rejected due to invalid items.',
-                    'date_time_created' => $date_time,
-                    'status' => 'rejected'
-                ];
+                foreach ($cart_id_list as $id) {
+                    $notifications[] = [
+                        'cart_id' => $id,
+                        'message' => 'Your reservation has been rejected due to invalid items.',
+                        'date_time_created' => $date_time,
+                        'status' => 'rejected'
+                    ];
+                }
+
+                notifyUsers($con, $notifications);
             }
-
-            notifyUsers($con, $notifications);
         }
 
         $con->commit();
@@ -193,8 +208,8 @@ if ($edit === 'add') {
     }
 }
 
-if($image_old_name != $image_name || $image_old_name == '') {
-    $allowedTypes = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+if (($image_old_name != $image_name || $image_old_name == '') && $file !== null) {
+    $allowedTypes = ['jpg', 'jpeg', 'png', 'webp'];
     $fileExtension = strtolower(pathinfo($image['name'], PATHINFO_EXTENSION));
     if (!in_array($fileExtension, $allowedTypes)) {
         echo json_encode(['status' => 400, 'message' => 'Invalid file type.']);
@@ -202,8 +217,29 @@ if($image_old_name != $image_name || $image_old_name == '') {
     }
 
     if (move_uploaded_file($file['tmp_name'], $targetDir . $image_name)) {
-        echo json_encode(['status' => 200, 'message' => 'File uploaded successfully.']);
+        if($edit === 'add') {
+            echo json_encode([
+            'status' => 200,
+            'message' => 'Product added successfully.'
+        ]);
+        }
     } else {
         echo json_encode(['status' => 500, 'message' => 'Failed to upload file.']);
     }
+}
+
+function checkProduct($con, $params, $values)
+{
+    $stmt = $con->prepare("
+    SELECT item_name 
+    FROM Products 
+    WHERE item_name = ? AND category_id = ? AND brand = ?");
+    $stmt->bind_param($params, ...$values);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result && $result->num_rows > 0) {
+        echo json_encode(['status' => 400, 'message' => 'Product already exists in this brand.']);
+        exit();
+    }
+    $stmt->close();
 }

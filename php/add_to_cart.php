@@ -2,8 +2,8 @@
 // Add a product to the cart
 include_once("db_connect.php");
 
-$user_id = $_POST['user_id'] ?? null;
-if (!$user_id) {
+$user_id = $_SESSION['user_id'] ?? null;
+if (!isset($user_id)) {
     echo json_encode(['status' => 400, 'message' => 'Must be signed in to proceed.']);
     exit();
 }
@@ -15,17 +15,28 @@ $cart_id = 0;
 $variation_id = 0;
 $stock_qty = 0;
 
-if (!isset($variation_id) && !isset($product_id) || !is_numeric($product_id) || !isset($quantity) || !is_numeric($quantity) || $quantity <= 0) {
+if (!isset($variation_id) && !isset($product_id) || !is_numeric($product_id) || !isset($quantity) || !is_numeric($quantity)) {
     echo json_encode(['status' => 400, 'message' => 'Invalid product or quantity.']);
+    exit();
+}
+
+$stmt = $con->prepare("
+SELECT 1 FROM Carts WHERE user_id = ? AND status IN('pending','approved') AND type = 'order' LIMIT 1");
+$stmt->bind_param('i', $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$stmt->close();
+if ($result->num_rows > 0) {
+    echo json_encode(['status' => 400, 'message' => 'You already have a reservation.']);
     exit();
 }
 
 $price = 0;
 $stmt = $con->prepare("
-SELECT v.variation_id, p.stock_qty, v.price
+SELECT v.variation_id, p.stock_qty, p.price
 FROM Products p
-JOIN Variations v ON p.variation_id=v.variation_id
-WHERE product_id = ?");
+JOIN Variations v ON p.product_id=v.product_id
+WHERE p.product_id = ?");
 $stmt->bind_param('i', $product_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -43,6 +54,8 @@ $stock_qty = $row['stock_qty'];
 $variation_id = $row['variation_id'];
 $stmt->close();
 
+
+
 // $stmt = $con->prepare("
 // SELECT variation_id
 // FROM Variations
@@ -59,35 +72,39 @@ $stmt->close();
 // $stmt->close();
 
 $stmt = $con->prepare("
-SELECT cart_id, c.item_qty
-FROM Carts 
-WHERE user_id = ? AND status = 'Pending'");
+SELECT cart_id
+FROM Carts
+WHERE user_id = ? AND status IN('pending', 'rejected') AND type = 'cart'");
 $stmt->bind_param('i', $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
 if ($result->num_rows > 0) {
+
     $row = $result->fetch_assoc();
     $cart_id = $row['cart_id'];
     $stmt->close();
 
     $stmt = $con->prepare("
-    SELECT item_qty
-    FROM Cart_Items 
-    WHERE cart_id = ? AND product_id = ? AND variation_id = ?");
+    SELECT c.item_qty
+    FROM Cart_Items c
+    JOIN Carts ca ON c.cart_id = ca.cart_id
+    WHERE ca.cart_id = ? AND c.product_id = ? AND c.variation_id = ? AND ca.type = 'cart' AND ca.status IN ('pending', 'rejected')");
     $stmt->bind_param('iii', $cart_id, $product_id, $variation_id);
     $stmt->execute();
     $result = $stmt->get_result();
     $stmt->close();
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        $quantity += $row['item_qty'];
-        if ($quantity > $stock_qty) {
+        if (($row['item_qty'] + $quantity > $stock_qty && $quantity > 0) || ($row['item_qty'] + $quantity <= 0 && $quantity < 0)) {
             echo json_encode(['status' => 400, 'message' => 'Insufficient stock.']);
             exit();
         }
     }
-
 } else {
+    if ($quantity <= 0) {
+        echo json_encode(['status' => 400, 'message' => 'Quantity must be above zero.']);
+        exit();
+    }
     $stmt = $con->prepare("
     INSERT INTO Carts (user_id)
     VALUES (?)");
@@ -101,7 +118,7 @@ $subtotal = $price * $quantity;
 
 $stmt = $con->prepare("
 INSERT INTO Cart_Items (cart_id, product_id, variation_id, item_qty, subtotal)
-VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE item_qty = ?, subtotal = ?");
+VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE item_qty = item_qty + ?, subtotal = subtotal + ?");
 $stmt->bind_param('iiiidid', $cart_id, $product_id, $variation_id, $quantity, $subtotal, $quantity, $subtotal);
 $stmt->execute();
 $stmt->close();

@@ -25,20 +25,20 @@ $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 
 if (!empty($category)) {
     $params .= 's';
-    $filter .= " AND cs.category = ?";
-    $values[] = $category;
+    $filter .= " AND cs.category LIKE ?";
+    $values[] = '%' . $category . '%';
 }
 
 if (!empty($subcategory)) { 
     $params .= 's';
-    $filter .= " AND cs.subcategory = ?";
-    $values[] = $subcategory;
+    $filter .= " AND cs.subcategory LIKE ?";
+    $values[] = '%' . $subcategory . '%';
 }
 
 if (!empty($brand)) {
     $params .= 's';
-    $filter .= " AND p.brand = ?";
-    $values[] = $brand;
+    $filter .= " AND p.brand LIKE ?";
+    $values[] = '%' . $brand . '%';
 }
 
 if (!empty($item_name)) {
@@ -49,30 +49,32 @@ if (!empty($item_name)) {
 
 $order_parts = [];
 if (!empty($total_sales) && in_array($total_sales, ['ASC', 'DESC'])) {
-    $order_parts[] = ",p.total_sales $total_sales";
+    $order_parts[] = "p.total_sales $total_sales";
 }
 
 if (!empty($stock_qty) && in_array($stock_qty, ['ASC', 'DESC'])) {
-    $order_parts[] = ",p.stock_qty $stock_qty";
+    $order_parts[] = "p.stock_qty $stock_qty";
 }
 
 if(!empty($date_restocked) && in_array($date_restocked, ['ASC', 'DESC'])) {
-    $order_parts[] = ",p.date_time_restocked $date_restocked";
+    $order_parts[] = "p.date_time_restocked $date_restocked";
 }
 
 if(!empty($recent) && in_array($recent, ['ASC', 'DESC'])) {
-    $order_parts[] = ",p.product_id $recent";
+    $order_parts[] = "p.product_id $recent";
 }
 
-if (!empty($orderParts)) {
-    $order = "ORDER BY " . implode(", ", $orderParts);
+if (!empty($order_parts)) {
+    $order = " ORDER BY " . implode(", ", $order_parts);
 } else {
-    $order = "ORDER BY p.item_name ASC";
+    $order = " ORDER BY p.item_name ASC";
 }
 
 $stmt = $con->prepare("
 SELECT COUNT(*) AS total 
-FROM Products" . $filter . $order);
+FROM Products p
+JOIN Categories cs ON p.category_id=cs.category_id" . $filter . $order);
+if(!empty($params))
 $stmt->bind_param($params, ...$values);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -96,12 +98,12 @@ if($totalRows == 0) {
     exit();
 }
 
-$filter .= " LIMIT $total OFFSET $offset";
+$filter .= $order . " LIMIT $total OFFSET $offset ";
 
 $stmt = $con->prepare("
 SELECT p.product_id, p.image, p.item_name, p.item_details, p.category_id, cs.category, cs.subcategory, p.brand, p.price, p.stock_qty
 FROM Products p
-JOIN Categories cs ON p.category_id=p.category_id". $filter. $order);
+JOIN Categories cs ON p.category_id=cs.category_id". $filter);
 if(!empty($params))
 $stmt->bind_param($params, ...$values);
 $stmt->execute();

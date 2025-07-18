@@ -16,6 +16,6 @@ $stmt->execute();
 if ($stmt->affected_rows > 0) {
     echo json_encode(['status' => 200, 'message' => 'Reservation cancelled successfully.']);
 } else {
-    echo json_encode(['status' => 500, 'message' => 'Failed to cancel reservation.']);
+    echo json_encode(['status' => 500, 'message' => 'Reservation cannot be cancelled when it is approved.']);
 }
 ?>

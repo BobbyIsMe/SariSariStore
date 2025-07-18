@@ -1,3 +1,10 @@
+<?php
+// session_start();
+// if (isset($_SESSION["user_id"])) {
+//     header("Location: ../../html/Webpages/homepage.php");
+//     exit();
+// }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,6 +15,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../css/navbarFooter.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- <script type="text/javascript" src="../../js/auth.js"></script> -->
     <style>
         * {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -44,27 +52,31 @@
         <main class="flex-fill">
             <div class="d-flex align-items-center justify-content-center p-4" style="min-height: 70vh;">
                 <div class="login-card text-center">
-                    <form>
+                    <form id="signupForm" method="POST" onsubmit="signupSubmit(event)">
                         <h4 class="mb-3"><b>REGISTRATION</b></h4>
                         <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="">
+                            <input type="text" class="form-control" placeholder="" name="phone_number">
                             <label>Mobile Number</label>
                         </div>
                         <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="">
-                            <label>Name</label>
+                            <input type="text" class="form-control" placeholder="" name="first_name">
+                            <label>First Name</label>
                         </div>
                         <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="">
+                            <input type="text" class="form-control" placeholder="" name="last_name">
+                            <label>Last Name</label>
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" class="form-control" placeholder="" name="password">
                             <label>Password</label>
                         </div>
                         <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="">
+                            <input type="password" class="form-control" placeholder="" name="confirm_password">
                             <label>Re-enter Password</label>
                         </div>
-                        <button class="btn login-btn"><b>REGISTER</b></button>
+                        <button class="btn login-btn" type="submit" on><b>REGISTER</b></button>
                     </form>
-                    <p class="mt-2 mb-0">Already have an account? Login <a href="login.html">Here</a></p>
+                    <p class="mt-2 mb-0">Already have an account? Login <a href="login.php">Here</a></p>
                 </div>
             </div>
         </main>

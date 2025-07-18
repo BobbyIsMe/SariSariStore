@@ -28,36 +28,44 @@ document.getElementById("next_button").addEventListener("click", () => {
     }
 });
 
+document.getElementById("recent").addEventListener("click", function (event) {
+    refreshFilter();
+    document.getElementById("recent").classList.add("active");
+    document.getElementById("status_dropdown").value = "status";
+    page = 1;
+    loadPage(1);
+});
+
 document.getElementById("status_dropdown").addEventListener("change", function () {
     refreshFilter();
-    document.getElementById("filter_form").reset();
     document.getElementById("recent").classList.remove("active");
-    document.getElementById("filter_button").classList.remove("active");
     const selectedValue = this.value;
     stat = selectedValue;
     page = 1;
     loadPage(1);
 });
 
-document.getElementById("set_status").addEventListener("change", function () {
+function changeStatus(order_id, old_value, status) {
+    const formData = new FormData();
+    formData.append('cart_id', order_id);
+    formData.append('status', status.value);
+    formData.append('date_time_deadline', document.getElementById(`date_${order_id}`).value);
     fetch('../../php/manage_order.php', {
         method: 'POST',
-        body: JSON.stringify({
-            order_id: this.value,
-            status: document.getElementById("set_status").value,
-            date_time_deadline: date_time_deadline
-        })
+        body: formData
     }).then(res => res.json()).then(
         data => {
             if (data.status === 200) {
+                loadNotificationBadge();
+                loadNotification(1);
                 loadPage(page);
             } else {
-                document.getElementById("set_status").value = "";
+                status.value = old_value;
                 alert(data.message);
             }
         }
-    )
-});
+    ).catch(error => console.log(error));
+}
 
 function loadOrderItems(cart_id) {
     const tableBody = document.getElementById("order_items_list");
@@ -73,8 +81,8 @@ function loadOrderItems(cart_id) {
                                                 <div class="name fw-bold">${item.brand} | ${item.item_name}</div>
                                             </div>
                                             <div class="text-end">
-                                                <div>₱${item.price}</div>
-                                                <div>${item.quantity} pcs</div>
+                                                <div>₱${item.subtotal}</div>
+                                                <div>${item.item_qty} pcs</div>
                                             </div>
                                         </div>
         `;
@@ -84,7 +92,7 @@ function loadOrderItems(cart_id) {
 function loadPage(page) {
     query = "";
     order_items = [];
-    if (stat != null && stat != "") query += `&stat=${stat}`;
+    if (stat != null && stat != "") query += `&status=${stat}`;
 
     const tableBody = document.getElementById("orders_list");
     tableBody.innerHTML = "Loading orders...";
@@ -95,19 +103,34 @@ function loadPage(page) {
             totalPages = data.totalPages;
             const ordersData = data.orders;
             const orderItemsData = data.order_items;
+            tableBody.innerHTML = "";
             if (data.status != 200) {
-                tableBody.innerHTML = data.message;
+                document.getElementById("page_number").innerHTML = data.totalPages != 0 ? `Page <strong>${page}</strong> of <strong>${data.totalPages}</strong>` : data.message;
+                document.getElementById("prev_button").disabled = (page === 1);
+                document.getElementById("next_button").disabled = (page >= totalPages);
                 return;
             }
-
-            tableBody.innerHTML = "";
-            const subListHTML = "";
 
             Object.entries(orderItemsData).forEach(([order_id, items]) => {
                 order_items[order_id] = items;
             });
 
+            const date = new Date();
+            date.setDate(date.getDate() + 1);
+
+            const manilaDate = new Date(date.toLocaleString("en-US", { timeZone: "Asia/Manila" }));
+
+            const year = manilaDate.getFullYear();
+            const month = String(manilaDate.getMonth() + 1).padStart(2, '0');
+            const day = String(manilaDate.getDate()).padStart(2, '0');
+            const hours = String(manilaDate.getHours()).padStart(2, '0');
+            const minutes = String(manilaDate.getMinutes()).padStart(2, '0');
+
+            const date_format = `${year}-${month}-${day}T${hours}:${minutes}`;
+
+
             ordersData.forEach(order => {
+                subListHTML = "";
                 subListHTML += `
                 <div class="cart-container"
                             style="display: flex; gap: 20px; padding: 20px; background: #f5f5f5;">
@@ -151,15 +174,17 @@ function loadPage(page) {
                                     </div>
 
                                     <!-- price -->
-                                    <div style="width: 80px; text-align: right;">₱${item.price}</div>
+                                    <div style="width: 80px; text-align: right;">₱${item.subtotal}</div>
 
                                     <!-- qty of items-->
                                     <div>
-                                        ${item.quantity} pcs
+                                        ${item.item_qty} pcs
                                     </div>
                                 </div>
                 `;
                 });
+
+                const cur_status = order.status;
 
                 subListHTML += `
                 <div class="d-flex justify-content-center align-items-center mt-3">
@@ -175,12 +200,13 @@ function loadPage(page) {
                             <!--order summary-->
                             <div class="order_summary">
                                 <div class="dropdown">
-                                    <select class="form-select border-0" id="status_dropdown" name="rent_status"
+                                    <select class="form-select border-0" id="status_${order.cart_id}" onchange="changeStatus(${order.cart_id}, '${order.status}', this)" name="rent_status"
                                         required>
                                         <option value="status">Status</option>
-                                        <option value="closed">Approved</option>
-                                        <option value="rejected">Rejected</option>
-                                        <option value="closed">Closed</option>
+                                        <option value="pending" ${cur_status == 'pending' ? 'selected' : ''}>Pending</option>
+                                        <option value="approved" ${cur_status == 'approved' ? 'selected' : ''}>Approved</option>
+                                        <option value="rejected" ${cur_status == 'rejected' ? 'selected' : ''}>Rejected</option>
+                                        <option value="closed" ${cur_status == 'closed' ? 'selected' : ''}>Closed</option>
                                     </select>
                                 </div>
 
@@ -190,8 +216,8 @@ function loadPage(page) {
 
                                     <div class="" style="border-top: solid black 1px;">
                                         <label for="check_in_date" class="form-label">Check-in Date</label>
-                                        <input type="date" class="paragraphs form-control" id="rent_check_in_date"
-                                            name="check_in_date" required>
+                                        <input type="datetime-local" class="paragraphs form-control" id="date_${order.cart_id}"
+                                            name="check_in_date" value="${date_format}" required>
                                     </div>
                                 </div>
 
@@ -201,7 +227,6 @@ function loadPage(page) {
                 `;
 
                 tableBody.innerHTML += subListHTML;
-
                 document.getElementById("page_number").innerHTML = data.totalPages != 0 ? `Page <strong>${page}</strong> of <strong>${data.totalPages}</strong>` : data.message;
                 document.getElementById("prev_button").disabled = (page === 1);
                 document.getElementById("next_button").disabled = (page >= totalPages);

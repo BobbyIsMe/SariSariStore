@@ -14,13 +14,13 @@ function requireAdmin($con, $staff_type)
         exit();
     }
 
-    $stmt = $con->prepare("SELECT admin FROM Users WHERE user_id = ?");
+    $stmt = $con->prepare("SELECT staff_type FROM Users WHERE user_id = ?");
     $stmt->bind_param("i", $_SESSION['user_id']);
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
     $stmt->close();
-    if ($row['staff_type'] == $staff_type) {
+    if ($row['staff_type'] != $staff_type) {
         echo json_encode([
             'status' => 400,
             'message' => 'Unauthorized access.'
