@@ -21,14 +21,14 @@ document.addEventListener('DOMContentLoaded', () => {
             // document.getElementById("stock_qty").textContent = (data.stock_quantity > 0) ? 1 : 0;
             document.getElementById("price").textContent = `₱${data.price}`;
              document.getElementById("price").value = data.price;
-            document.getElementById("item_details").textContent = data.item_details;
+            document.getElementById("item_details").innerHTML = data.item_details;
 
             document.getElementById("add_product").textContent = (stock_quantity > 0) ? "Add to Cart" : "Out of Stock";
             document.getElementById("add_product").disabled = (stock_quantity === 0);
 
             document.getElementById("subtotal").textContent = `₱${Number(quantity * data.price).toFixed(2)}`;
 
-            document.getElementById("see_more").href = "../Webpages/category.php?category=" + data.category + "&subcategory=" + data.subcategory;
+            document.getElementById("see_more").href = "../Webpages/category.php?category=" + data.category;
 
             const dropdown = document.getElementById("variations_dropdown");
             fetch("../../php/get_variations.php" + "?product_id=" + urlParams.get("product_id"))

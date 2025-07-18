@@ -9,7 +9,7 @@ if (!isset($user_id)) {
     exit();
 }
 
-$carts = checkProductValidation($con, " ca.type = 'cart' AND ca.user_id = ?", 'i', $user_id);
+$carts = checkProductValidation($con, " ca.type = 'cart' AND ca.user_id = ?", 'i', [$user_id]);
 
 if ($carts === null || empty($carts)) {
     echo json_encode(['status' => 404, 'message' => 'No items in cart.']);
@@ -18,8 +18,8 @@ if ($carts === null || empty($carts)) {
 
 foreach ($carts as $cart_id => $items) {
     foreach ($items as $product_id => $item) {
-        if ($item['quantity'] <= 0) {
-            echo json_encode(['status' => 400, 'message' => 'Insufficient stock for product ID: ' . $item['product_id']]);
+        if ($item['quantity'] < 0) {
+            echo json_encode(['status' => 400, 'message' => 'Insufficient stock for product: ' . $item['item_name']]);
         } else {
             continue;
         }
@@ -28,7 +28,7 @@ foreach ($carts as $cart_id => $items) {
 }
 
 $stmt = $con->prepare("
-UPDATE Carts SET type = 'order'
+UPDATE Carts SET type = 'order', status = 'pending', date_time_created = NOW()
 WHERE user_id = ? AND type = 'cart' AND status IN ('pending', 'rejected')");
 $stmt->bind_param('i', $user_id);
 $stmt->execute();

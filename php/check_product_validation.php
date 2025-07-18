@@ -2,18 +2,18 @@
 // Check product validation
 include_once('db_connect.php');
 
-function checkProductValidation($con, $filter, $values, $params)
+function checkProductValidation($con, $filter, $params, $values)
 {
 
     $stmt = $con->prepare("
-    SELECT ca.cart_id, p.product_id, c.variation_id, (p.stock_qty - c.item_qty) AS quantity
+    SELECT ca.cart_id, p.item_name, p.product_id, c.variation_id, (p.stock_qty - c.item_qty) AS quantity
     FROM Carts ca
     JOIN Cart_Items c ON ca.cart_id = c.cart_id
     JOIN Products p ON c.product_id = p.product_id
     JOIN Variations v ON c.variation_id = v.variation_id
     WHERE " . $filter);
     if(!empty($params))
-    $stmt->bind_param($values, $params);
+    $stmt->bind_param($params, ...$values);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -23,6 +23,7 @@ function checkProductValidation($con, $filter, $values, $params)
         while ($row = $result->fetch_assoc()) {
             
             $carts[$row['cart_id']][$row['product_id']] = [
+                'item_name' => $row['item_name'],
                 'variation_id' => $row['variation_id'],
                 'quantity' => $row['quantity']
             ];

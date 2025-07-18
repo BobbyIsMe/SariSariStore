@@ -13,6 +13,7 @@ let products = [];
 let categories = [];
 
 document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById("all").classList.add("active");
   loadPage(1);
   loadCategories();
 });
@@ -89,7 +90,7 @@ document.getElementById("recent").addEventListener("click", function (event) {
     }
   );
 
-  recent = "ASC";
+  recent = "DESC";
   page = 1;
   loadPage(1);
 });
@@ -276,6 +277,7 @@ function onSubmitEditCategories(e) {
         document.getElementById("edit_categories_form").reset();
         loadCategories();
         loadSidebar();
+        loadPage(page);
       } else {
         alert(data.message);
       }
@@ -414,7 +416,7 @@ function removeItem(product_id) {
   const formData = new FormData();
   formData.append('product_id', product_id);
   if (confirm("Are you sure you want to delete this product?")) {
-    fetch(`../../php/remove_product.php?product_id=`, {
+    fetch(`../../php/remove_product.php`, {
       method: 'POST',
       body: formData
     })
@@ -486,8 +488,9 @@ function loadPage(page) {
   if (stock_qty != null && stock_qty != "") query += `&stock_qty=${stock_qty}`;
   if (item_name != null && item_name != "") query += `&item_name=${item_name}`;
   if (total_sales != null && total_sales != "") query += `&total_sales=${total_sales}`;
+  if (recent != null && recent != "") query += `&recent=${recent}`;
   if (date_restocked != null && date_restocked != "") query += `&date_restocked=${date_restocked}`;
-
+  
   const tableBody = document.getElementById("product_list");
   tableBody.innerHTML = "Loading products...";
 

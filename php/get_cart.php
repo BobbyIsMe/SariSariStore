@@ -1,7 +1,7 @@
 <?php
 // Get cart items of user by User ID
 include_once("db_connect.php");
-$user_id = $_SESSION['user_id'];
+$user_id = $_SESSION['user_id'] ?? null;
 $cart_items = [];
 $cart_id = null;
 $cart_status = null;

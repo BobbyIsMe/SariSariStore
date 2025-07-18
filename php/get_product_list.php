@@ -71,7 +71,7 @@ if (!empty($order_parts)) {
 $stmt = $con->prepare("
 SELECT COUNT(*) AS total 
 FROM Products p
-JOIN Categories cs ON p.category_id=p.category_id" . $filter . $order);
+JOIN Categories cs ON p.category_id=cs.category_id" . $filter . $order);
 if(!empty($params))
 $stmt->bind_param($params, ...$values);
 $stmt->execute();
@@ -101,7 +101,7 @@ $filter .= $order . " LIMIT $total OFFSET $offset";
 $stmt = $con->prepare("
 SELECT p.product_id, p.image, p.item_name, cs.category, cs.subcategory, p.brand, p.price, p.stock_qty
 FROM Products p
-JOIN Categories cs ON cs.category_id=p.category_id". $filter);
+JOIN Categories cs ON p.category_id=cs.category_id". $filter);
 if(!empty($params))
 $stmt->bind_param($params, ...$values);
 $stmt->execute();

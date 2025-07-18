@@ -20,6 +20,17 @@ if (!isset($variation_id) && !isset($product_id) || !is_numeric($product_id) || 
     exit();
 }
 
+$stmt = $con->prepare("
+SELECT 1 FROM Carts WHERE user_id = ? AND status IN('pending','approved') AND type = 'order' LIMIT 1");
+$stmt->bind_param('i', $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$stmt->close();
+if ($result->num_rows > 0) {
+    echo json_encode(['status' => 400, 'message' => 'You already have a reservation.']);
+    exit();
+}
+
 $price = 0;
 $stmt = $con->prepare("
 SELECT v.variation_id, p.stock_qty, p.price
@@ -43,6 +54,8 @@ $stock_qty = $row['stock_qty'];
 $variation_id = $row['variation_id'];
 $stmt->close();
 
+
+
 // $stmt = $con->prepare("
 // SELECT variation_id
 // FROM Variations
@@ -61,7 +74,7 @@ $stmt->close();
 $stmt = $con->prepare("
 SELECT cart_id
 FROM Carts
-WHERE user_id = ? AND status = 'Pending'");
+WHERE user_id = ? AND status IN('pending', 'rejected') AND type = 'cart'");
 $stmt->bind_param('i', $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -82,18 +95,13 @@ if ($result->num_rows > 0) {
     $stmt->close();
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        if ($row['item_qty'] + $quantity > $stock_qty) {
+        if (($row['item_qty'] + $quantity > $stock_qty && $quantity > 0) || ($row['item_qty'] + $quantity <= 0 && $quantity < 0)) {
             echo json_encode(['status' => 400, 'message' => 'Insufficient stock.']);
             exit();
         }
-    } else {
-        echo json_encode(['status' => 400, 'message' => 'You already have a reservation.']);
-        exit();
     }
-
 } else {
-    if($quantity <= 0)
-    {
+    if ($quantity <= 0) {
         echo json_encode(['status' => 400, 'message' => 'Quantity must be above zero.']);
         exit();
     }

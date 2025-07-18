@@ -49,23 +49,23 @@ if (!empty($item_name)) {
 
 $order_parts = [];
 if (!empty($total_sales) && in_array($total_sales, ['ASC', 'DESC'])) {
-    $order_parts[] = ",p.total_sales $total_sales";
+    $order_parts[] = "p.total_sales $total_sales";
 }
 
 if (!empty($stock_qty) && in_array($stock_qty, ['ASC', 'DESC'])) {
-    $order_parts[] = ",p.stock_qty $stock_qty";
+    $order_parts[] = "p.stock_qty $stock_qty";
 }
 
 if(!empty($date_restocked) && in_array($date_restocked, ['ASC', 'DESC'])) {
-    $order_parts[] = ",p.date_time_restocked $date_restocked";
+    $order_parts[] = "p.date_time_restocked $date_restocked";
 }
 
 if(!empty($recent) && in_array($recent, ['ASC', 'DESC'])) {
-    $order_parts[] = ",p.product_id $recent";
+    $order_parts[] = "p.product_id $recent";
 }
 
-if (!empty($orderParts)) {
-    $order = " ORDER BY " . implode(", ", $orderParts);
+if (!empty($order_parts)) {
+    $order = " ORDER BY " . implode(", ", $order_parts);
 } else {
     $order = " ORDER BY p.item_name ASC";
 }
@@ -73,7 +73,7 @@ if (!empty($orderParts)) {
 $stmt = $con->prepare("
 SELECT COUNT(*) AS total 
 FROM Products p
-JOIN Categories cs ON p.category_id=p.category_id" . $filter . $order);
+JOIN Categories cs ON p.category_id=cs.category_id" . $filter . $order);
 if(!empty($params))
 $stmt->bind_param($params, ...$values);
 $stmt->execute();

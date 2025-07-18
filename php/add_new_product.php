@@ -73,11 +73,6 @@ if ($edit === 'add') {
     $stmt->bind_param('ssisisd', $image_name, $item_name, $category_id, $brand, $stock_qty, $item_details, $price);
     if ($stmt->execute()) {
         $stmt->close();
-
-        echo json_encode([
-            'status' => 200,
-            'message' => 'Product added successfully.'
-        ]);
     } else {
         echo json_encode(['status' => 500, 'message' => 'Failed to add product.']);
     }
@@ -106,7 +101,7 @@ if ($edit === 'add') {
 
     try {
         $stmt = $con->prepare("
-        SELECT image, price 
+        SELECT image, price, stock_qty 
         FROM Products 
         WHERE product_id = ?");
         $stmt->bind_param('i', $product_id);
@@ -120,6 +115,7 @@ if ($edit === 'add') {
         $row = $result->fetch_assoc();
         $image_old_name = $row['image'];
         $old_price = $row['price'];
+        $old_qty = $row['stock_qty'];
 
         if ($old_price != $price) {
             $stmt = $con->prepare("
@@ -151,7 +147,7 @@ if ($edit === 'add') {
         }
         $stmt = $con->prepare("
         UPDATE Products 
-        SET " . $img . "item_name = ?, category_id = ?, brand = ?, stock_qty = ?, item_details = ?, price = ?, date_time_restocked = NOW()
+        SET " . $img . "item_name = ?, category_id = ?, brand = ?, stock_qty = ?, item_details = ?, price = ?" . ($old_qty != $stock_qty ? ", date_time_restocked = CURRENT_TIMESTAMP" : "") . "
         WHERE product_id = ?
         ");
         $stmt->bind_param($params, ...$values);
@@ -168,7 +164,7 @@ if ($edit === 'add') {
 
             foreach ($orders as $cart_id_invalid => $items) {
                 foreach ($items as $product_id => $item) {
-                    if ($item['quantity'] <= 0) {
+                    if ($item['quantity'] < 0) {
                         $cart_id_list[$cart_id_invalid] = true;
                         break;
                     }
@@ -181,7 +177,7 @@ if ($edit === 'add') {
                 $placeholders = implode(',', array_fill(0, count($cart_id_list), '?'));
                 $stmt = $con->prepare("
             UPDATE Carts 
-            SET status = 'rejected' 
+            SET status = 'rejected', type = 'cart'
             WHERE cart_id IN ($placeholders) AND type = 'order'
             ");
                 $stmt->bind_param(str_repeat('i', count($cart_id_list)), ...$cart_id_list);
@@ -221,7 +217,12 @@ if (($image_old_name != $image_name || $image_old_name == '') && $file !== null)
     }
 
     if (move_uploaded_file($file['tmp_name'], $targetDir . $image_name)) {
-        echo json_encode(['status' => 200, 'message' => 'File uploaded successfully.']);
+        if($edit === 'add') {
+            echo json_encode([
+            'status' => 200,
+            'message' => 'Product added successfully.'
+        ]);
+        }
     } else {
         echo json_encode(['status' => 500, 'message' => 'Failed to upload file.']);
     }
@@ -237,7 +238,7 @@ function checkProduct($con, $params, $values)
     $stmt->execute();
     $result = $stmt->get_result();
     if ($result && $result->num_rows > 0) {
-        echo json_encode(['status' => 400, 'message' => 'Product already exists in this category.']);
+        echo json_encode(['status' => 400, 'message' => 'Product already exists in this brand.']);
         exit();
     }
     $stmt->close();
