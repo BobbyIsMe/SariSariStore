@@ -102,7 +102,7 @@
 
         <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel"
             aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content p-3">
                     <div class="modal-header border-0">
                         <h5 class="modal-title" id="notificationModalLabel">Notifications</h5>

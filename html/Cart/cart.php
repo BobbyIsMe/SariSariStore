@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="../../css/navbarFooter.css">
     <link rel="stylesheet" href="../../css/webpageBody.css">
     <link rel="stylesheet" href="../../css/cart.css">
+    <link rel="stylesheet" href="../../css/loadingscreen.css">
+    <link rel="stylesheet" href="../../css/failedtoload.css">
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- <script type="text/javascript" src="../../js/auth.js"></script>
     <script type="text/javascript" src="../../js/load_sidebar.js" defer></script>
@@ -64,7 +67,7 @@
                                     <div class="cart_item">
 
                                         <div class="item_image">
-                                            <img src="../../img/${item.image}" alt="img" style="width: 100px; height: 100px;">
+                                            <img src="../../img/${item.image}=" alt="img" style="width: 100px; height: 100px;">
                                         </div>
 
                                         <!-- details-->
@@ -129,10 +132,23 @@
                                         <div>₱${item.subtotal}</div>
                                     </div>
                                 </div>
-                                <div
-                                    style="margin-top: 20px; font-weight: bold; display: flex; justify-content: space-between;">
+                                
+                                <br>
+                                <div class="d-flex flex-row justify-content-between">
+                                <div><b>Cart Status</b></div>
+                                    <div id="status"><b>hi</b></div>
+                                </div>
+
+                                <div class="d-flex flex-row justify-content-between">
+                                <div><b>Deadline date</b></div>
+                                    <div id="status"><b>9/26/25 12:19 PM</b></div>
+                                </div>
+                                
+                                <div class="d-flex flex-row justify-content-between"
+                                    style="margin-top: 20px; font-weight: bold;">
                                     <div>Estimated Total</div>
                                     <div id="estimated_total">N/A</div>
+                                    
                                 </div>
                                 <br>
                                 <button

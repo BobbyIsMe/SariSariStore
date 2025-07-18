@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="../../css/navbarFooter.css">
     <link rel="stylesheet" href="../../css/webpageBody.css">
     <link rel="stylesheet" href="../../css/cart.css">
+    <link rel="stylesheet" href="../../css/loadingscreen.css">
+    <link rel="stylesheet" href="../../css/failedtoload.css">
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- <script type="text/javascript" src="../../js/auth.js"></script>
     <script type="text/javascript" src="../../js/load_sidebar.js" defer></script>
@@ -24,6 +27,7 @@
     <style>
         * {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
+
         }
 
         .seeMoreBtn {
@@ -43,7 +47,7 @@
 <body>
     <div class="d-flex flex-column min-vh-100">
 
-    <?php include '../Navbars/navbar.php'; ?>
+        <?php include '../Navbars/navbar.php'; ?>
 
         <main class="flex-fill">
             <div class="d-flex align-items-stretch justify-content-center" style="height: 100%; min-height: 100vh;">
@@ -78,44 +82,55 @@
                                 <!-- cart items-->
                                 <div class="cart_items">
                                     <div>
-                                        <h6>Cart ID # ${order.cart_id}</h6>
+                                        <h6>Cart ID # 1</h6>
                                     </div>
 
                                     <br>
 
                                     <div>
-                                        Name: ${order.name}
+                                        Name: bembi
                                     </div>
 
                                     <br>
 
                                     <div class="d-flex flex-row col-12">
                                         <div class="col-4">
-                                            Reserved: ${order.date_time_created}
+                                            Reserved: 8/26/25 12:19 PM
                                         </div>
                                         <div class="col-4">
-                                            Received: ${order.date_time_received}
+                                            Received: 8/26/25 5:00 PM
                                         </div>
                                         <div class="col-4">
-                                            Deadline: ${order.date_time_deadline}
+                                            Deadline: 8/27/25 12:19 PM
                                         </div>
                                     </div>
                                     <!-- item-->
-                                    <div class="cart_item">
+                                    <div class="cart_item d-flex">
 
                                         <!-- details-->
-                                        <div style="flex: 1;">
-                                            <div class="category" style="font-size: 12px; color: gray;">${item.category} | ${item.subcategory}</div>
-                                            <div class="name" style="font-weight: bold;">${item.brand} | ${item.item_name}</div>
+                                        <div class="d-flex flex-row w-75 ">
+                                            <div class="item_image" style="margin-right: 20px;">
+                                                <img src="../../img/bembi.jpg" alt="img">
+                                            </div>
+                                            <div style="flex: 1;">
+
+                                                <div class="category" style="font-size: 12px; color: gray;">Snacks |
+                                                    Junkfood</div>
+                                                <div class="name" style="font-weight: bold;">Mang Juan | Chicharon</div>
+                                                <div class="variation" style="font-weight: lighter;">Suka't Sili</div>
+                                            </div>
                                         </div>
 
-                                        <!-- price -->
-                                        <div style="width: 80px; text-align: right;">₱${item.subtotal}</div>
 
-                                        <!-- qty of items-->
-                                        <div>
-                                            ${item.item_qty} pcs
+                                        <div class="d-flex flex-row justify-content-end w-50">
+                                            <div class="align-items-center" style="width: 80px;">₱12</div>
+
+                                            <!-- qty of items-->
+                                            <div>
+                                                2 pcs
+                                            </div>
                                         </div>
+
                                     </div>
                                     <div class="d-flex justify-content-center align-items-center mt-3">
                                         <button type="button" class="btn seeMoreBtn" data-bs-toggle="modal"
@@ -130,8 +145,8 @@
                                 <!--order summary-->
                                 <div class="order_summary">
                                     <div class="dropdown">
-                                        <select class="form-select border-0" id="status_${order.cart_id}" name="rent_status"
-                                            required>
+                                        <select class="form-select border-0" id="status_${order.cart_id}"
+                                            name="rent_status" required>
                                             <option value="status">Status</option>
                                         </select>
                                     </div>
@@ -142,8 +157,9 @@
 
                                         <div class="" style="border-top: solid black 1px;">
                                             <label for="check_in_date" class="form-label">Check-in Date</label>
-                                            <input type="datetime-local" class="paragraphs form-control" id="date_${order.cart_id}"
-                                                name="check_in_date" value="${date_format}" required>
+                                            <input type="datetime-local" class="paragraphs form-control"
+                                                id="date_${order.cart_id}" name="check_in_date" value="${date_format}"
+                                                required>
                                         </div>
                                     </div>
 
@@ -153,27 +169,47 @@
                         </div>
 
 
-                        <div class="modal fade" id="seeMoreModal" tabindex="-1" aria-labelledby="seeMoreModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal fade" id="seeMoreModal" tabindex="-1" aria-labelledby="seeMoreModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="seeMoreModalLabel">Order Details</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
                                     </div>
 
                                     <div class="modal-body" id="order_items_list">
-                                         <div
-                                            class="order-item d-flex justify-content-between align-items-center border-bottom pb-2 mb-2">
-                                            <div>
-                                                <div class="category" style="font-size: 12px; color: gray;">
-                                                    ${item.category} | ${item.subcategory}</div>
-                                                <div class="name fw-bold">${item.brand} | ${item.item_name}</div>
+                                        <div class="cart_item d-flex">
+
+                                            <!-- details-->
+                                            <div class="d-flex flex-row w-75 ">
+                                                <div class="item_image" style="margin-right: 20px;">
+                                                    <img src="../../img/bembi.jpg" alt="img">
+                                                </div>
+                                                <div style="flex: 1;">
+
+                                                    <div class="category" style="font-size: 12px; color: gray;">Snacks |
+                                                        Junkfood</div>
+                                                    <div class="name" style="font-weight: bold;">Mang Juan | Chicharon
+                                                    </div>
+                                                    <div class="variation" style="font-weight: lighter;">Suka't Sili
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="text-end">
-                                                <div>₱${item.subtotal}</div>
-                                                <div>${item.item_qty} pcs</div>
+
+
+                                            <div class="d-flex flex-row justify-content-end w-50">
+                                                <div class="align-items-center" style="width: 80px;">₱12</div>
+
+                                                <!-- qty of items-->
+                                                <div>
+                                                    2 pcs
+                                                </div>
                                             </div>
+
                                         </div>
+                                        
                                     </div>
                                 </div>
                             </div>

@@ -14,6 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../css/navbarFooter.css">
+    <link rel="stylesheet" href="../../css/webpageBody.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- <script type="text/javascript" src="../../js/auth.js"></script> -->
     <style>
@@ -21,6 +22,8 @@
             font-family: Verdana, Geneva, Tahoma, sans-serif;
 
         }
+
+        
     </style>
 </head>
 
@@ -74,7 +77,7 @@
                             <input type="password" class="form-control" placeholder="" name="confirm_password">
                             <label>Re-enter Password</label>
                         </div>
-                        <button class="btn login-btn" type="submit" on><b>REGISTER</b></button>
+                        <button class="add_to_cart btn login-btn" type="submit" on><b>REGISTER</b></button>
                     </form>
                     <p class="mt-2 mb-0">Already have an account? Login <a href="login.php">Here</a></p>
                 </div>

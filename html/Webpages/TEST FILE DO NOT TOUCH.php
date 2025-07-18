@@ -296,7 +296,7 @@ main section.body_container {
                                 <div class="product_card">
                                     <a href="itemDescription.html">
                                         <div class="image"><img src="../../img/bembi.jpg" alt="img"></div>
-                                        <div class="category" style="font-size: 10px;">Student</div>
+                                        <div class="category">Student</div>
                                         <div class="name">Bembi | USC</div>
                                             <div class="price"><strong>₱2.00</strong></div>
                                         <a>
@@ -323,7 +323,7 @@ main section.body_container {
                                 <div class="product_card">
                                     <a href="itemDescription.html">
                                         <div class="image"><img src="" alt="img"></div>
-                                        <div class="category" style="font-size: 10px;">Student</div>
+                                        <div class="category">Student</div>
                                     </a>
                                     <a>
                                         <div class="name">Mang Juan | Chicharon</div>

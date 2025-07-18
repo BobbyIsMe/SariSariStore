@@ -9,6 +9,9 @@
   <link rel="stylesheet" href="../../css/navbarFooter.css">
   <link rel="stylesheet" href="../../css/webpageBody.css">
   <link rel="stylesheet" href="../../css/category.css">
+  <link rel="stylesheet" href="../../css/loadingscreen.css">
+  <link rel="stylesheet" href="../../css/failedtoload.css">
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <!-- <script type="text/javascript" src="../../js/auth.js"></script>
   <script type="text/javascript" src="../../js/load_sidebar.js" defer></script>
@@ -44,7 +47,7 @@
 
 <body>
   <div class="d-flex flex-column min-vh-100">
-  <?php include '../Navbars/navbar.php'; ?>
+    <?php include '../Navbars/navbar.php'; ?>
 
     <main class="flex-fill">
       <div class="d-flex align-items-stretch justify-content-center" style="min-height: 100vh;">
@@ -57,7 +60,8 @@
               <details class="category">
                 <summary>${category}</summary>
                 <ul class="subcategory">
-                  <a href="../Webpages/category.php?category=${category}&subcategory=${item.subcategory}">• ${item.subcategory}</a>
+                  <a href="../Webpages/category.php?category=${category}&subcategory=${item.subcategory}">•
+                    ${item.subcategory}</a>
                 </ul>
               </details>
             </div>
@@ -70,23 +74,201 @@
           <div class="d-flex gap-2 mb-3">
             <button class="btn btn-light filter-btn" id="all">All</button>
             <button class="btn btn-light filter-btn" id="recent">New</button>
-            <button class="btn btn-light filter-btn" id="filter_button"
-              data-bs-toggle="modal" data-bs-target="#filterItemModal">Filtered</button>
+            <button class="btn btn-light filter-btn" id="filter_button" data-bs-toggle="modal"
+              data-bs-target="#filterItemModal">Filtered</button>
           </div>
 
-          <div class="product_list d-flex flex-wrap gap-4" id="products_list">
+          <div class="product_list d-flex flex-wrap justify-content-between" id="products_list">
             <div class="product_card">
               <a href="../../html/Webpages/itemDescription.php?product_id=${product.product_id}">
                 <div class="image"><img src="../../img/bembi.jpg" alt="img"></div>
               </a>
-              <div class="category" style="font-size: 10px;">${product.category} | ${product.subcategory}</div>
+              <div class="category">Snacks | Junkfood</div>
               <a>
                 <div class="name">${product.brand} | ${product.item_name}</div>
                 <div class="price"><strong>₱${product.price}</strong></div>
-                <button class="add_to_cart" style="width: 100%; margin-top: 5px;">${in_stock ? "Add to Cart" : "Out of Stock"}</button>
+                <button class="add_to_cart" style="width: 100%; margin-top: 5px;">${in_stock ? "Add to Cart" : "Out of
+                  Stock"}</button>
               </a>
 
             </div>
+
+            
+            
+            <div class="product_card">
+              <!----FILLER CARD---->
+              <div class="image" style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)"></div>
+              <br>
+              <div class="category"
+                style="font-size: 10px; background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                dgsauydgsayudgsdsay</div>
+              <a><br>
+                <div class="name" style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                  dasdasd</div>
+                <div class="price" style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                  <strong>dsai</strong>
+                </div><br>
+                <div class="add_to_cart"
+                  style="width: 100%; margin-top: 5px; background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                  Add to Cart</div>
+              </a>
+            </div>
+
+            <div class="product_card">
+              <!----FILLER CARD---->
+              <div class="image" style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)"></div>
+              <br>
+              <div class="category"
+                style="font-size: 10px; background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                dgsauydgsayudgsdsay</div>
+              <a><br>
+                <div class="name" style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                  dasdasd</div>
+                <div class="price" style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                  <strong>dsai</strong>
+                </div><br>
+                <div class="add_to_cart"
+                  style="width: 100%; margin-top: 5px; background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                  Add to Cart</div>
+              </a>
+            </div>
+
+            <div class="product_card">
+              <!----FILLER CARD---->
+              <div class="image" style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)"></div>
+              <br>
+              <div class="category"
+                style="font-size: 10px; background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                dgsauydgsayudgsdsay</div>
+              <a><br>
+                <div class="name" style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                  dasdasd</div>
+                <div class="price" style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                  <strong>dsai</strong>
+                </div><br>
+                <div class="add_to_cart"
+                  style="width: 100%; margin-top: 5px; background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                  Add to Cart</div>
+              </a>
+            </div>
+
+            <div class="product_card">
+              <!----FILLER CARD---->
+              <div class="image" style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)"></div>
+              <br>
+              <div class="category"
+                style="font-size: 10px; background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                dgsauydgsayudgsdsay</div>
+              <a><br>
+                <div class="name" style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                  dasdasd</div>
+                <div class="price" style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                  <strong>dsai</strong>
+                </div><br>
+                <div class="add_to_cart"
+                  style="width: 100%; margin-top: 5px; background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                  Add to Cart</div>
+              </a>
+            </div>
+
+            <div class="product_card">
+              <!----FILLER CARD---->
+              <div class="image" style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)"></div>
+              <br>
+              <div class="category"
+                style="font-size: 10px; background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                dgsauydgsayudgsdsay</div>
+              <a><br>
+                <div class="name" style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                  dasdasd</div>
+                <div class="price" style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                  <strong>dsai</strong>
+                </div><br>
+                <div class="add_to_cart"
+                  style="width: 100%; margin-top: 5px; background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                  Add to Cart</div>
+              </a>
+            </div>
+
+            <div class="product_card">
+              <!----FILLER CARD---->
+              <div class="image" style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)"></div>
+              <br>
+              <div class="category"
+                style="font-size: 10px; background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                dgsauydgsayudgsdsay</div>
+              <a><br>
+                <div class="name" style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                  dasdasd</div>
+                <div class="price" style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                  <strong>dsai</strong>
+                </div><br>
+                <div class="add_to_cart"
+                  style="width: 100%; margin-top: 5px; background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                  Add to Cart</div>
+              </a>
+            </div>
+
+            <div class="product_card">
+              <!----FILLER CARD---->
+              <div class="image" style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)"></div>
+              <br>
+              <div class="category"
+                style="font-size: 10px; background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                dgsauydgsayudgsdsay</div>
+              <a><br>
+                <div class="name" style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                  dasdasd</div>
+                <div class="price" style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                  <strong>dsai</strong>
+                </div><br>
+                <div class="add_to_cart"
+                  style="width: 100%; margin-top: 5px; background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                  Add to Cart</div>
+              </a>
+            </div>
+
+            <div class="product_card">
+              <!----FILLER CARD---->
+              <div class="image" style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)"></div>
+              <br>
+              <div class="category"
+                style="font-size: 10px; background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                dgsauydgsayudgsdsay</div>
+              <a><br>
+                <div class="name" style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                  dasdasd</div>
+                <div class="price" style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                  <strong>dsai</strong>
+                </div><br>
+                <div class="add_to_cart"
+                  style="width: 100%; margin-top: 5px; background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                  Add to Cart</div>
+              </a>
+            </div>
+
+            <div class="product_card">
+              <!----FILLER CARD---->
+              <div class="image" style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)"></div>
+              <br>
+              <div class="category"
+                style="font-size: 10px; background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                dgsauydgsayudgsdsay</div>
+              <a><br>
+                <div class="name" style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                  dasdasd</div>
+                <div class="price" style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                  <strong>dsai</strong>
+                </div><br>
+                <div class="add_to_cart"
+                  style="width: 100%; margin-top: 5px; background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                  Add to Cart</div>
+              </a>
+            </div>
+
+
+          
+          
           </div>
           <div class="p-4 d-flex justify-content-center align-items-center gap-4">
             <button class="navButton" type="button" id="prev_button">

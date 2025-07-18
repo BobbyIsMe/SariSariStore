@@ -16,6 +16,9 @@
   <link rel="stylesheet" href="../../css/navbarFooter.css">
   <link rel="stylesheet" href="../../css/webpageBody.css">
   <link rel="stylesheet" href="../../css/cart.css">
+  <link rel="stylesheet" href="../../css/loadingscreen.css">
+  <link rel="stylesheet" href="../../css/failedtoload.css">
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <!-- <script type="text/javascript" src="../../js/auth.js"></script>
   <script type="text/javascript" src="../../js/load_sidebar.js" defer></script>
@@ -24,13 +27,15 @@
   <style>
     * {
       font-family: Verdana, Geneva, Tahoma, sans-serif;
+
     }
 
-    .description-text {
+    .description_text {
       word-wrap: break-word;
       overflow-wrap: break-word;
       word-break: break-word;
       white-space: normal;
+      font-size: 12px;
     }
 
     #editItem,
@@ -106,56 +111,57 @@
             <div id="product_list">
               <div class="cart-container"
                 style="display: flex; gap: 20px; padding: 20px; background: #f5f5f5; justify-content: center; align-items: center; ">
-                <div class="item_image" style="width: 300px; height: 400px;">
-                  <img src="../../img/${product.image}" alt="img" style="width: 100%; height: 100%; object-fit: contain;">
+                <div class="item_image" style="height: 250px; width: 250px; aspect-ratio: 1/1; ">
+                  <img src="../../img/test1.png" alt="img" >
                 </div>
                 <!-- cart items-->
                 <div class="cart_items">
                   <div>
-                    <h4><b>Product Details</b></h4>
+                    <h5><b>Product Details</b></h5>
                   </div>
 
-                  <br>
-                  <div class="d-flex flex-row col-12">
-                    <div class="col-6 d-flex flex-column gap-1">
-                      <h5><b>Name</b><br></h5>
-                      <div>${product.brand} | ${product.item_name}</div>
+                  
+                  <div class="row">
+                    <div class="col-6 ">
+                      <h5><b>Name</b></h5>
+                      <div class="name">${product.brand} | ${product.item_name}</div>
                     </div>
-                    <div class="col-6 d-flex flex-column gap-1">
-                      <h5><b>Item ID</b><br></h5>
-                      <div>${product.product_id}</div>
-                    </div>
-                  </div>
-                  <br>
-                  <div class="d-flex flex-row col-12">
-                    <div class="col-6 d-flex flex-column gap-1">
-                      <h5><b>Category</b><br></h5>
-                      <div>${product.category}</div>
-                    </div>
-                    <div class="col-6 d-flex flex-column gap-1">
-                      <h5><b>Subcategory</b><br></h5>
-                      <div>${product.subcategory}</div>
+                    <div class="col-6 ">
+                      <h5><b>Item ID</b></h5>
+                      <div class="item_id">${product.product_id}</div>
                     </div>
                   </div>
+                  
+                  <div class="row">
+                    <div class="col-6">
+                      <h5><b>Category</b></h5>
+                      <div class="category">${product.category}</div>
+                    </div>
+                    <div class="col-6">
+                      <h5><b>Subcategory</b></h5>
+                      <div class="category">${product.subcategory}</div>
+                    </div>
+                    
+                  </div>
 
 
-                  <br>
+                  
 
-                  <div class="d-flex flex-column">
+                  <div class="row">
                     <h5><b>Description</b></h5>
-                    <div class="description-text">
+                    <div class="description_text">
                       ${product.item_details}
                     </div>
                   </div>
 
-                  <div class="col-12 d-flex flex-row" style="padding-top: 20px;">
-                    <div class="col-6 d-flex flex-column gap-1">
-                      <h5><b>Price</b><br></h5>
-                      <div>₱${product.price}</div>
+                  <div class="row">
+                    <div class="col-6">
+                      <h5><b>Price</b></h5>
+                      <div class="price">₱${product.price}</div>
                     </div>
-                    <div class="col-6 d-flex flex-column gap-1">
-                      <h5><b>Current Quantity</b><br></h5>
-                      <div>${product.stock_qty}</div>
+                    <div class="col-6 ">
+                      <h5><b>Current Quantity</b></h5>
+                      <div class="qty" style="font-size: 12px;">${product.stock_qty}</div>
                     </div>
 
                   </div>
@@ -171,11 +177,11 @@
 
                   <div class="d-flex flex-column align-items-center p-4" style="gap: 20px;">
 
-                    <button id="editItem" class="btn adminBtn " type="button" style="background-color: #e6cc8c;;"
+                    <button id="editItem" class="btn adminBtn " type="button" style="background-color: #FFC107;;;"
                       data-bs-toggle="modal" data-bs-target="#editItemModal">
                       Edit Item
                     </button>
-                    <button id="editVariations" type="button" class="btn adminBtn" style="background-color: #e6cc8c;"
+                    <button id="editVariations" type="button" class="btn adminBtn" style="background-color: #FFC107;;"
                       data-bs-toggle="modal" data-bs-target="#editVariationsModal">
                       Edit Variations
                     </button>
@@ -230,7 +236,7 @@
                 <div class="d-flex flex-row align-items-center gap-2 variation_row">
                   <input type="text" class="form-control" style="width: 220px; font-size: 14px;"
                     value="${variation.variation_name}" name="newVariation" data-id="${variation.variation_id}" required>
-                  <button type="button" class="btn btn-danger small" style="width: 140px;">Remove</button>
+                  <button type="button" class="btn btn-danger small" style="width: 140px; background-color: red; ">Remove</button>
                 </div><br>
               </div>
 

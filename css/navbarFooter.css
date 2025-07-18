@@ -102,6 +102,7 @@ a{
     background-color: #fff;
     letter-spacing: 2px;
     border-radius: 5px;
+    border: none;
 }
 
 #profile_dropdown[aria-expanded="true"], #profile_dropdown:hover {
@@ -117,7 +118,6 @@ a{
     background: transparent;
     border: none;
     padding: 0.5rem;
-    /* breathing room */
 }
 
 .nav-icon svg {
@@ -126,9 +126,7 @@ a{
     height: 1.8rem;
     stroke: #fff;
     stroke-width: 1.5;
-    /* fine lines */
     fill: none;
-    /* these icons are stroke-only */
     display: block;
 }
 
