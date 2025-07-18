@@ -19,7 +19,6 @@ if (isset($_SESSION["user_id"])) {
     <style>
         * {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
-
         }
     </style>
 </head>
@@ -30,19 +29,14 @@ if (isset($_SESSION["user_id"])) {
         <div class="header">
             <div class="container d-flex flex-row align-items-center text-center py-3" style="gap: 30px;">
                 <h5 class="mb-0"><b>Cerina's Sari2Store</b></h5>
+
                 <div class="d-flex flex-grow-1">
                     <input type="text" class="form-control" placeholder="Search">
                     <button class="btn btn-light search-button" type="button" aria-label="Search">
-                        <svg
-                            class="search-icon"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="-81.92 -81.92 1187.84 1187.84"
-                            >
-                            <path
-                                d="m795.904 750.72 124.992 124.928a32 32 0 0 1-45.248 
-                                45.248L750.656 795.904a416 416 0 1 1 45.248-45.248z
-                                M480 832a352 352 0 1 0 0-704 352 352 0 0 0 0 704z"
-                            />
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-81.92 -81.92 1187.84 1187.84">
+                            <path d="m795.904 750.72 124.992 124.928a32 32 0 0 1-45.248 
+                                    45.248L750.656 795.904a416 416 0 1 1 45.248-45.248z
+                                    M480 832a352 352 0 1 0 0-704 352 352 0 0 0 0 704z"/>
                         </svg>
                     </button>
                 </div>
@@ -54,14 +48,17 @@ if (isset($_SESSION["user_id"])) {
                 <div class="login-card text-center">
                     <form id="signinForm" method="POST" onsubmit="signinSubmit(event)">
                         <h4 class="mb-3"><b>LOGIN</b></h4>
+
                         <div class="mb-5">
                             <input type="text" class="form-control" placeholder="" name="phone_number">
                             <label>Mobile Number</label>
                         </div>
+
                         <div class="mb-4">
                             <input type="password" class="form-control" placeholder="" name="password">
                             <label>Password</label>
                         </div>
+                        
                         <button class="btn login-btn" type="submit"><b>LOGIN</b></button>
                     </form>
                     <p class="mt-2 mb-0">No account? Register <a href="registration.php">Here</a></p>

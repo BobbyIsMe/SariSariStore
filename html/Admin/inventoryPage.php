@@ -36,7 +36,6 @@ if (!isset($_SESSION["user_id"]) && !isset($_SESSION["staff_type"]) || $_SESSION
     #editVariations,
     #remove {
       width: 200px;
-
     }
   </style>
 </head>
@@ -75,22 +74,21 @@ if (!isset($_SESSION["user_id"]) && !isset($_SESSION["staff_type"]) || $_SESSION
               <a class="dropdown-item" id="authLink" onclick="signoutClick(event)">Logout</a>
             </ul>
           </div>
-
         </div>
 
         <div class="nav-icons d-flex gap-3 ms-3">
           <button class="btn nav-icon" onclick="window.location.href='../Cart/cart.php'" aria-label="Cart">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <path d="M6.29977 5H21L19 12H7.37671M20 16H8L6 3H3
-                          M9 20C9 20.5523 8.55228 21 8 21
-                          C7.44772 21 7 20.5523 7 20
-                          C7 19.4477 7.44772 19 8 19
-                          C8.55228 19 9 19.4477 9 20
-                          Z
-                          M20 20C20 20.5523 19.5523 21 19 21
-                          C18.4477 21 18 20.5523 18 20
-                          C18 19.4477 18.4477 19 19 19
-                          C19.5523 19 20 19.4477 20 20Z" />
+                      M9 20C9 20.5523 8.55228 21 8 21
+                      C7.44772 21 7 20.5523 7 20
+                      C7 19.4477 7.44772 19 8 19
+                      C8.55228 19 9 19.4477 9 20
+                      Z
+                      M20 20C20 20.5523 19.5523 21 19 21
+                      C18.4477 21 18 20.5523 18 20
+                      C18 19.4477 18.4477 19 19 19
+                      C19.5523 19 20 19.4477 20 20Z" />
             </svg>
           </button>
 
@@ -239,24 +237,14 @@ if (!isset($_SESSION["user_id"]) && !isset($_SESSION["staff_type"]) || $_SESSION
               </div>
             </div>
 
-
-
             <div id="product_list"></div>
             <div class="p-4 d-flex justify-content-center align-items-center gap-4">
-              <button class="navButton" type="button" id="prev_button">
-                Previous
-              </button>
+              <button class="navButton" type="button" id="prev_button">Previous</button>
               <span>|</span>
-              <div id="page_number" class="paragraphs">
-                Page # out of #
-              </div>
+              <div id="page_number" class="paragraphs">Page # out of #</div>
               <span>|</span>
-              <button class="navButton" type="button" id="next_button">
-                Next
-              </button>
+              <button class="navButton" type="button" id="next_button">Next</button>
             </div>
-
-
         </main>
       </div>
     </main>
@@ -274,16 +262,14 @@ if (!isset($_SESSION["user_id"]) && !isset($_SESSION["staff_type"]) || $_SESSION
               <label for="editVariationId" class="form-label">Item ID:</label>
               <input type="text" class="form-control" id="edit_variation_id" name="product_id" readonly>
             </div>
+
             <form id="edit_variations_form" class="d-flex flex-column gap-3" method="POST" onsubmit="onSubmitEditVariations(event)">
               <div class="d-flex flex-row align-items-center gap-2">
                 <input type="text" class="form-control" style="width: 220px; font-size: 14px;" placeholder="Your variation here..." id="variation_name" name="variation_name">
                 <button type="button" class="btn small" style="width: 140px; font-size: 16px; background-color: #FFC107;" id="addVariationBtn" onclick="onSubmitAddVariation()">Add Variation</button>
               </div>
 
-              <div id="edit_variations">
-
-              </div>
-
+              <div id="edit_variations"></div>
               <div class="d-flex justify-content-center">
                 <button type="submit" class="btn px-4 py-1" style="background-color: #FFC107;">Update Variations</button>
               </div>

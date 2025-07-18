@@ -13,7 +13,6 @@
     <style>
         * {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
-            
         }
 
         .subcategory {
@@ -40,37 +39,35 @@
                             <svg class="search-icon" xmlns="http://www.w3.org/2000/svg"
                                 viewBox="-81.92 -81.92 1187.84 1187.84">
                                 <path d="m795.904 750.72 124.992 124.928a32 32 0 0 1-45.248 
-                                45.248L750.656 795.904a416 416 0 1 1 45.248-45.248z
-                                M480 832a352 352 0 1 0 0-704 352 352 0 0 0 0 704z" />
+                                        45.248L750.656 795.904a416 416 0 1 1 45.248-45.248z
+                                        M480 832a352 352 0 1 0 0-704 352 352 0 0 0 0 704z" />
                             </svg>
                         </button>
                     </div>
 
-
                     <div class="dropdown ms-auto">
-                        <button id="profile_dropdown" class="btn btn-outline-secondary dropdown-toggle" type="button"
-                            data-bs-toggle="dropdown">Profile</button>
+                        <button id="profile_dropdown" class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">Profile</button>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <a class="dropdown-item" href="../Admin/inventoryPage.html">Inventory</a>
                                 <a class="dropdown-item" href="../Admin/staffPage.html">Staff</a>
                                 <a class="dropdown-item" id="authLink" href="#" onclick="signoutClick(event)">Logout</a>
                             </ul>
                     </div>
-
                 </div>
+
                 <div class="nav-icons d-flex gap-3 ms-3">
                     <button class="btn nav-icon" onclick="window.location.href='../Cart/cart.html'" aria-label="Cart">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <path d="M6.29977 5H21L19 12H7.37671M20 16H8L6 3H3
-                        M9 20C9 20.5523 8.55228 21 8 21
-                        C7.44772 21 7 20.5523 7 20
-                        C7 19.4477 7.44772 19 8 19
-                        C8.55228 19 9 19.4477 9 20
-                        Z
-                        M20 20C20 20.5523 19.5523 21 19 21
-                        C18.4477 21 18 20.5523 18 20
-                        C18 19.4477 18.4477 19 19 19
-                        C19.5523 19 20 19.4477 20 20Z" />
+                                    M9 20C9 20.5523 8.55228 21 8 21
+                                    C7.44772 21 7 20.5523 7 20
+                                    C7 19.4477 7.44772 19 8 19
+                                    C8.55228 19 9 19.4477 9 20
+                                    Z
+                                    M20 20C20 20.5523 19.5523 21 19 21
+                                    C18.4477 21 18 20.5523 18 20
+                                    C18 19.4477 18.4477 19 19 19
+                                    C19.5523 19 20 19.4477 20 20Z" />
                         </svg>
                     </button>
 
@@ -78,49 +75,47 @@
                         aria-label="Order">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <path d="M16 8H17.1597C18.1999 8 19.0664 8.79732
-                        19.1528 9.83391L19.8195 17.8339
-                        C19.9167 18.9999 18.9965 20 17.8264 20
-                        H6.1736C5.00352 20 4.08334 18.9999
-                        4.18051 17.8339L4.84718 9.83391
-                        C4.93356 8.79732 5.80009 8 6.84027 8H8
-                        M16 8H8M16 8L16 7C16 5.93913 15.5786 4.92172
-                        14.8284 4.17157C14.0783 3.42143 13.0609 3 12 3
-                        C10.9391 3 9.92172 3.42143 9.17157 4.17157
-                        C8.42143 4.92172 8 5.93913 8 7L8 8M16 8L16 12M8 8L8 12" />
+                                    19.1528 9.83391L19.8195 17.8339
+                                    C19.9167 18.9999 18.9965 20 17.8264 20
+                                    H6.1736C5.00352 20 4.08334 18.9999
+                                    4.18051 17.8339L4.84718 9.83391
+                                    C4.93356 8.79732 5.80009 8 6.84027 8H8
+                                    M16 8H8M16 8L16 7C16 5.93913 15.5786 4.92172
+                                    14.8284 4.17157C14.0783 3.42143 13.0609 3 12 3
+                                    C10.9391 3 9.92172 3.42143 9.17157 4.17157
+                                    C8.42143 4.92172 8 5.93913 8 7L8 8M16 8L16 12M8 8L8 12" />
                         </svg>
                     </button>
 
                     <div class="dropdown">
-                        <button class="btn nav-icon d-flex flex-row" aria-label="Notifications" type="button"
-                            id="notificationDropdown" data-bs-toggle="modal" aria-expanded="false"
-                            data-bs-target="#notificationModal">
+                        <button class="btn nav-icon d-flex flex-row" aria-label="Notifications" type="button" id="notificationDropdown" data-bs-toggle="modal" aria-expanded="false" data-bs-target="#notificationModal">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                 <path d="M12.0196 2.91016C8.7096 2.91016 6.0196 5.60016 6.0196 8.91016
-                        V11.8002C6.0196 12.4102 5.7596 13.3402 5.4496 13.8602
-                        L4.2996 15.7702C3.5896 16.9502 4.0796 18.2602 5.3796 18.7002
-                        C9.6896 20.1402 14.3396 20.1402 18.6496 18.7002
-                        C19.8596 18.3002 20.3896 16.8702 19.7296 15.7702
-                        L18.5796 13.8602C18.2796 13.3402 18.0196 12.4102 18.0196 11.8002
-                        V8.91016C18.0196 5.61016 15.3196 2.91016 12.0196 2.91016Z" />
+                                        V11.8002C6.0196 12.4102 5.7596 13.3402 5.4496 13.8602
+                                        L4.2996 15.7702C3.5896 16.9502 4.0796 18.2602 5.3796 18.7002
+                                        C9.6896 20.1402 14.3396 20.1402 18.6496 18.7002
+                                        C19.8596 18.3002 20.3896 16.8702 19.7296 15.7702
+                                        L18.5796 13.8602C18.2796 13.3402 18.0196 12.4102 18.0196 11.8002
+                                        V8.91016C18.0196 5.61016 15.3196 2.91016 12.0196 2.91016Z" />
+
                                 <path d="M13.8699 3.19994C13.5599 3.10994 13.2399 3.03994 12.9099 2.99994
-                        C11.9499 2.87994 11.0299 2.94994 10.1699 3.19994
-                        C10.4599 2.45994 11.1799 1.93994 12.0199 1.93994
-                        C12.8599 1.93994 13.5799 2.45994 13.8699 3.19994Z" />
+                                        C11.9499 2.87994 11.0299 2.94994 10.1699 3.19994
+                                        C10.4599 2.45994 11.1799 1.93994 12.0199 1.93994
+                                        C12.8599 1.93994 13.5799 2.45994 13.8699 3.19994Z" />
+
                                 <path opacity="0.4" d="M15.0195 19.0601C15.0195 20.7101 13.6695 22.0601
-                        12.0195 22.0601C11.1995 22.0601 10.4395 21.7201
-                        9.89953 21.1801C9.35953 20.6401 9.01953 19.8801 9.01953 19.0601" />
+                                        12.0195 22.0601C11.1995 22.0601 10.4395 21.7201
+                                        9.89953 21.1801C9.35953 20.6401 9.01953 19.8801 9.01953 19.0601" />
                             </svg>
                             <div class="notification-badge">3</div>
                         </button>
 
-                        <div class="modal fade" id="notificationModal" tabindex="-1"
-                            aria-labelledby="notificationModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content p-3">
                                     <div class="modal-header border-0">
                                         <h5 class="modal-title" id="notificationModalLabel">Notifications</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body" style=" overflow-y: auto;">
                                         <div class="notification_card d-flex mb-3">
@@ -132,16 +127,16 @@
                                                 <small class="text-muted">3/5/25 1:40 AM</small>
                                             </div>
                                         </div>
+
                                         <div class="notification_card d-flex mb-3">
                                             <div class="col-1" style="background-color: rgb(217, 255, 0);"></div>
                                             <div class="d-flex flex-column flex-grow-1">
                                                 <div class="fw-bold">Order ID# 3</div>
-                                                <div class="notification_message">Your reservation has been
-                                                    approvedjdsiahdshdsahdshdsahdiashiudashudashuidshaiudhsaiudhsauidhsauidhsauidhsuaihdasuihdsuiahdas
-                                                </div>
+                                                <div class="notification_message">Your reservation has been approvedjdsiahdshdsahdshdsahdiashi</div>
                                                 <small class="text-muted">3/5/25 10:01 AM</small>
                                             </div>
                                         </div>
+
                                         <div class="notification_card d-flex mb-3">
                                             <div class="col-1" style="background-color: rgb(185, 185, 185);"></div>
                                             <div class="d-flex flex-column flex-grow-1">
@@ -152,31 +147,20 @@
                                         </div>
 
                                         <div class="p-4 d-flex justify-content-center align-items-center gap-4">
-                                            <button class="navButton" type="button" id="prev_button">
-                                                Previous
-                                            </button>
+                                            <button class="navButton" type="button" id="prev_button">Previous</button>
                                             <span>|</span>
-                                            <div id="page_number" class="paragraphs">
-                                                Page # out of #
-                                            </div>
+                                            <div id="page_number" class="paragraphs">Page # out of #</div>
                                             <span>|</span>
-                                            <button class="navButton" type="button" id="next_button">
-                                                Next
-                                            </button>
+                                            <button class="navButton" type="button" id="next_button">Next</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
-
-
             </div>
         </div>
-
 
         <main class="flex-fill" style="height: 100%;">
             <div class="d-flex align-items-stretch justify-content-center" style="min-height: 100vh;">
@@ -187,38 +171,36 @@
                         <details class="category">
                             <summary>School Supplies</summary>
                             <ul class="subcategory list-unstyled ms-3">
-                                <li><a href="../../Webpages/category.html"
-                                        onclick="updateCategory('School Supplies', 'Filler')">Filler</a></li>
+                                <li><a href="../../Webpages/category.html" onclick="updateCategory('School Supplies', 'Filler')">Filler</a></li>
                             </ul>
                         </details>
+
                         <details class="category">
                             <summary>Softdrinks</summary>
                             <ul class="subcategory list-unstyled ms-3">
-                                <li><a href="../../Webpages/category.html"
-                                        onclick="updateCategory('Softdrinks', 'Juice')">Juice</a></li>
+                                <li><a href="../../Webpages/category.html" onclick="updateCategory('Softdrinks', 'Juice')">Juice</a></li>
                             </ul>
                         </details>
+
                         <details class="category">
                             <summary>Powdered Drinks</summary>
                             <ul class="subcategory list-unstyled ms-3">
-                                <li><a href="../../Webpages/category.html"
-                                        onclick="updateCategory('Powdered Drinks', 'Coffee')">Coffee</a></li>
+                                <li><a href="../../Webpages/category.html" onclick="updateCategory('Powdered Drinks', 'Coffee')">Coffee</a></li>
                             </ul>
                         </details>
+
                         <details class="category">
                             <summary>Snacks</summary>
                             <ul class="subcategory list-unstyled ms-3">
-                                <li><a href="../../Webpages/category.html"
-                                        onclick="updateCategory('Snacks', 'Junkfood')">Junkfood</a></li>
-                                <li><a href="../../Webpages/category.html"
-                                        onclick="updateCategory('Snacks', 'Biscuits')">Biscuits</a></li>
+                                <li><a href="../../Webpages/category.html" onclick="updateCategory('Snacks', 'Junkfood')">Junkfood</a></li>
+                                <li><a href="../../Webpages/category.html" onclick="updateCategory('Snacks', 'Biscuits')">Biscuits</a></li>
                             </ul>
                         </details>
+
                         <details class="category">
                             <summary>Hygiene</summary>
                             <ul class="subcategory list-unstyled ms-3">
-                                <li><a href="../../Webpages/category.html"
-                                        onclick="updateCategory('Hygiene', 'Soap')">Soap</a></li>
+                                <li><a href="../../Webpages/category.html" onclick="updateCategory('Hygiene', 'Soap')">Soap</a></li>
                             </ul>
                         </details>
                     </aside>
@@ -226,63 +208,42 @@
 
                 <main style="flex-grow: 1;">
                     <div class="object_container">
-                        <div class="cart-container"
-                            style="display: flex; gap: 20px; padding: 20px; background: #f5f5f5;">
-
-                            <!-- cart items-->
+                        <div class="cart-container" style="display: flex; gap: 20px; padding: 20px; background: #f5f5f5;">
                             <div class="cart_items">
                                 <h4><b>Order #</b></h4>
-
-                                <!-- item-->
                                 <div class="cart_item">
-
                                     <div class="item_image">
                                         <img src="" alt="img">
                                     </div>
 
-                                    <!-- details-->
                                     <div style="flex: 1; ">
-                                        <div class="d-flex flex-row g-2"
-                                            style="gap: 20px; font-size: 12px; color: gray;">
+                                        <div class="d-flex flex-row g-2" style="gap: 20px; font-size: 12px; color: gray;">
                                             <div class="category">Snacks</div>
                                             <div>|</div>
                                             <div class="category">Junkfood</div>
                                         </div>
 
                                         <div class="name" style="font-weight: bold;">Mang Juan | Chicharon</div>
-                                        <div style="font-size: 15px;">
-                                            Chilimansi
-                                        </div>
+                                        <div style="font-size: 15px;">Chilimansi</div>
                                     </div>
 
                                     <div class="d-flex flex-row align-items-center" style="gap:20px">
                                         <div style="width: auto; text-align: right;">₱12.00</div>
-                                        <div class="d-flex flex-column align-items-center text-center"
-                                            style="gap: 10px; ">
-                                            <div readonly
-                                                style="height: 15px; width: 100px; font-size: 12PX; color: red; ">
-                                                </div>
+                                        <div class="d-flex flex-column align-items-center text-center" style="gap: 10px; ">
+                                            <div readonly style="height: 15px; width: 100px; font-size: 12PX; color: red; "></div>
                                             <div>
-                                                <div>
-                                                    2 pcs
-                                                </div>
+                                                <div>2 pcs</div>
                                             </div>
                                             <div style="font-size: 10px; color: gray;">2 in Stock</div>
-                                        </div>
-                                        <div>
-                                            
                                         </div>
                                     </div>
                                 </div>
 
-
                                 <div class="cart_item">
-
                                     <div class="item_image">
                                         <img src="" alt="img">
                                     </div>
 
-                                    <!-- details-->
                                     <div style="flex: 1;">
                                         <div class="d-flex flex-row g-2"
                                             style="gap: 20px; font-size: 12px; color: gray;">
@@ -290,19 +251,15 @@
                                             <div>|</div>
                                             <div class="category">Softdrinks</div>
                                         </div>
+
                                         <div class="name" style="font-weight: bold;">Coke | Softdrink</div>
-                                        <div style="font-size: 15px;">
-                                            Coke Zero
-                                        </div>
+                                        <div style="font-size: 15px;">Coke Zero</div>
                                     </div>
 
                                     <div class="d-flex flex-row align-items-center" style="gap:20px">
                                         <div style="width: auto; text-align: right;">₱24.00</div>
-                                        <div class="d-flex flex-column align-items-center text-center"
-                                            style="gap: 10px; ">
-                                            <div readonly
-                                                style="height: 15px; width: 100px; font-size: 12PX; color: red; ">
-                                                </div>
+                                        <div class="d-flex flex-column align-items-center text-center" style="gap: 10px; ">
+                                            <div readonly style="height: 15px; width: 100px; font-size: 12PX; color: red; "></div>
                                             <div>
                                                 <div>
                                                     1 pcs
@@ -310,47 +267,33 @@
                                             </div>
                                             <div style="font-size: 10px; color: gray;">1 in Stock</div>
                                         </div>
-                                        <div>
-                                            
-                                        </div>
                                     </div>
-
-
-
                                 </div>
-
                             </div>
 
-                            <!--order summary-->
                             <div class="order_summary">
                                 <h3>Order Details</h3>
-                                <!-- item -->
                                 <div class="summary_item">
                                     <div>Mang Juan | Chicharon</div>
                                     <div>₱12.00</div>
                                 </div>
+
                                 <div class="summary_item">
                                     <div>Coke | Softdrinks</div>
                                     <div>₱24.00</div>
                                 </div>
                                 <br>
-                                <div
-                                    style="margin-top: 20px; font-weight: bold; display: flex; justify-content: space-between;">
+
+                                <div style="margin-top: 20px; font-weight: bold; display: flex; justify-content: space-between;">
                                     <div>Estimated Total</div>
                                     <div>₱80.00</div>
                                 </div>
                                 <br>
-                                <button
-                                    class="add_to_cart">
-                                    Cancel
-                                </button>
+
+                                <button class="add_to_cart">Cancel</button>
                             </div>
                         </div>
-
                     </div>
-
-
-
                 </main>
             </div>
         </main>

@@ -136,6 +136,7 @@
                                                 <small class="text-muted">3/5/25 1:40 AM</small>
                                             </div>
                                         </div>
+                                        
                                         <div class="notification_card d-flex mb-3">
                                             <div class="col-1" style="background-color: rgb(217, 255, 0);"></div>
                                             <div class="d-flex flex-column flex-grow-1">
@@ -144,6 +145,7 @@
                                                 <small class="text-muted">3/5/25 10:01 AM</small>
                                             </div>
                                         </div>
+
                                         <div class="notification_card d-flex mb-3">
                                             <div class="col-1" style="background-color: rgb(185, 185, 185);"></div>
                                             <div class="d-flex flex-column flex-grow-1">
