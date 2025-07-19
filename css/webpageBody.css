@@ -2,9 +2,7 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  scrollbar-gutter: stable;
-  font-family: 'Inter', sans-serif;
-  overflow-y: scroll;
+  width: 100%;
 }
 
 a {
