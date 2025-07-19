@@ -253,7 +253,7 @@ if ($status == 'closed') {
                 $placeholders = implode(',', array_fill(0, count($cart_id_list), '?'));
                 $stmt = $con->prepare("
                 UPDATE Carts 
-                SET status = 'rejected' 
+                SET type = 'cart', status = 'rejected' 
                 WHERE cart_id IN ($placeholders) AND type = 'order'
                 ");
                 $stmt->bind_param(str_repeat('i', count($cart_id_list)), ...$cart_id_list);

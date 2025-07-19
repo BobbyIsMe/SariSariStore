@@ -5,6 +5,10 @@ CREATE TABLE `Users` (
   FOREIGN KEY (`name_id`) REFERENCES Names(`name_id`),
   `password` varchar(255) NOT NULL,
   `date_created` date NOT NULL DEFAULT CURRENT_DATE,
-  `staff_type` enum('customer', 'inventory', 'staff') NOT NULL
+  `staff_type` enum('customer', 'inventory', 'staff') NOT NULL,
+  `verified` boolean NOT NULL DEFAULT false,
+  `resend_date` datetime,
+  `expiration_date` datetime,
+  `code` varchar(6)
 )
 

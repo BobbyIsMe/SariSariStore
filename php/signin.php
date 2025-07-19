@@ -48,6 +48,7 @@ if ($isValid) {
             $retVal = "Success.";
             $_SESSION['user_id'] = $obj->user_id;
             $_SESSION['staff_type'] = $obj->staff_type;
+            $_SESSION['verified'] = $obj->verified;
         }
     }
 }

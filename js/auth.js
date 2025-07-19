@@ -18,6 +18,7 @@ function signupSubmit(e) {
             alert(res["message"]);
             if (res["status"] === 200) {
                 document.getElementById("signupForm").reset();
+                window.location.replace('../../html/Signin/login.php');
             }
         })
         .catch(error => {
