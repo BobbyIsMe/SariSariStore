@@ -87,7 +87,7 @@
     </div>
   </div>
 
-  <!-- 📦 Order Summary -->
+  <!-- Order Summary -->
   <div class="order_summary">
     <h3>Order Details</h3>
 
