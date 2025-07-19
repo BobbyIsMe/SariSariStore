@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="../../css/cart.css">
   <link rel="stylesheet" href="../../css/loadingscreen.css">
   <link rel="stylesheet" href="../../css/failedtoload.css">
+  <link rel="stylesheet" href="../../css/scrollbarfix.css">
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <!-- <script type="text/javascript" src="../../js/auth.js"></script>
@@ -118,6 +119,7 @@
     <?php include '../Navbars/footer.php'; ?>
   </div>
   <!-- <script type="text/javascript" src="../../js/session.js"></script> -->
+  <script src="../../js/modal-fix.js"></script>
 </body>
 
 </html>
