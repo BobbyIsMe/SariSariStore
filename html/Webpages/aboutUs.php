@@ -84,7 +84,6 @@
   </section>
 </main>
 
-
 <?php include '../Navbars/footer.php'; ?>
   </div>
 

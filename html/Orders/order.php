@@ -20,7 +20,6 @@
     <style>
         * {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
-
         }
 
         .subcategory {
@@ -34,7 +33,7 @@
 <body>
     <div class="d-flex flex-column min-vh-100">
 
-    <?php include '../Navbars/navbar.php'; ?>
+        <?php include '../Navbars/navbar.php'; ?>
 
 
         <main class="flex-fill" style="height: 100%;">
@@ -57,60 +56,58 @@
                 <main style="flex-grow: 1;">
                     <div class="cart-container" style="display: flex; flex-wrap: wrap; gap: 20px; padding: 20px; background: #f5f5f5; width: 100%;">
 
-  <!-- 🧾 Order Items -->
-  <div class="cart_items">
-    <h4><b id="order_number">Order</b></h4>
+                        <!-- 🧾 Order Items -->
+                        <div class="cart_items">
+                            <h4><b id="order_number">Order</b></h4>
 
-    <div id="order_items">
-      <div class="cart_item">
-        <div class="item_image">
-          <img src="../../img/bembi.jpg" alt="img" class="bembi-logo" style="width: 80px; height: 80px">
-        </div>
+                            <div id="order_items">
+                                <div class="cart_item">
+                                    <div class="item_image">
+                                    <img src="../../img/bembi.jpg" alt="img" class="bembi-logo" style="width: 80px; height: 80px">
+                                    </div>
 
-        <div style="flex: 1;">
-          <div class="d-flex flex-row" style="gap: 20px; font-size: 12px; color: gray;">
-            <div class="category">${item.category}</div>
-            <div>|</div>
-            <div class="category">${item.subcategory}</div>
-          </div>
+                                    <div style="flex: 1;">
+                                        <div class="d-flex flex-row" style="gap: 20px; font-size: 12px; color: gray;">
+                                            <div class="category">${item.category}</div>
+                                            <div>|</div>
+                                            <div class="category">${item.subcategory}</div>
+                                        </div>
 
-          <div class="name" style="font-weight: bold;">${item.brand} | ${item.item_name}</div>
-          <div style="font-size: 15px;">${item.variation_name}</div>
-        </div>
+                                        <div class="name" style="font-weight: bold;">${item.brand} | ${item.item_name}</div>
+                                        <div style="font-size: 15px;">${item.variation_name}</div>
+                                    </div>
 
-        <div class="d-flex flex-column align-items-center text-center" style="gap: 10px;">
-          <div style="height: 15px; width: 100px; font-size: 12px; color: red;"></div>
-          <div>${item.item_qty} pcs</div>
-          <div style="font-size: 10px; color: gray;">${item.stock_qty} in Stock</div>
-        </div>
-      </div>
-    </div>
-  </div>
+                                    <div class="d-flex flex-column align-items-center text-center" style="gap: 10px;">
+                                        <div style="height: 15px; width: 100px; font-size: 12px; color: red;"></div>
+                                        <div>${item.item_qty} pcs</div>
+                                        <div style="font-size: 10px; color: gray;">${item.stock_qty} in Stock</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-  <!-- Order Summary -->
-  <div class="order_summary">
-    <h3>Order Details</h3>
+                        <!-- Order Summary -->
+                        <div class="order_summary">
+                            <h3>Order Details</h3>
 
-    <div id="order_details">
-      <div class="summary_item">
-        <div><strong>${item.item_qty}x</strong> ${item.brand} | ${item.item_name} (${item.variation_name})</div>
-        <div>₱${item.subtotal}</div>
-      </div>
-    </div>
+                            <div id="order_details">
+                                <div class="summary_item">
+                                    <div><strong>${item.item_qty}x</strong> ${item.brand} | ${item.item_name} (${item.variation_name})</div>
+                                    <div>₱${item.subtotal}</div>
+                                </div>
+                            </div>
 
-    <br>
+                            <br>
 
-    <div class="d-flex flex-row justify-content-between" style="margin-top: 20px; font-weight: bold;">
-      <div>Estimated Total</div>
-      <div id="estimated_total">N/A</div>
-    </div>
+                            <div class="d-flex flex-row justify-content-between" style="margin-top: 20px; font-weight: bold;">
+                                <div>Estimated Total</div>
+                                <div id="estimated_total">N/A</div>
+                            </div>
 
-    <br>
-    <button class="add_to_cart" id="cancel">Cancel</button>
-  </div>
-</div>
-
-
+                            <br>
+                            <button class="add_to_cart" id="cancel">Cancel</button>
+                        </div>
+                    </div>
                 </main>
             </div>
         </main>

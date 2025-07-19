@@ -104,6 +104,7 @@
                         <h5 class="modal-title" id="notificationModalLabel">Notifications</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+                    
                     <div class="modal-body" style=" overflow-y: auto;">
                         <div id="notifications_popup"></div>
                         <div class="p-4 d-flex justify-content-center align-items-center gap-4">

@@ -91,6 +91,7 @@
                                                     style="height: 12px; width: 200px; font-size: 12PX; color: red; ">
                                                     "QUANTITY EXCEEDS STOCK"
                                                 </div>
+                                                
                                                 <div>
 
 
@@ -117,11 +118,11 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
 
                             <div class="order_summary">
                                 <h3>Order Details</h3>
+
                                 <!-- item -->
                                 <div id="cart_details">
                                     <div class="summary_item">
@@ -129,15 +130,16 @@
                                         <div>₱${item.subtotal}</div>
                                     </div>
                                 </div>
-                                
+
                                 <br>
+                                
                                 <div class="d-flex flex-row justify-content-between">
-                                <div><b>Cart Status</b></div>
+                                    <div><b>Cart Status</b></div>
                                     <div id="status"><b>hi</b></div>
                                 </div>
 
                                 <div class="d-flex flex-row justify-content-between">
-                                <div><b>Deadline date</b></div>
+                                    <div><b>Deadline date</b></div>
                                     <div id="status"><b>9/26/25 12:19 PM</b></div>
                                 </div>
                                 
@@ -145,7 +147,6 @@
                                     style="margin-top: 20px; font-weight: bold;">
                                     <div>Estimated Total</div>
                                     <div id="estimated_total">N/A</div>
-                                    
                                 </div>
                                 <br>
                                 <button class="add_to_cart" id="reserve">Reserve</button>
@@ -154,6 +155,7 @@
                 </main>
             </div>
         </main>
+
         <script type="text/javascript" src="../../js/session.js"></script>
         <?php include '../Navbars/footer.php'; ?>
     </div>

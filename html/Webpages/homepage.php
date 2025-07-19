@@ -20,7 +20,6 @@
     <style>
         * {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
-
         }
 
         .add_to_cart {
@@ -42,7 +41,6 @@
 </head>
 
 <body>
-
 
     <div class="d-flex flex-column min-vh-100">
 
@@ -92,7 +90,6 @@
                                             <div class="warning__title">lorem ipsum dolor sit amet</div>
                                         </div>
                                     </div>
-
                                 </div>
                         </section>
                     </div>
@@ -129,6 +126,7 @@
                                     <div class="category"
                                         style="font-size: 10px; background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
                                         dgsauydgsayudgsdsay</div>
+
                                     <a><br>
                                         <div class="name"
                                             style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
@@ -151,6 +149,7 @@
                                     <div class="category"
                                         style="font-size: 10px; background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
                                         dgsauydgsayudgsdsay</div>
+
                                     <a><br>
                                         <div class="name"
                                             style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
@@ -173,6 +172,7 @@
                                     <div class="category"
                                         style="font-size: 10px; background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
                                         dgsauydgsayudgsdsay</div>
+
                                     <a><br>
                                         <div class="name"
                                             style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
@@ -195,6 +195,7 @@
                                     <div class="category"
                                         style="font-size: 10px; background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
                                         dgsauydgsayudgsdsay</div>
+
                                     <a><br>
                                         <div class="name"
                                             style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
@@ -211,12 +212,12 @@
                             </div>
                         </section>
                     </div>
-
                 </section>
             </div>
         </main>
-        <?php include '../Navbars/footer.php'; ?>
-        <script type="text/javascript" src="../../js/session.js"></script>
+
+    <?php include '../Navbars/footer.php'; ?>
+    <script type="text/javascript" src="../../js/session.js"></script>
 
 </body>
 
