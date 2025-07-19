@@ -61,7 +61,7 @@
           </aside>
         </div>
 
-        <main style="flex-grow: 1; padding: 20px; margin-top: -10px; margin-left: -10px">
+        <main style="flex-grow: 1; padding: 20px; margin-top: -10px; margin-left: -10px; margin-right: 10px">
           <div class="object_container">
             <h3>Inventory</h3>
             <div class="col-12 d-flex flex-row align-items-center">
@@ -221,7 +221,7 @@
                 <input type="text" class="form-control" style="width: 220px; font-size: 14px;"
                   placeholder="Your variation here..." id="variation_name" name="variation_name">
                 <button type="button" class="btn small"
-                  style="width: 140px; font-size: 16px; background-color: #FFC107;" id="addVariationBtn"
+                  style="width: 140px; font-size: 14px; background-color: #FFC107;" id="addVariationBtn"
                   onclick="onSubmitAddVariation()">Add Variation</button>
               </div>
 
@@ -247,72 +247,78 @@
 
     <div class="modal fade" id="editItemModal" tabindex="-1" aria-labelledby="editItemModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content p-4">
+        <div class="modal-content p-4 rounded-4 border-0 shadow-sm">
           <div class="modal-header border-0">
-            <h5 class="modal-title" id="editItemModalLabel">Edit Item</h5>
+            <h5 class="modal-title fw-bold text-dark" id="editItemModalLabel">Edit Item</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
 
           <div class="modal-body">
             <form id="edit_item_form" method="POST" onsubmit="onSubmitEditItem(event)">
-              <div class="d-flex gap-4">
-                <div style="width: 400px;">
+              <div class="row g-4 align-items-start">
+
+                <!-- IMAGE BLOCK -->
+                <div class="col-lg-4 col-md-5 text-center">
                   <img id="edit_image" src="" alt="Image Placeholder"
-                    style="width: 300px; height: 300px; object-fit: contain; border: 1px solid #ccc;" />
+                      class="img-fluid border rounded-3 shadow-sm"
+                      style="max-height: 300px; object-fit: contain;">
                   <input type="file" id="edit_product_image" name="image" accept="image/*"
-                    onchange="previewSelectedImage(event, 'edit_image')" style="display: none;" />
-                  <button type="button" class="btn btn-warning mt-2 w-100"
-                    onclick="document.getElementById('edit_product_image').click()">Change Image</button>
+                        onchange="previewSelectedImage(event, 'edit_image')" hidden>
+                  <button type="button"
+                          class="btn btn-warning w-100 mt-3"
+                          onclick="document.getElementById('edit_product_image').click()">
+                    Change Image
+                  </button>
                 </div>
 
-                <div class="flex-grow-1">
-                  <div class="mb-3 d-flex gap-3">
-                    <div class="flex-grow-1">
-                      <label for="editItemName" class="form-label">Name:</label>
+                <!-- FORM BLOCK -->
+                <div class="col-lg-8 col-md-7">
+                  <div class="row g-3">
+
+                    <div class="col-md-6">
+                      <label for="edit_product_name" class="form-label">Name</label>
                       <input type="text" class="form-control" id="edit_product_name" name="item_name" required>
                     </div>
 
-                    <div class="flex-grow-1">
-                      <label for="editItemBrand" class="form-label">Brand:</label>
+                    <div class="col-md-6">
+                      <label for="edit_product_brand" class="form-label">Brand</label>
                       <input type="text" class="form-control" id="edit_product_brand" name="brand" required>
                     </div>
 
-                    <div style="width: 100px;">
-                      <label for="editItemId" class="form-label">Item ID:</label>
-                      <input type="text" class="form-control" id="edit_product_id" name="product_id" readonly>
+                    <div class="col-md-4">
+                      <label for="edit_product_id" class="form-label">Item ID</label>
+                      <input type="text" class="form-control bg-light text-muted" id="edit_product_id" name="product_id" readonly>
                     </div>
-                  </div>
 
-                  <div class="mb-3">
-                    <label for="editItemDescription" class="form-label">Description:</label>
-                    <textarea class="form-control" id="edit_product_details" name="item_details" rows="3"
-                      required></textarea>
-                  </div>
+                    <div class="col-12">
+                      <label for="edit_product_details" class="form-label">Description</label>
+                      <textarea class="form-control" id="edit_product_details" name="item_details" rows="3" required></textarea>
+                    </div>
 
-                  <div class="mb-3 d-flex gap-3">
-                    <div class="flex-grow-1">
-                      <label for="editItemPrices" class="form-label">Prices:</label>
+                    <div class="col-md-6">
+                      <label for="edit_product_price" class="form-label">Price</label>
                       <input type="text" class="form-control" id="edit_product_price" name="price" required>
                     </div>
 
-                    <div class="flex-grow-1">
-                      <label for="editItemQty" class="form-label">Qty In Stock</label>
+                    <div class="col-md-6">
+                      <label for="edit_product_stock" class="form-label">Qty in Stock</label>
                       <input type="text" class="form-control" id="edit_product_stock" name="stock_qty" required>
                     </div>
 
-                    <div style="width: 150px;">
-                      <label for="editItemCategory" class="form-label">Category:</label>
-                      <select class="form-select" id="edit_product_category" required>
-                      </select>
+                    <div class="col-md-6">
+                      <label for="edit_product_category" class="form-label">Category</label>
+                      <select class="form-select" id="edit_product_category" required></select>
                     </div>
 
-                    <div style="width: 150px;">
-                      <label for="editItemSubcategory" class="form-label">Subcategory:</label>
-                      <select class="form-select" id="edit_product_subcategory" name="category_id" required>
-                      </select>
+                    <div class="col-md-6">
+                      <label for="edit_product_subcategory" class="form-label">Subcategory</label>
+                      <select class="form-select" id="edit_product_subcategory" name="category_id" required></select>
                     </div>
                   </div>
-                  <button type="submit" class="btn btn-warning">Update Item</button>
+
+                  <div class="mt-4 text-end">
+                    <button type="submit" class="btn btn-warning px-4">Update Item</button>
+                  </div>
                 </div>
               </div>
             </form>

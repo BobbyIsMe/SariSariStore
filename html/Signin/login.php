@@ -27,7 +27,6 @@
             height: 80.8px;
             width: 1306.4px;
             max-width: 300%;
-            
             }
 
     </style>

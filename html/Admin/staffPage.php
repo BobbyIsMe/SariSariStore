@@ -60,7 +60,7 @@
                     </aside>
                 </div>
 
-                <main style="flex-grow: 1; padding: 20px; margin-top: -10px; margin-left: -10px">
+                <main style="flex-grow: 1; padding: 20px; margin-top: -10px; margin-left: -10px; margin-right: 10px">
                     <div class="object_container">
                         <h3>Reservation Details</h3>
                         <div class="d-flex align-items-center">
@@ -107,11 +107,10 @@
                                     </div>
                                     <!-- item-->
                                     <div class="cart_item d-flex">
-
                                         <!-- details-->
                                         <div class="d-flex flex-row w-75 ">
                                             <div class="item_image" style="margin-right: 20px;">
-                                                <img src="../../img/bembi.jpg" alt="img">
+                                                <img src="../../img/bembi.jpg" alt="img" class="bembi-logo">
                                             </div>
                                             <div style="flex: 1;">
 
