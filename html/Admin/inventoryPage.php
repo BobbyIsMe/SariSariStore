@@ -11,11 +11,15 @@
 <head>
   <meta charset="UTF-8">
   <title>Inventory</title>
+  <link rel="icon" type="image/x-icon" href="../../icons/tab-icon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../../css/navbarFooter.css">
   <link rel="stylesheet" href="../../css/webpageBody.css">
   <link rel="stylesheet" href="../../css/cart.css">
+  <link rel="stylesheet" href="../../css/loadingscreen.css">
+  <link rel="stylesheet" href="../../css/failedtoload.css">
+  <link rel="stylesheet" href="../../css/scrollbarfix.css">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <!-- <script type="text/javascript" src="../../js/auth.js"></script>
   <script type="text/javascript" src="../../js/load_sidebar.js" defer></script>
@@ -26,18 +30,18 @@
       font-family: Verdana, Geneva, Tahoma, sans-serif;
     }
 
-    .description-text {
+    .description_text {
       word-wrap: break-word;
       overflow-wrap: break-word;
       word-break: break-word;
       white-space: normal;
+      font-size: 12px;
     }
 
     #editItem,
     #editVariations,
     #remove {
       width: 200px;
-
     }
   </style>
 </head>
@@ -45,118 +49,7 @@
 <body>
   <div class="d-flex flex-column min-vh-100">
 
-    <div class="header">
-      <div class="container-fluid d-flex flex-row align-items-center text-center py-2" style="gap: 40px;">
-        <a href="../Webpages/homepage.php" class="text-decoration-none">
-          <h5 class="mb-0"><b>Cerina's Sari2Store</b></h5>
-        </a>
-        <div class="d-flex flex-grow-1">
-
-          <div class="col-10 d-flex flex-row">
-            <input type="text" class="form-control" id="search_input" placeholder="Search">
-            <button class="btn btn-light search-button" type="button" id="search_button" aria-label="Search">
-              <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-81.92 -81.92 1187.84 1187.84">
-                <path d="m795.904 750.72 124.992 124.928a32 32 0 0 1-45.248 
-                        45.248L750.656 795.904a416 416 0 1 1 45.248-45.248z
-                        M480 832a352 352 0 1 0 0-704 352 352 0 0 0 0 704z" />
-              </svg>
-            </button>
-          </div>
-
-          <div class="dropdown ms-auto">
-            <button id="profile_dropdown" class="btn btn-outline-secondary dropdown-toggle" type="button"
-              data-bs-toggle="dropdown">Profile</button>
-            <ul class="dropdown-menu dropdown-menu-end">
-              <!-- <?php ?>
-              <?php if (isset($_SESSION['staff_type']) && $_SESSION['staff_type'] == 'staff'): ?>
-                <a class="dropdown-item" id="adminLink" href="../Admin/staffPage.php">Staff</a>
-              <?php elseif (isset($_SESSION['staff_type']) && $_SESSION['staff_type'] == 'inventory'): ?>
-                <a class="dropdown-item" id="adminLink" href="../Admin/inventoryPage.php">Inventory</a>
-              <?php endif; ?> -->
-              <a class="dropdown-item" id="authLink" onclick="signoutClick(event)">Logout</a>
-            </ul>
-          </div>
-
-        </div>
-
-        <div class="nav-icons d-flex gap-3 ms-3">
-          <button class="btn nav-icon" onclick="window.location.href='../Cart/cart.php'" aria-label="Cart">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-              <path d="M6.29977 5H21L19 12H7.37671M20 16H8L6 3H3
-                          M9 20C9 20.5523 8.55228 21 8 21
-                          C7.44772 21 7 20.5523 7 20
-                          C7 19.4477 7.44772 19 8 19
-                          C8.55228 19 9 19.4477 9 20
-                          Z
-                          M20 20C20 20.5523 19.5523 21 19 21
-                          C18.4477 21 18 20.5523 18 20
-                          C18 19.4477 18.4477 19 19 19
-                          C19.5523 19 20 19.4477 20 20Z" />
-            </svg>
-          </button>
-
-          <button class="btn nav-icon" onclick="window.location.href='../Orders/order.php'" aria-label="Reservation">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-              <path d="M16 8H17.1597C18.1999 8 19.0664 8.79732
-                      19.1528 9.83391L19.8195 17.8339
-                      C19.9167 18.9999 18.9965 20 17.8264 20
-                      H6.1736C5.00352 20 4.08334 18.9999
-                      4.18051 17.8339L4.84718 9.83391
-                      C4.93356 8.79732 5.80009 8 6.84027 8H8
-                      M16 8H8M16 8L16 7C16 5.93913 15.5786 4.92172
-                      14.8284 4.17157C14.0783 3.42143 13.0609 3 12 3
-                      C10.9391 3 9.92172 3.42143 9.17157 4.17157
-                      C8.42143 4.92172 8 5.93913 8 7L8 8M16 8L16 12M8 8L8 12" />
-            </svg>
-          </button>
-
-          <div class="dropdown">
-            <button class="btn nav-icon d-flex flex-row" aria-label="Notifications" type="button" id="notifications" data-bs-toggle="modal" aria-expanded="false" data-bs-target="#notificationModal">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M12.0196 2.91016C8.7096 2.91016 6.0196 5.60016 6.0196 8.91016
-                          V11.8002C6.0196 12.4102 5.7596 13.3402 5.4496 13.8602
-                          L4.2996 15.7702C3.5896 16.9502 4.0796 18.2602 5.3796 18.7002
-                          C9.6896 20.1402 14.3396 20.1402 18.6496 18.7002
-                          C19.8596 18.3002 20.3896 16.8702 19.7296 15.7702
-                          L18.5796 13.8602C18.2796 13.3402 18.0196 12.4102 18.0196 11.8002
-                          V8.91016C18.0196 5.61016 15.3196 2.91016 12.0196 2.91016Z" />
-
-                <path d="M13.8699 3.19994C13.5599 3.10994 13.2399 3.03994 12.9099 2.99994
-                          C11.9499 2.87994 11.0299 2.94994 10.1699 3.19994
-                          C10.4599 2.45994 11.1799 1.93994 12.0199 1.93994
-                          C12.8599 1.93994 13.5799 2.45994 13.8699 3.19994Z" />
-
-                <path opacity="0.4" d="M15.0195 19.0601C15.0195 20.7101 13.6695 22.0601
-                          12.0195 22.0601C11.1995 22.0601 10.4395 21.7201
-                          9.89953 21.1801C9.35953 20.6401 9.01953 19.8801 9.01953 19.0601" />
-              </svg>
-              <div id="notification_count"></div>
-            </button>
-
-            <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content p-3">
-                  <div class="modal-header border-0">
-                    <h5 class="modal-title" id="notificationModalLabel">Notifications</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body" style=" overflow-y: auto;">
-                    <div id="notifications_popup"></div>
-                    <div class="p-4 d-flex justify-content-center align-items-center gap-4">
-                      <button class="navButton" type="button" id="notif_prev_button">Previous</button>
-                      <span>|</span>
-                      <div id="notif_page_number" class="paragraphs">Page # out of #</div>
-                      <span>|</span>
-                      <button class="navButton" type="button" id="notif_next_button">Next</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <?php include '../Navbars/navbar.php'; ?>
 
     <main class="flex-fill">
       <div class="d-flex align-items-stretch justify-content-center" style="min-height: 100vh;">
@@ -168,7 +61,7 @@
           </aside>
         </div>
 
-        <main style="flex-grow: 1; padding: 20px;">
+        <main style="flex-grow: 1; padding: 20px; margin-top: -10px; margin-left: -10px; margin-right: 10px">
           <div class="object_container">
             <h3>Inventory</h3>
             <div class="col-12 d-flex flex-row align-items-center">
@@ -177,20 +70,24 @@
                 <span class="d-flex align-items-center px-2">|</span>
                 <button id="recent" class="btn adminBtn " type="button">Recent</button>
                 <span class="d-flex align-items-center px-2">|</span>
-                <button id="filter_button" class="btn adminBtn" type="button" data-bs-toggle="modal" data-bs-target="#filterItemModal">Filter</button>
+                <button id="filter_button" class="btn adminBtn" type="button" data-bs-toggle="modal"
+                  data-bs-target="#filterItemModal">Filter</button>
                 <!-- <span class="d-flex align-items-center px-2">|</span> -->
                 <!-- <button id="search_item" class="btn adminBtn" type="button" data-bs-toggle="modal" data-bs-target="#searchItemModal">Search Item</button> -->
               </div>
 
               <div class="col-4 d-flex gap-2">
-                <button id="addItemBtn" class="btn adminBtn " type="button" data-bs-toggle="modal" data-bs-target="#addItemModal" onclick="addItem()">Add Item</button>
+                <button id="addItemBtn" class="btn adminBtn " type="button" data-bs-toggle="modal"
+                  data-bs-target="#addItemModal" onclick="addItem()">Add Item</button>
                 <span class="d-flex align-items-center px-2">|</span>
-                <button class="btn adminBtn" type="button" data-bs-toggle="modal" data-bs-target="#editCategoriesModal" onclick="loadDefault()">Edit Category</button>
+                <button class="btn adminBtn" type="button" data-bs-toggle="modal" data-bs-target="#editCategoriesModal"
+                  onclick="loadDefault()">Edit Category</button>
               </div>
 
             </div>
 
-            <div class="modal fade" id="searchItemModal" tabindex="-1" aria-labelledby="searchItemModalLabel" aria-hidden="true">
+            <div class="modal fade" id="searchItemModal" tabindex="-1" aria-labelledby="searchItemModalLabel"
+              aria-hidden="true">
               <div class="modal-dialog modal-md modal-dialog-centered">
                 <div class="modal-content p-4">
                   <div class="modal-header border-0">
@@ -212,69 +109,61 @@
               </div>
             </div>
 
-
-
             <div id="product_list">
               <div class="cart-container"
                 style="display: flex; gap: 20px; padding: 20px; background: #f5f5f5; justify-content: center; align-items: center; ">
-                <div class="item_image" style="width: 300px; height: 400px;">
-                  <img src="../../img/${product.image}" alt="img" style="width: 100%; height: 100%; object-fit: contain;">
+                <div class="item_image" style="height: 250px; width: 250px; aspect-ratio: 1/1; ">
+                  <img src="../../img/test1.png" alt="img">
                 </div>
+
                 <!-- cart items-->
                 <div class="cart_items">
                   <div>
-                    <h4><b>Product Details</b></h4>
+                    <h5><b>Product Details</b></h5>
                   </div>
+                  
+                  <div class="row">
+                    <div class="col-6 ">
+                      <h5><b>Name</b></h5>
+                      <div class="name">${product.brand} | ${product.item_name}</div>
+                    </div>
 
-                  <br>
-                  <div class="d-flex flex-row col-12">
-                    <div class="col-6 d-flex flex-column gap-1">
-                      <h5><b>Name</b><br></h5>
-                      <div>${product.brand} | ${product.item_name}</div>
-                    </div>
-                    <div class="col-6 d-flex flex-column gap-1">
-                      <h5><b>Item ID</b><br></h5>
-                      <div>${product.product_id}</div>
-                    </div>
-                  </div>
-                  <br>
-                  <div class="d-flex flex-row col-12">
-                    <div class="col-6 d-flex flex-column gap-1">
-                      <h5><b>Category</b><br></h5>
-                      <div>${product.category}</div>
-                    </div>
-                    <div class="col-6 d-flex flex-column gap-1">
-                      <h5><b>Subcategory</b><br></h5>
-                      <div>${product.subcategory}</div>
+                    <div class="col-6 ">
+                      <h5><b>Item ID</b></h5>
+                      <div class="item_id">${product.product_id}</div>
                     </div>
                   </div>
 
+                  <div class="row">
+                    <div class="col-6">
+                      <h5><b>Category</b></h5>
+                      <div class="category">${product.category}</div>
+                    </div>
 
-                  <br>
+                    <div class="col-6">
+                      <h5><b>Subcategory</b></h5>
+                      <div class="category">${product.subcategory}</div>
+                    </div>
+                  </div>
 
-                  <div class="d-flex flex-column">
+                  <div class="row">
                     <h5><b>Description</b></h5>
-                    <div class="description-text">
+                    <div class="description_text">
                       ${product.item_details}
                     </div>
                   </div>
 
-                  <div class="col-12 d-flex flex-row" style="padding-top: 20px;">
-                    <div class="col-6 d-flex flex-column gap-1">
-                      <h5><b>Price</b><br></h5>
-                      <div>₱${product.price}</div>
-                    </div>
-                    <div class="col-6 d-flex flex-column gap-1">
-                      <h5><b>Current Quantity</b><br></h5>
-                      <div>${product.stock_qty}</div>
+                  <div class="row">
+                    <div class="col-6">
+                      <h5><b>Price</b></h5>
+                      <div class="price">₱${product.price}</div>
                     </div>
 
+                    <div class="col-6 ">
+                      <h5><b>Current Quantity</b></h5>
+                      <div class="qty" style="font-size: 12px;">${product.stock_qty}</div>
+                    </div>
                   </div>
-
-
-
-
-
                 </div>
 
                 <!--order summary-->
@@ -282,43 +171,37 @@
 
                   <div class="d-flex flex-column align-items-center p-4" style="gap: 20px;">
 
-                    <button id="editItem" class="btn adminBtn " type="button" style="background-color: #e6cc8c;;"
+                    <button id="editItem" class="btn adminBtn " type="button" style="background-color: #FFC107;;;"
                       data-bs-toggle="modal" data-bs-target="#editItemModal">
                       Edit Item
                     </button>
-                    <button id="editVariations" type="button" class="btn adminBtn" style="background-color: #e6cc8c;"
+
+                    <button id="editVariations" type="button" class="btn adminBtn" style="background-color: #FFC107;;"
                       data-bs-toggle="modal" data-bs-target="#editVariationsModal">
                       Edit Variations
                     </button>
+
                     <button id="remove" class="btn adminBtn " type="button" style="background-color: red; color: white;">
                       Remove
                     </button>
                   </div>
-
-
                 </div>
               </div>
             </div>
+
             <div class="p-4 d-flex justify-content-center align-items-center gap-4">
-              <button class="navButton" type="button" id="prev_button">
-                Previous
-              </button>
+              <button class="navButton" type="button" id="prev_button">Previous</button>
               <span>|</span>
-              <div id="page_number" class="paragraphs">
-                Page # out of #
-              </div>
+              <div id="page_number" class="paragraphs">Page # out of #</div>
               <span>|</span>
-              <button class="navButton" type="button" id="next_button">
-                Next
-              </button>
+              <button class="navButton" type="button" id="next_button">Next</button>
             </div>
-
-
         </main>
       </div>
     </main>
 
-    <div class="modal fade" id="editVariationsModal" tabindex="-1" aria-labelledby="editVariationsModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editVariationsModal" tabindex="-1" aria-labelledby="editVariationsModalLabel"
+      aria-hidden="true">
       <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content p-4">
           <div class="modal-header border-0">
@@ -331,22 +214,30 @@
               <label for="editVariationId" class="form-label">Item ID:</label>
               <input type="text" class="form-control" id="edit_variation_id" name="product_id" readonly>
             </div>
-            <form id="edit_variations_form" class="d-flex flex-column gap-3" method="POST" onsubmit="onSubmitEditVariations(event)">
+
+            <form id="edit_variations_form" class="d-flex flex-column gap-3" method="POST"
+              onsubmit="onSubmitEditVariations(event)">
               <div class="d-flex flex-row align-items-center gap-2">
-                <input type="text" class="form-control" style="width: 220px; font-size: 14px;" placeholder="Your variation here..." id="variation_name" name="variation_name">
-                <button type="button" class="btn small" style="width: 140px; font-size: 16px; background-color: #FFC107;" id="addVariationBtn" onclick="onSubmitAddVariation()">Add Variation</button>
+                <input type="text" class="form-control" style="width: 220px; font-size: 14px;"
+                  placeholder="Your variation here..." id="variation_name" name="variation_name">
+                <button type="button" class="btn small"
+                  style="width: 140px; font-size: 14px; background-color: #FFC107;" id="addVariationBtn"
+                  onclick="onSubmitAddVariation()">Add Variation</button>
               </div>
 
               <div id="edit_variations">
                 <div class="d-flex flex-row align-items-center gap-2 variation_row">
                   <input type="text" class="form-control" style="width: 220px; font-size: 14px;"
-                    value="${variation.variation_name}" name="newVariation" data-id="${variation.variation_id}" required>
-                  <button type="button" class="btn btn-danger small" style="width: 140px;">Remove</button>
+                    value="${variation.variation_name}" name="newVariation" data-id="${variation.variation_id}"
+                    required>
+                  <button type="button" class="btn btn-danger small"
+                    style="width: 140px; background-color: red; ">Remove</button>
                 </div><br>
               </div>
 
               <div class="d-flex justify-content-center">
-                <button type="submit" class="btn px-4 py-1" style="background-color: #FFC107;">Update Variations</button>
+                <button type="submit" class="btn px-4 py-1" style="background-color: #FFC107;">Update
+                  Variations</button>
               </div>
             </form>
           </div>
@@ -356,69 +247,78 @@
 
     <div class="modal fade" id="editItemModal" tabindex="-1" aria-labelledby="editItemModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content p-4">
+        <div class="modal-content p-4 rounded-4 border-0 shadow-sm">
           <div class="modal-header border-0">
-            <h5 class="modal-title" id="editItemModalLabel">Edit Item</h5>
+            <h5 class="modal-title fw-bold text-dark" id="editItemModalLabel">Edit Item</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
 
           <div class="modal-body">
             <form id="edit_item_form" method="POST" onsubmit="onSubmitEditItem(event)">
-              <div class="d-flex gap-4">
-                <div style="width: 400px;">
-                  <img id="edit_image" src="" alt="Image Placeholder" style="width: 300px; height: 300px; object-fit: contain; border: 1px solid #ccc;" />
+              <div class="row g-4 align-items-start">
+
+                <!-- IMAGE BLOCK -->
+                <div class="col-lg-4 col-md-5 text-center">
+                  <img id="edit_image" src="" alt="Image Placeholder"
+                      class="img-fluid border rounded-3 shadow-sm"
+                      style="max-height: 300px; object-fit: contain;">
                   <input type="file" id="edit_product_image" name="image" accept="image/*"
-                    onchange="previewSelectedImage(event, 'edit_image')" style="display: none;" />
-                  <button type="button" class="btn btn-warning mt-2 w-100" onclick="document.getElementById('edit_product_image').click()">Change Image</button>
+                        onchange="previewSelectedImage(event, 'edit_image')" hidden>
+                  <button type="button"
+                          class="btn btn-warning w-100 mt-3"
+                          onclick="document.getElementById('edit_product_image').click()">
+                    Change Image
+                  </button>
                 </div>
 
-                <div class="flex-grow-1">
-                  <div class="mb-3 d-flex gap-3">
-                    <div class="flex-grow-1">
-                      <label for="editItemName" class="form-label">Name:</label>
+                <!-- FORM BLOCK -->
+                <div class="col-lg-8 col-md-7">
+                  <div class="row g-3">
+
+                    <div class="col-md-6">
+                      <label for="edit_product_name" class="form-label">Name</label>
                       <input type="text" class="form-control" id="edit_product_name" name="item_name" required>
                     </div>
 
-                    <div class="flex-grow-1">
-                      <label for="editItemBrand" class="form-label">Brand:</label>
+                    <div class="col-md-6">
+                      <label for="edit_product_brand" class="form-label">Brand</label>
                       <input type="text" class="form-control" id="edit_product_brand" name="brand" required>
                     </div>
 
-                    <div style="width: 100px;">
-                      <label for="editItemId" class="form-label">Item ID:</label>
-                      <input type="text" class="form-control" id="edit_product_id" name="product_id" readonly>
+                    <div class="col-md-4">
+                      <label for="edit_product_id" class="form-label">Item ID</label>
+                      <input type="text" class="form-control bg-light text-muted" id="edit_product_id" name="product_id" readonly>
                     </div>
-                  </div>
 
-                  <div class="mb-3">
-                    <label for="editItemDescription" class="form-label">Description:</label>
-                    <textarea class="form-control" id="edit_product_details" name="item_details" rows="3" required></textarea>
-                  </div>
+                    <div class="col-12">
+                      <label for="edit_product_details" class="form-label">Description</label>
+                      <textarea class="form-control" id="edit_product_details" name="item_details" rows="3" required></textarea>
+                    </div>
 
-                  <div class="mb-3 d-flex gap-3">
-                    <div class="flex-grow-1">
-                      <label for="editItemPrices" class="form-label">Prices:</label>
+                    <div class="col-md-6">
+                      <label for="edit_product_price" class="form-label">Price</label>
                       <input type="text" class="form-control" id="edit_product_price" name="price" required>
                     </div>
 
-                    <div class="flex-grow-1">
-                      <label for="editItemQty" class="form-label">Qty In Stock</label>
+                    <div class="col-md-6">
+                      <label for="edit_product_stock" class="form-label">Qty in Stock</label>
                       <input type="text" class="form-control" id="edit_product_stock" name="stock_qty" required>
                     </div>
 
-                    <div style="width: 150px;">
-                      <label for="editItemCategory" class="form-label">Category:</label>
-                      <select class="form-select" id="edit_product_category" required>
-                      </select>
+                    <div class="col-md-6">
+                      <label for="edit_product_category" class="form-label">Category</label>
+                      <select class="form-select" id="edit_product_category" required></select>
                     </div>
 
-                    <div style="width: 150px;">
-                      <label for="editItemSubcategory" class="form-label">Subcategory:</label>
-                      <select class="form-select" id="edit_product_subcategory" name="category_id" required>
-                      </select>
+                    <div class="col-md-6">
+                      <label for="edit_product_subcategory" class="form-label">Subcategory</label>
+                      <select class="form-select" id="edit_product_subcategory" name="category_id" required></select>
                     </div>
                   </div>
-                  <button type="submit" class="btn btn-warning">Update Item</button>
+
+                  <div class="mt-4 text-end">
+                    <button type="submit" class="btn btn-warning px-4">Update Item</button>
+                  </div>
                 </div>
               </div>
             </form>
@@ -427,15 +327,17 @@
       </div>
     </div>
 
-    <div class="modal fade" id="editCategoriesModal" tabindex="-1" aria-labelledby="editCategoriesModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editCategoriesModal" tabindex="-1" aria-labelledby="editCategoriesModalLabel"
+      aria-hidden="true">
       <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content p-4" style="max-width: 650px;">
           <div class="modal-body">
-            <form id="edit_categories_form" class="d-flex flex-column gap-3" method="POST" onsubmit="onSubmitEditCategories(event)">
+            <form id="edit_categories_form" class="d-flex flex-column gap-3" method="POST"
+              onsubmit="onSubmitEditCategories(event)">
               <div class="d-flex flex-row flex-wrap align-items-center gap-2">
                 <input type="text" class="form-control" style="width: 200px; font-size: 14px;" placeholder="Category Name" name="category" id="add_category">
                 <input type="text" class="form-control" style="width: 200px; font-size: 14px;" placeholder="Subcategory Name" name="subcategory" id="add_subcategory">
-                <button type="button" class="btn small" style="width: 140px; font-size: 14px; white-space: nowrap; background-color: #e6cc8c;" onclick="onSubmitAddCategory()">Add Category</button>
+                <button type="button" class="btn small" style="width: 140px; font-size: 14px; white-space: nowrap; background-color: #FFC107;" onclick="onSubmitAddCategory()">Add Category</button>
               </div>
 
               <hr class="my-2">
@@ -453,7 +355,7 @@
               </div>
 
               <div class="d-flex justify-content-center mt-2">
-                <button type="submit" class="btn px-4 py-1" style="background-color: #e6cc8c; white-space: nowrap;">Update Categories</button>
+                <button type="submit" class="btn px-4 py-1" style="background-color: #FFC107; white-space: nowrap;">Update Categories</button>
               </div>
             </form>
           </div>
@@ -473,10 +375,12 @@
             <form id="add_item_form" method="POST" onsubmit="onSubmitAddItem(event)">
               <div class="d-flex gap-4">
                 <div style="width: 400px;">
-                  <img id="previewImage" src="" alt="Image Placeholder" style="width: 300px; height: 300px; object-fit: contain; border: 1px solid #ccc;" />
+                  <img id="previewImage" src="" alt="Image Placeholder"
+                    style="width: 300px; height: 300px; object-fit: contain; border: 1px solid #ccc;" />
                   <input type="file" id="image" name="image" accept="image/*"
                     onchange="previewSelectedImage(event, 'previewImage')" style="display: none;" />
-                  <button type="button" class="btn btn-warning mt-2 w-100" onclick="document.getElementById('image').click()">Add Image</button>
+                  <button type="button" class="btn btn-warning mt-2 w-100"
+                    onclick="document.getElementById('image').click()">Add Image</button>
                 </div>
 
                 <div class="flex-grow-1">
@@ -494,7 +398,8 @@
 
                   <div class="mb-3">
                     <label for="itemDescription" class="form-label">Description:</label>
-                    <textarea class="form-control" id="itemDescription" name="item_details" rows="3" required></textarea>
+                    <textarea class="form-control" id="itemDescription" name="item_details" rows="3"
+                      required></textarea>
                   </div>
 
                   <div class="mb-3 d-flex gap-3">
@@ -602,13 +507,8 @@
       </div>
     </div>
 
-    <footer class="footer mt-auto">
-      <div class="container d-flex flex-row justify-content-between p-4">
-        <div><a href="../Webpages/aboutUs.php"><b>About Us</b></a></div>
-        <div><a href="../Webpages/contactUs.php"><b>Contact Us</b></a></div>
-        <div>Copyright © <b>2025</b>. All rights reserved.</div>
-      </div>
-    </footer>
+    <?php include '../Navbars/footer.php'; ?>
+    <script src="../../js/modal-fix.js"></script>
 </body>
 
 </html>
