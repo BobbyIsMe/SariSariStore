@@ -11,6 +11,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <link rel="icon" type="image/x-icon" href="../../icons/tab-icon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../css/navbarFooter.css">
@@ -34,10 +35,11 @@
                 <div class="d-flex flex-grow-1">
                     <input type="text" class="form-control" placeholder="Search">
                     <button class="btn btn-light search-button" type="button" aria-label="Search">
-                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-81.92 -81.92 1187.84 1187.84">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="-81.92 -81.92 1187.84 1187.84">
                             <path d="m795.904 750.72 124.992 124.928a32 32 0 0 1-45.248 
                                     45.248L750.656 795.904a416 416 0 1 1 45.248-45.248z
-                                    M480 832a352 352 0 1 0 0-704 352 352 0 0 0 0 704z"/>
+                                    M480 832a352 352 0 1 0 0-704 352 352 0 0 0 0 704z" />
                         </svg>
                     </button>
                 </div>
@@ -61,7 +63,7 @@
                         </div>
                         <button class="add_to_cart btn login-btn " type="submit" "><b>LOGIN</b></button>
                     </form>
-                    <p class="mt-2 mb-0">No account? Register <a href="registration.php">Here</a></p>
+                    <p class=" mt-2 mb-0">No account? Register <a href="registration.php">Here</a></p>
                 </div>
             </div>
         </main>
