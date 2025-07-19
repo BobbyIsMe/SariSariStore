@@ -123,6 +123,31 @@
               <div class="category"
                 style="font-size: 10px; background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
                 dgsauydgsayudgsdsay</div>
+
+              <a><br>
+                <div class="name" style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                  dasdasd
+                </div>
+
+                <div class="price" style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                  <strong>dsai</strong>
+                </div><br>
+
+                <div class="add_to_cart"
+                  style="width: 100%; margin-top: 5px; background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                  Add to Cart
+                </div>
+              </a>
+            </div>
+
+            <div class="product_card">
+              <!----FILLER CARD---->
+              <div class="image" style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)"></div>
+              <br>
+              <div class="category"
+                style="font-size: 10px; background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
+                dgsauydgsayudgsdsay</div>
+                
               <a><br>
                 <div class="name" style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
                   dasdasd</div>
@@ -248,28 +273,6 @@
                   Add to Cart</div>
               </a>
             </div>
-
-            <div class="product_card">
-              <!----FILLER CARD---->
-              <div class="image" style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)"></div>
-              <br>
-              <div class="category"
-                style="font-size: 10px; background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
-                dgsauydgsayudgsdsay</div>
-              <a><br>
-                <div class="name" style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
-                  dasdasd</div>
-                <div class="price" style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
-                  <strong>dsai</strong>
-                </div><br>
-                <div class="add_to_cart"
-                  style="width: 100%; margin-top: 5px; background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)">
-                  Add to Cart</div>
-              </a>
-            </div>
-
-
-
 
           </div>
           <div class="p-4 d-flex justify-content-center align-items-center gap-4">

@@ -60,7 +60,7 @@
                     </aside>
                 </div>
 
-                <main style="flex-grow: 1;">
+                <main style="flex-grow: 1; padding: 20px; margin-top: -10px; margin-left: -10px">
                     <div class="object_container">
                         <h3>Reservation Details</h3>
                         <div class="d-flex align-items-center">
@@ -122,7 +122,6 @@
                                             </div>
                                         </div>
 
-
                                         <div class="d-flex flex-row justify-content-end w-50">
                                             <div class="align-items-center" style="width: 80px;">₱12</div>
 
@@ -131,16 +130,14 @@
                                                 2 pcs
                                             </div>
                                         </div>
-
                                     </div>
+
                                     <div class="d-flex justify-content-center align-items-center mt-3">
                                         <button type="button" class="btn seeMoreBtn" data-bs-toggle="modal"
                                             data-bs-target="#seeMoreModal">
                                             See More
                                         </button>
                                     </div>
-
-
                                 </div>
 
                                 <!--order summary-->
@@ -163,12 +160,9 @@
                                                 required>
                                         </div>
                                     </div>
-
-
                                 </div>
                             </div>
                         </div>
-
 
                         <div class="modal fade" id="seeMoreModal" tabindex="-1" aria-labelledby="seeMoreModalLabel"
                             aria-hidden="true">
@@ -199,7 +193,6 @@
                                                 </div>
                                             </div>
 
-
                                             <div class="d-flex flex-row justify-content-end w-50">
                                                 <div class="align-items-center" style="width: 80px;">₱12</div>
 
@@ -208,9 +201,7 @@
                                                     2 pcs
                                                 </div>
                                             </div>
-
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -227,10 +218,7 @@
                 </main>
             </div>
         </main>
-
-
     </div>
-
 
     <?php include '../Navbars/footer.php'; ?>
     <script src="../../js/script.js"></script>

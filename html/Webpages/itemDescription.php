@@ -136,6 +136,7 @@
                                     </a>
                                     <div class="category">${product.category} |
                                         ${product.subcategory}</div>
+
                                     <a>
                                         <div class="name">${product.brand} | ${product.item_name}</div>
                                         <div class="price"><strong>₱${product.price}</strong></div>
@@ -144,7 +145,6 @@
                                     </a>
 
                                 </div>
-
                                 
                                 <div class="product_card">
                                     <!----FILLER CARD---->
@@ -194,13 +194,11 @@
                                     </a>
                                 </div>
                             </div>
-                            
-
-                            
                         </section>
                 </main>
             </div>
         </main>
+
         <?php include '../Navbars/footer.php'; ?>
         <script type="text/javascript" src="../../js/session.js"></script>
         <script src="../../js/modal-fix.js"></script>

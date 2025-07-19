@@ -66,35 +66,26 @@
             </div>
           </div>
 
-          <div class="faq-box flex-grow-1">
-            <h5 class="mb-3"><b>FAQ's</b></h5>
-            <ol>
-              <li>How do I reserve items?
-                <ul>
-                  <li>Simply select your products and click “Reserve” in your cart.</li>
-                </ul>
-              </li>
-              <li>Can I cancel a reservation?
-                <ul>
-                  <li>Yes, as long as the status is still pending for approval.</li>
-                </ul>
-              </li>
-              <li>How often are items restocked?
-                <ul>
-                  <li>We restock key products weekly; exact dates may vary per supplier.</li>
-                </ul>
-              </li>
-              <li>Who should I contact for help?
-                <ul>
-                  <li>See our <a href="contactUs.html">Contact Us</a> page for full details.</li>
-                </ul>
-              </li>
-            </ol>
-          </div>
-        </div>
-      </section>
-    </main>
-
+      <div class="faq-box flex-grow-1">
+        <h5 class="mb-3"><b>FAQ's</b></h5>
+        <ol>
+          <li>How do I reserve items?
+            <ul><li>Simply select your products and click “Reserve” in your cart.</li></ul>
+          </li>
+          <li>Can I cancel a reservation?
+            <ul><li>Yes, as long as the status is still pending for approval.</li></ul>
+          </li>
+          <li>How often are items restocked?
+            <ul><li>We restock key products weekly; exact dates may vary per supplier.</li></ul>
+          </li>
+          <li>Who should I contact for help?
+            <ul><li>See our <a href="contactUs.html">Contact Us</a> page for full details.</li></ul>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+</main>
 
     <?php include '../Navbars/footer.php'; ?>
   </div>

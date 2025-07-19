@@ -28,7 +28,6 @@
   <style>
     * {
       font-family: Verdana, Geneva, Tahoma, sans-serif;
-
     }
 
     .description_text {
@@ -62,7 +61,7 @@
           </aside>
         </div>
 
-        <main style="flex-grow: 1; padding: 20px;">
+        <main style="flex-grow: 1; padding: 20px; margin-top: -10px; margin-left: -10px">
           <div class="object_container">
             <h3>Inventory</h3>
             <div class="col-12 d-flex flex-row align-items-center">
@@ -110,26 +109,25 @@
               </div>
             </div>
 
-
-
             <div id="product_list">
               <div class="cart-container"
                 style="display: flex; gap: 20px; padding: 20px; background: #f5f5f5; justify-content: center; align-items: center; ">
                 <div class="item_image" style="height: 250px; width: 250px; aspect-ratio: 1/1; ">
                   <img src="../../img/test1.png" alt="img">
                 </div>
+
                 <!-- cart items-->
                 <div class="cart_items">
                   <div>
                     <h5><b>Product Details</b></h5>
                   </div>
-
-
+                  
                   <div class="row">
                     <div class="col-6 ">
                       <h5><b>Name</b></h5>
                       <div class="name">${product.brand} | ${product.item_name}</div>
                     </div>
+
                     <div class="col-6 ">
                       <h5><b>Item ID</b></h5>
                       <div class="item_id">${product.product_id}</div>
@@ -141,15 +139,12 @@
                       <h5><b>Category</b></h5>
                       <div class="category">${product.category}</div>
                     </div>
+
                     <div class="col-6">
                       <h5><b>Subcategory</b></h5>
                       <div class="category">${product.subcategory}</div>
                     </div>
-
                   </div>
-
-
-
 
                   <div class="row">
                     <h5><b>Description</b></h5>
@@ -163,17 +158,12 @@
                       <h5><b>Price</b></h5>
                       <div class="price">₱${product.price}</div>
                     </div>
+
                     <div class="col-6 ">
                       <h5><b>Current Quantity</b></h5>
                       <div class="qty" style="font-size: 12px;">${product.stock_qty}</div>
                     </div>
-
                   </div>
-
-
-
-
-
                 </div>
 
                 <!--order summary-->
@@ -185,20 +175,20 @@
                       data-bs-toggle="modal" data-bs-target="#editItemModal">
                       Edit Item
                     </button>
+
                     <button id="editVariations" type="button" class="btn adminBtn" style="background-color: #FFC107;;"
                       data-bs-toggle="modal" data-bs-target="#editVariationsModal">
                       Edit Variations
                     </button>
-                    <button id="remove" class="btn adminBtn " type="button"
-                      style="background-color: red; color: white;">
+
+                    <button id="remove" class="btn adminBtn " type="button" style="background-color: red; color: white;">
                       Remove
                     </button>
                   </div>
-
-
                 </div>
               </div>
             </div>
+
             <div class="p-4 d-flex justify-content-center align-items-center gap-4">
               <button class="navButton" type="button" id="prev_button">Previous</button>
               <span>|</span>
@@ -339,13 +329,9 @@
             <form id="edit_categories_form" class="d-flex flex-column gap-3" method="POST"
               onsubmit="onSubmitEditCategories(event)">
               <div class="d-flex flex-row flex-wrap align-items-center gap-2">
-                <input type="text" class="form-control" style="width: 200px; font-size: 14px;"
-                  placeholder="Category Name" name="category" id="add_category">
-                <input type="text" class="form-control" style="width: 200px; font-size: 14px;"
-                  placeholder="Subcategory Name" name="subcategory" id="add_subcategory">
-                <button type="button" class="btn small"
-                  style="width: 140px; font-size: 14px; white-space: nowrap; background-color: #e6cc8c;"
-                  onclick="onSubmitAddCategory()">Add Category</button>
+                <input type="text" class="form-control" style="width: 200px; font-size: 14px;" placeholder="Category Name" name="category" id="add_category">
+                <input type="text" class="form-control" style="width: 200px; font-size: 14px;" placeholder="Subcategory Name" name="subcategory" id="add_subcategory">
+                <button type="button" class="btn small" style="width: 140px; font-size: 14px; white-space: nowrap; background-color: #FFC107;" onclick="onSubmitAddCategory()">Add Category</button>
               </div>
 
               <hr class="my-2">
@@ -363,8 +349,7 @@
               </div>
 
               <div class="d-flex justify-content-center mt-2">
-                <button type="submit" class="btn px-4 py-1"
-                  style="background-color: #e6cc8c; white-space: nowrap;">Update Categories</button>
+                <button type="submit" class="btn px-4 py-1" style="background-color: #FFC107; white-space: nowrap;">Update Categories</button>
               </div>
             </form>
           </div>
