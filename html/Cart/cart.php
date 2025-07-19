@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Cart</title>
+    <link rel="icon" type="image/x-icon" href="../../icons/tab-icon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../css/navbarFooter.css">
@@ -33,7 +34,7 @@
 <body>
     <div class="d-flex flex-column min-vh-100">
 
-    <?php include '../Navbars/navbar.php'; ?>
+        <?php include '../Navbars/navbar.php'; ?>
 
         <main class="flex-fill" style="height: 100%;">
             <div class="row g-0" style="min-height: 100vh;">
@@ -46,7 +47,8 @@
                             <details class="category">
                                 <summary>${category}</summary>
                                 <ul class="subcategory">
-                                    <a href="../Webpages/category.php?category=${category}&subcategory=${item.subcategory}">
+                                    <a
+                                        href="../Webpages/category.php?category=${category}&subcategory=${item.subcategory}">
                                         ${item.subcategory}</a>
                                 </ul>
                             </details>
@@ -55,33 +57,36 @@
                 </div>
 
                 <div class="col-10">
-                    <div class="cart-container" style="display: flex; flex-wrap: wrap; gap: 20px; padding: 20px; background: #f5f5f5; width: 100%;">
+                    <div class="cart-container"
+                        style="display: flex; flex-wrap: wrap; gap: 20px; padding: 20px; background: #f5f5f5; width: 100%;">
 
                         <div class="cart_items">
-                                <h4><b id="cart_number">Cart</b></h4>
+                            <h4><b id="cart_number">Cart</b></h4>
 
-                                <!-- item-->
-                                <div id="cart_items">
-                                    <div class="cart_item">
+                            <!-- item-->
+                            <div id="cart_items">
+                                <div class="cart_item">
 
-                                        <div class="item_image">
-                                            <img src="../../img/${item.image}=" alt="img" style="width: 100px; height: 100px;">
+                                    <div class="item_image">
+                                        <img src="../../img/${item.image}=" alt="img"
+                                            style="width: 100px; height: 100px;">
+                                    </div>
+
+                                    <!-- details-->
+                                    <div style="flex: 1; ">
+                                        <div class="d-flex flex-row g-2"
+                                            style="gap: 20px; font-size: 12px; color: gray;">
+                                            <div class="category">${item.category}</div>
+                                            <div>|</div>
+                                            <div class="category">${item.subcategory}</div>
                                         </div>
 
-                                        <!-- details-->
-                                        <div style="flex: 1; ">
-                                            <div class="d-flex flex-row g-2"
-                                                style="gap: 20px; font-size: 12px; color: gray;">
-                                                <div class="category">${item.category}</div>
-                                                <div>|</div>
-                                                <div class="category">${item.subcategory}</div>
-                                            </div>
-
-                                            <div class="name" style="font-weight: bold;">${item.brand} | ${item.item_name}</div>
-                                            <div style="font-size: 15px;">
-                                                ${item.variation_name}
-                                            </div>
+                                        <div class="name" style="font-weight: bold;">${item.brand} | ${item.item_name}
                                         </div>
+                                        <div style="font-size: 15px;">
+                                            ${item.variation_name}
+                                        </div>
+                                    </div>
 
                                         <div class="d-flex flex-row align-items-center" style="gap:20px">
                                             <div style="width: auto; text-align: right;">₱${item.subtotal}</div>
@@ -95,13 +100,13 @@
                                                 <div>
 
 
-                                                    <div class="quantity_control  ">
-                                                        <button>-</button>
-                                                        <input type="text" value="1" readonly />
-                                                        <button>+</button>
-                                                    </div>
-
+                                                <div class="quantity_control  ">
+                                                    <button>-</button>
+                                                    <input type="text" value="1" readonly />
+                                                    <button>+</button>
                                                 </div>
+
+                                            </div>
 
                                                 <div style="font-size: 10px; color: gray;">${item.stock_qty} in Stock</div>
                                             </div>

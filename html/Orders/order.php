@@ -2,18 +2,19 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Order</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../css/navbarFooter.css">
-    <link rel="stylesheet" href="../../css/webpageBody.css">
-    <link rel="stylesheet" href="../../css/cart.css">
-    <link rel="stylesheet" href="../../css/loadingscreen.css">
-    <link rel="stylesheet" href="../../css/failedtoload.css">
+  <meta charset="UTF-8">
+  <title>Order</title>
+  <link rel="icon" type="image/x-icon" href="../../icons/tab-icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/navbarFooter.css">
+  <link rel="stylesheet" href="../../css/webpageBody.css">
+  <link rel="stylesheet" href="../../css/cart.css">
+  <link rel="stylesheet" href="../../css/loadingscreen.css">
+  <link rel="stylesheet" href="../../css/failedtoload.css">
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- <script type="text/javascript" src="../../js/auth.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- <script type="text/javascript" src="../../js/auth.js"></script>
     <script type="text/javascript" src="../../js/load_sidebar.js" defer></script>
     <script type="text/javascript" src="../../js/order_controller.js" defer></script>
     <script type="text/javascript" src="../../js/notifications_controller.js" defer></script> -->
@@ -22,39 +23,41 @@
             font-family: Verdana, Geneva, Tahoma, sans-serif;
         }
 
-        .subcategory {
-            margin-left: 0 !important;
-            text-align: left;
-            width: 100%;
-        }
-    </style>
+    .subcategory {
+      margin-left: 0 !important;
+      text-align: left;
+      width: 100%;
+    }
+  </style>
 </head>
 
 <body>
-    <div class="d-flex flex-column min-vh-100">
+  <div class="d-flex flex-column min-vh-100">
 
         <?php include '../Navbars/navbar.php'; ?>
 
 
-        <main class="flex-fill" style="height: 100%;">
-            <div class="d-flex align-items-stretch justify-content-center" style="min-height: 100vh;">
-                <div class="col-2 p-2" style="background-color: white; flex-shrink: 0;">
-                    <aside class="item_nav flex-column align-items-start text-start">
-                        <h6>Categories</h6>
-                        <hr>
-                        <div id="sidebar">
-                            <details class="category">
-                                <summary>${category}</summary>
-                                <ul class="subcategory">
-                                    <a href="../Webpages/category.php?category=${category}&subcategory=${item.subcategory}"> ${item.subcategory}</a>
-                                </ul>
-                            </details>
-                        </div>
-                    </aside>
-                </div>
+    <main class="flex-fill" style="height: 100%;">
+      <div class="d-flex align-items-stretch justify-content-center" style="min-height: 100vh;">
+        <div class="col-2 p-2" style="background-color: white; flex-shrink: 0;">
+          <aside class="item_nav flex-column align-items-start text-start">
+            <h6>Categories</h6>
+            <hr>
+            <div id="sidebar">
+              <details class="category">
+                <summary>${category}</summary>
+                <ul class="subcategory">
+                  <a href="../Webpages/category.php?category=${category}&subcategory=${item.subcategory}">
+                    ${item.subcategory}</a>
+                </ul>
+              </details>
+            </div>
+          </aside>
+        </div>
 
-                <main style="flex-grow: 1;">
-                    <div class="cart-container" style="display: flex; flex-wrap: wrap; gap: 20px; padding: 20px; background: #f5f5f5; width: 100%;">
+        <main style="flex-grow: 1;">
+          <div class="cart-container"
+            style="display: flex; flex-wrap: wrap; gap: 20px; padding: 20px; background: #f5f5f5; width: 100%;">
 
                         <!-- 🧾 Order Items -->
                         <div class="cart_items">
@@ -112,9 +115,9 @@
             </div>
         </main>
 
-        <?php include '../Navbars/footer.php'; ?>
-    </div>
-    <!-- <script type="text/javascript" src="../../js/session.js"></script> -->
+    <?php include '../Navbars/footer.php'; ?>
+  </div>
+  <!-- <script type="text/javascript" src="../../js/session.js"></script> -->
 </body>
 
 </html>

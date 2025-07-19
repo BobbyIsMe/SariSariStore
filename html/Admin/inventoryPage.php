@@ -11,6 +11,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Inventory</title>
+  <link rel="icon" type="image/x-icon" href="../../icons/tab-icon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../../css/navbarFooter.css">
@@ -48,7 +49,7 @@
 <body>
   <div class="d-flex flex-column min-vh-100">
 
-  <?php include '../Navbars/navbar.php'; ?>
+    <?php include '../Navbars/navbar.php'; ?>
 
     <main class="flex-fill">
       <div class="d-flex align-items-stretch justify-content-center" style="min-height: 100vh;">
@@ -69,20 +70,24 @@
                 <span class="d-flex align-items-center px-2">|</span>
                 <button id="recent" class="btn adminBtn " type="button">Recent</button>
                 <span class="d-flex align-items-center px-2">|</span>
-                <button id="filter_button" class="btn adminBtn" type="button" data-bs-toggle="modal" data-bs-target="#filterItemModal">Filter</button>
+                <button id="filter_button" class="btn adminBtn" type="button" data-bs-toggle="modal"
+                  data-bs-target="#filterItemModal">Filter</button>
                 <!-- <span class="d-flex align-items-center px-2">|</span> -->
                 <!-- <button id="search_item" class="btn adminBtn" type="button" data-bs-toggle="modal" data-bs-target="#searchItemModal">Search Item</button> -->
               </div>
 
               <div class="col-4 d-flex gap-2">
-                <button id="addItemBtn" class="btn adminBtn " type="button" data-bs-toggle="modal" data-bs-target="#addItemModal" onclick="addItem()">Add Item</button>
+                <button id="addItemBtn" class="btn adminBtn " type="button" data-bs-toggle="modal"
+                  data-bs-target="#addItemModal" onclick="addItem()">Add Item</button>
                 <span class="d-flex align-items-center px-2">|</span>
-                <button class="btn adminBtn" type="button" data-bs-toggle="modal" data-bs-target="#editCategoriesModal" onclick="loadDefault()">Edit Category</button>
+                <button class="btn adminBtn" type="button" data-bs-toggle="modal" data-bs-target="#editCategoriesModal"
+                  onclick="loadDefault()">Edit Category</button>
               </div>
 
             </div>
 
-            <div class="modal fade" id="searchItemModal" tabindex="-1" aria-labelledby="searchItemModalLabel" aria-hidden="true">
+            <div class="modal fade" id="searchItemModal" tabindex="-1" aria-labelledby="searchItemModalLabel"
+              aria-hidden="true">
               <div class="modal-dialog modal-md modal-dialog-centered">
                 <div class="modal-content p-4">
                   <div class="modal-header border-0">
@@ -108,7 +113,7 @@
               <div class="cart-container"
                 style="display: flex; gap: 20px; padding: 20px; background: #f5f5f5; justify-content: center; align-items: center; ">
                 <div class="item_image" style="height: 250px; width: 250px; aspect-ratio: 1/1; ">
-                  <img src="../../img/test1.png" alt="img" >
+                  <img src="../../img/test1.png" alt="img">
                 </div>
 
                 <!-- cart items-->
@@ -128,7 +133,7 @@
                       <div class="item_id">${product.product_id}</div>
                     </div>
                   </div>
-                  
+
                   <div class="row">
                     <div class="col-6">
                       <h5><b>Category</b></h5>
@@ -195,7 +200,8 @@
       </div>
     </main>
 
-    <div class="modal fade" id="editVariationsModal" tabindex="-1" aria-labelledby="editVariationsModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editVariationsModal" tabindex="-1" aria-labelledby="editVariationsModalLabel"
+      aria-hidden="true">
       <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content p-4">
           <div class="modal-header border-0">
@@ -209,22 +215,29 @@
               <input type="text" class="form-control" id="edit_variation_id" name="product_id" readonly>
             </div>
 
-            <form id="edit_variations_form" class="d-flex flex-column gap-3" method="POST" onsubmit="onSubmitEditVariations(event)">
+            <form id="edit_variations_form" class="d-flex flex-column gap-3" method="POST"
+              onsubmit="onSubmitEditVariations(event)">
               <div class="d-flex flex-row align-items-center gap-2">
-                <input type="text" class="form-control" style="width: 220px; font-size: 14px;" placeholder="Your variation here..." id="variation_name" name="variation_name">
-                <button type="button" class="btn small" style="width: 140px; font-size: 16px; background-color: #FFC107;" id="addVariationBtn" onclick="onSubmitAddVariation()">Add Variation</button>
+                <input type="text" class="form-control" style="width: 220px; font-size: 14px;"
+                  placeholder="Your variation here..." id="variation_name" name="variation_name">
+                <button type="button" class="btn small"
+                  style="width: 140px; font-size: 16px; background-color: #FFC107;" id="addVariationBtn"
+                  onclick="onSubmitAddVariation()">Add Variation</button>
               </div>
 
               <div id="edit_variations">
                 <div class="d-flex flex-row align-items-center gap-2 variation_row">
                   <input type="text" class="form-control" style="width: 220px; font-size: 14px;"
-                    value="${variation.variation_name}" name="newVariation" data-id="${variation.variation_id}" required>
-                  <button type="button" class="btn btn-danger small" style="width: 140px; background-color: red; ">Remove</button>
+                    value="${variation.variation_name}" name="newVariation" data-id="${variation.variation_id}"
+                    required>
+                  <button type="button" class="btn btn-danger small"
+                    style="width: 140px; background-color: red; ">Remove</button>
                 </div><br>
               </div>
 
               <div class="d-flex justify-content-center">
-                <button type="submit" class="btn px-4 py-1" style="background-color: #FFC107;">Update Variations</button>
+                <button type="submit" class="btn px-4 py-1" style="background-color: #FFC107;">Update
+                  Variations</button>
               </div>
             </form>
           </div>
@@ -244,10 +257,12 @@
             <form id="edit_item_form" method="POST" onsubmit="onSubmitEditItem(event)">
               <div class="d-flex gap-4">
                 <div style="width: 400px;">
-                  <img id="edit_image" src="" alt="Image Placeholder" style="width: 300px; height: 300px; object-fit: contain; border: 1px solid #ccc;" />
+                  <img id="edit_image" src="" alt="Image Placeholder"
+                    style="width: 300px; height: 300px; object-fit: contain; border: 1px solid #ccc;" />
                   <input type="file" id="edit_product_image" name="image" accept="image/*"
                     onchange="previewSelectedImage(event, 'edit_image')" style="display: none;" />
-                  <button type="button" class="btn btn-warning mt-2 w-100" onclick="document.getElementById('edit_product_image').click()">Change Image</button>
+                  <button type="button" class="btn btn-warning mt-2 w-100"
+                    onclick="document.getElementById('edit_product_image').click()">Change Image</button>
                 </div>
 
                 <div class="flex-grow-1">
@@ -270,7 +285,8 @@
 
                   <div class="mb-3">
                     <label for="editItemDescription" class="form-label">Description:</label>
-                    <textarea class="form-control" id="edit_product_details" name="item_details" rows="3" required></textarea>
+                    <textarea class="form-control" id="edit_product_details" name="item_details" rows="3"
+                      required></textarea>
                   </div>
 
                   <div class="mb-3 d-flex gap-3">
@@ -305,11 +321,13 @@
       </div>
     </div>
 
-    <div class="modal fade" id="editCategoriesModal" tabindex="-1" aria-labelledby="editCategoriesModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editCategoriesModal" tabindex="-1" aria-labelledby="editCategoriesModalLabel"
+      aria-hidden="true">
       <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content p-4" style="max-width: 650px;">
           <div class="modal-body">
-            <form id="edit_categories_form" class="d-flex flex-column gap-3" method="POST" onsubmit="onSubmitEditCategories(event)">
+            <form id="edit_categories_form" class="d-flex flex-column gap-3" method="POST"
+              onsubmit="onSubmitEditCategories(event)">
               <div class="d-flex flex-row flex-wrap align-items-center gap-2">
                 <input type="text" class="form-control" style="width: 200px; font-size: 14px;" placeholder="Category Name" name="category" id="add_category">
                 <input type="text" class="form-control" style="width: 200px; font-size: 14px;" placeholder="Subcategory Name" name="subcategory" id="add_subcategory">
@@ -351,10 +369,12 @@
             <form id="add_item_form" method="POST" onsubmit="onSubmitAddItem(event)">
               <div class="d-flex gap-4">
                 <div style="width: 400px;">
-                  <img id="previewImage" src="" alt="Image Placeholder" style="width: 300px; height: 300px; object-fit: contain; border: 1px solid #ccc;" />
+                  <img id="previewImage" src="" alt="Image Placeholder"
+                    style="width: 300px; height: 300px; object-fit: contain; border: 1px solid #ccc;" />
                   <input type="file" id="image" name="image" accept="image/*"
                     onchange="previewSelectedImage(event, 'previewImage')" style="display: none;" />
-                  <button type="button" class="btn btn-warning mt-2 w-100" onclick="document.getElementById('image').click()">Add Image</button>
+                  <button type="button" class="btn btn-warning mt-2 w-100"
+                    onclick="document.getElementById('image').click()">Add Image</button>
                 </div>
 
                 <div class="flex-grow-1">
@@ -372,7 +392,8 @@
 
                   <div class="mb-3">
                     <label for="itemDescription" class="form-label">Description:</label>
-                    <textarea class="form-control" id="itemDescription" name="item_details" rows="3" required></textarea>
+                    <textarea class="form-control" id="itemDescription" name="item_details" rows="3"
+                      required></textarea>
                   </div>
 
                   <div class="mb-3 d-flex gap-3">

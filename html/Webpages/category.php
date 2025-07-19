@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Category</title>
+  <link rel="icon" type="image/x-icon" href="../../icons/tab-icon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../../css/navbarFooter.css">
@@ -93,8 +94,8 @@
 
             </div>
 
-            
-            
+
+
             <div class="product_card">
               <!----FILLER CARD---->
               <div class="image" style="background-color: rgb(211, 211, 211); color: rgb(211, 211, 211)"></div>

@@ -11,6 +11,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <link rel="icon" type="image/x-icon" href="../../icons/tab-icon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../css/navbarFooter.css">
@@ -76,7 +77,7 @@
                         </div>
                         <button class="add_to_cart btn login-btn " type="submit" "><b>LOGIN</b></button>
                     </form>
-                    <p class="mt-2 mb-0">No account? Register <a href="registration.php">Here</a></p>
+                    <p class=" mt-2 mb-0">No account? Register <a href="registration.php">Here</a></p>
                 </div>
             </div>
         </main>
