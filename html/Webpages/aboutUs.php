@@ -32,25 +32,32 @@
 
             <div class="creator-profile d-flex align-items-start mb-4">
               <div class="avatar-img bg-light border">
-                <img src="../../img/bembi.jpg" alt="Contact Avatar" class="bembi-logo"
-                  style="height: 80px; width: 80px; object-fit: cover; border-radius: 6px;">
+                <a href="https://www.facebook.com/jemuzucameron"><img src="../../img/james.jpg" alt="Contact Avatar" class="bembi-logo"
+                  style="height: 80px; width: 80px; object-fit: cover; border-radius: 6px;"></a>
               </div>
               <div class="creator-details">
                 <h5>James Cameron Abello</h5>
                 <p>Lead Developer. Focused on usability, dynamic features, and frontend polish.</p>
               </div>
             </div>
-
+            
             <div class="creator-profile d-flex align-items-start mb-4">
-              <div class="avatar-img bg-light border"></div>
+            <div class="avatar-img bg-light border">
+                <a href="https://www.facebook.com/cedreimat"><img src="../../img/frucius.jpg" alt="Contact Avatar" class="bembi-logo"
+                  style="height: 80px; width: 80px; object-fit: cover; border-radius: 6px;"></a>
+              </div>
               <div class="creator-details">
                 <h5>Cedrick Digory</h5>
                 <p>UI Designer. Responsible for layout structure, colors, and responsive feel.</p>
               </div>
             </div>
 
+          
             <div class="creator-profile d-flex align-items-start mb-4">
-              <div class="avatar-img bg-light border"></div>
+            <div class="avatar-img bg-light border">
+                <a href="https://www.facebook.com/roydennis.patalinghug"><img src="../../img/roy.png" alt="Contact Avatar" class="bembi-logo"
+                  style="height: 80px; width: 80px; object-fit: cover; border-radius: 6px;"></a>
+              </div>
               <div class="creator-details">
                 <h5>Roy THE Man</h5>
                 <p>Backend Engineer. Handles reservation logic and database efficiency.</p>
@@ -58,7 +65,10 @@
             </div>
 
             <div class="creator-profile d-flex align-items-start mb-4">
-              <div class="avatar-img bg-light border"></div>
+            <div class="avatar-img bg-light border">
+                <a href="https://www.facebook.com/mezze.you2"><img src="../../img/mezze.png" alt="Contact Avatar" class="bembi-logo"
+                  style="height: 80px; width: 80px; object-fit: cover; border-radius: 6px;"></a>
+              </div>
               <div class="creator-details">
                 <h5>Mizzi You 2</h5>
                 <p>Project Manager. Oversees development flow, timelines, and testing.</p>

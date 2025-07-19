@@ -95,7 +95,10 @@
                                             category_placeholder | subcategory_placeholder</div>
                                         <div class="name" id="item_name">name_placeholder</div>
                                         <div class="price" id="price"><strong>price_placeholder</strong></div>
+                                        <div class="category" id="totalsales">total_placeholder</div>
+                                        
                                         <br>
+
                                         <div class="desc" id="item_details">desc_placeholder</div>
                                         <br>
 

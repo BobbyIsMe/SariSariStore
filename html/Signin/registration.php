@@ -16,7 +16,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../css/navbarFooter.css">
     <link rel="stylesheet" href="../../css/webpageBody.css">
-    
+    <link rel="stylesheet" href="../../css/scrollbarfix.css">
+    <link rel="stylesheet" href="../../css/signbutton.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- <script type="text/javascript" src="../../js/auth.js"></script> -->
     <style>
@@ -33,25 +34,25 @@
 <body>
     <div class="d-flex flex-column min-vh-100">
 
-        <div class="header w-100">
-            <div class="container-fluid d-flex flex-row align-items-center justify-content-start py-2 px-3" 
-                style="gap: 34.5px; margin-left: -2.5px">
-                
-                <div class="d-flex align-items-center">
-                <img src="../../icons/logo-icon.png" alt="Cerina's Sari2Store Logo" style="height: 40px; width: auto;">
-                </div>
+    <div class="header w-100">
+            <div class="container-fluid d-flex flex-row align-items-center py-2 px-3 position-relative" style="gap: 34.5px; margin-left: -2.5px">
 
-                <div class="d-flex flex-grow-1 ms-3" style="max-width: 700px;">
-                <div class="d-flex flex-row flex-grow-1">
-                    <input type="text" class="form-control" placeholder="Search" style="padding-top: 5px">
-                    <button class="btn btn-light search-button" type="button" aria-label="Search">
-                    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-81.92 -81.92 1187.84 1187.84">
-                        <path d="m795.904 750.72 124.992 124.928a32 32 0 0 1-45.248 
+            <a href="../Webpages/homepage.php" class="text-decoration-none d-flex align-items-center">
+                    <img src="../../icons/logo-icon.png" alt="Cerina's Sari2Store Logo" style="height: 40px; width: auto;">
+                </a>
+
+                <div class="position-absolute start-50 translate-middle-x" style="max-width: 700px; width: 100%;">
+                    <div class="d-flex flex-row flex-grow-1">
+                        <input type="text" class="form-control" placeholder="Search" style="padding-top: 5px">
+                        <button class="btn btn-light search-button" type="button" aria-label="Search">
+                            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="-81.92 -81.92 1187.84 1187.84">
+                                <path d="m795.904 750.72 124.992 124.928a32 32 0 0 1-45.248 
                                 45.248L750.656 795.904a416 416 0 1 1 45.248-45.248z
-                                M480 832a352 352 0 1 0 0-704 352 352 0 0 0 0 704z"/>
-                    </svg>
-                    </button>
-                </div>
+                                M480 832a352 352 0 1 0 0-704 352 352 0 0 0 0 704z" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
 
             </div>
