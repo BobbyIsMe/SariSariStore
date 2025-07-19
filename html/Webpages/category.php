@@ -60,7 +60,7 @@
               <details class="category">
                 <summary>${category}</summary>
                 <ul class="subcategory">
-                  <a href="../Webpages/category.php?category=${category}&subcategory=${item.subcategory}">•
+                  <a href="../Webpages/category.php?category=${category}&subcategory=${item.subcategory}">
                     ${item.subcategory}</a>
                 </ul>
               </details>

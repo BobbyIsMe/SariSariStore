@@ -67,4 +67,27 @@
   pointer-events: none;
 }
 
+/* RESPONSIVENESS */
+@media (max-width: 768px) {
+  .product_info {
+    gap: 5px;
+  }
+
+  .product_name {
+    font-size: 14px;
+  }
+
+  .price {
+    font-size: 16px;
+  }
+
+  .product_controls {
+    padding: 10px;
+  }
+
+  .quantity_control {
+    width: 80px;
+  }
+}
+
 

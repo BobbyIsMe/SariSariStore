@@ -1,172 +1,190 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-
+/* BASE STYLING */
 body {
-    background-color: #f4f4f4;
-    position: relative;
+  background-color: #f4f4f4;
+  position: relative;
 }
 
-.header, .footer {
-    background-color: #e6cc8c;
-    padding: 10px 20px;
-    align-items: center;
-}
-
-.header input[type="text"] {
-    border-radius: 5px 0 0 5px;
-}
-
-.header .btn {
-    border-radius: 0 5px 5px 0;
-}
-
-.notification-badge {
-    position: absolute;
-    top: 0px;
-    right: 3px;
-    background-color: red;
-    color: white;
-    font-size: 0.75rem;
-    font-weight: bold;
-    padding: 2px 6px;
-    border-radius: 50%;
-    min-width: 20px;
-    height: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    pointer-events: none;
-    user-select: none;
-    z-index: 10;
+a {
+  color: black;
+  text-decoration: none;
 }
 
 .login-card {
-    background: white;
-    border-radius: 10px;
-    padding: 30px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin: auto;
-    width: 500px;
-    height: auto;
-}
-
-.footer {
-    width: 100%;
-    font-size: 15px;
-    padding: 10px;
-    align-items: center;
-    height: 100px;
-}
-
-.footer .col {
-    text-align: center;
-}
-
-a{
-    color: black;
-    text-decoration: none;
-}
-
-.login-btn {
-    background-color: #ccc;
-    color: white;
-    border: 1px solid rgba(0, 0, 0, 0.075) !important;
-    letter-spacing: 3px;
-    width: 35%;
-    height: 3rem;
-    text-decoration: none;
-    margin-bottom: 20px;
+  background: white;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  margin: auto;
+  width: 500px;
 }
 
 .login-card label {
-    margin-top: 5px;
-    margin-bottom: 10px;
-    display: block;
+  margin: 5px 0 10px;
+  display: block;
 }
 
 .login-card p.mt-2.mb-0 a {
-    color: #000;
-    text-decoration: none;
-    font-weight: bold;
+  color: #000;
+  font-weight: bold;
+  text-decoration: none;
 }
 
+/* HEADER & FOOTER */
+.header, .footer {
+  background-color: #e6cc8c;
+  padding: 10px 20px;
+  align-items: center;
+}
+
+.footer {
+  width: 100%;
+  font-size: 15px;
+  height: 100px;
+}
+
+.footer .col {
+  text-align: center;
+}
+
+/* SEARCH INPUT */
+.header input[type="text"] {
+  border-radius: 5px 0 0 5px;
+  max-width: 700px;
+  width: 100%;
+}
+
+.header .btn {
+  border-radius: 0 5px 5px 0;
+}
+
+@media (max-width: 768px) {
+  .header input[type="text"] {
+    max-width: 200px;
+  }
+}
+
+/* LOGIN BUTTON */
+.login-btn {
+  background-color: #ccc;
+  color: white;
+  border: 1px solid rgba(0, 0, 0, 0.075) !important;
+  letter-spacing: 3px;
+  width: 35%;
+  height: 3rem;
+  margin-bottom: 20px;
+  text-decoration: none;
+}
+
+/* SEARCH ICON */
 .search-button .search-icon {
-    width: 1.5rem;
-    height: 1.5rem;
-    fill: #333;
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: #333;
 }
 
-/*webpages css*/
-
+/* PROFILE DROPDOWN */
 #profile_dropdown {
-    color: black;
-    background-color: #fff;
-    letter-spacing: 2px;
-    border-radius: 5px;
-    border: none;
+  color: black;
+  background-color: #fff;
+  border-radius: 5px;
+  border: none;
+  letter-spacing: 2px;
 }
 
-#profile_dropdown[aria-expanded="true"], #profile_dropdown:hover {
-    background-color: #b8a36c;
-    color: black;
+#profile_dropdown[aria-expanded="true"],
+#profile_dropdown:hover {
+  background-color: #b8a36c;
 }
 
+/* NAVBAR ICONS */
 .nav-icons {
-    align-items: center;
+  align-items: center;
 }
 
 .nav-icon {
-    background: transparent;
-    border: none;
-    padding: 0.5rem;
+  background: transparent;
+  border: none;
+  padding: 0.5rem;
+  transition: transform 0.1s ease, background-color 0.1s ease;
+}
+
+.nav-icon:active {
+  transform: scale(0.60);
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 6px;
 }
 
 .nav-icon svg {
-    width: 2.5rem;
-    /* 40px */
-    height: 1.8rem;
-    stroke: #fff;
-    stroke-width: 1.5;
-    fill: none;
-    display: block;
+  width: 2.5rem;
+  height: 1.8rem;
+  stroke: #fff;
+  stroke-width: 1.5;
+  fill: none;
+  display: block;
 }
 
-
-
-/* notif bar po up */
-
+/* DROPDOWN MENU / NOTIFICATIONS */
 .dropdown-menu {
-    max-height: 400px;
+  max-height: 400px;
+  overflow-y: auto;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  border-radius: 10px;
+}
 
-    overflow-y: auto;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-    border-radius: 10px;
-
+.notification-badge {
+  position: absolute;
+  top: 0;
+  right: 3px;
+  background-color: red;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 50%;
+  min-width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  user-select: none;
+  z-index: 10;
 }
 
 .notification_card {
-    padding: 30px 0;
-    border-bottom: 1px solid #f1f1f1;
-    gap: 20px;
+  padding: 30px 0;
+  border-bottom: 1px solid #f1f1f1;
+  gap: 20px;
 }
 
 .notification_card:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
-.notification_message {
-    white-space: normal;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    min-width: 0;
-    word-break: break-word;
+.notification_message,
+.notification_card > .d-flex.flex-column.flex-grow-1 {
+  min-width: 0;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
-.notification_card>.d-flex.flex-column.flex-grow-1 {
-    min-width: 0;
-}
-
+/* PAGE NAVIGATION BUTTON */
 .navButton {
-    border: 1px solid black;
-    border-radius: 5px;
-    font-weight: lighter;
+  border: 1px solid black;
+  border-radius: 5px;
+  font-weight: lighter;
+}
+
+/* BEMBI LOGO EASTER EGG */
+.bembi-logo:hover {
+  animation: wiggleColor 0.6s ease;
+  filter: hue-rotate(45deg);
+}
+
+@keyframes wiggleColor {
+  0%   { transform: rotate(0); }
+  25%  { transform: rotate(5deg); }
+  50%  { transform: rotate(-5deg); }
+  75%  { transform: rotate(3deg); }
+  100% { transform: rotate(0); }
 }

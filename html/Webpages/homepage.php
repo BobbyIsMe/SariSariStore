@@ -59,7 +59,7 @@
                                 <summary>${category}</summary>
                                 <ul class="subcategory">
                                     <a
-                                        href="../Webpages/category.php?category=${category}&subcategory=${item.subcategory}">•
+                                        href="../Webpages/category.php?category=${category}&subcategory=${item.subcategory}">
                                         ${item.subcategory}</a>
                                 </ul>
                             </details>
@@ -67,7 +67,7 @@
                     </aside>
                 </div>
 
-                <section class="body_container" style="flex-grow: 1; gap: 20px;">
+                <section class="body_container" style="flex-grow: 1; gap: 20px; margin-top: -10px; margin-left: -10px">
                     <div class="object_container">
                         <section class="top_selling">
 

@@ -1,28 +1,60 @@
-.cart_items {
-
-    flex: 3;
-    background: white;
-    border-radius: 8px;
-    padding: 20px;
-    gap: 5px;
+/* CART CONTAINER */
+.cart-container {
+  flex-wrap: wrap;
+  width: 100%;
+  overflow-x: hidden;
 }
 
-.cart_items .name, .item_id, .category, .subcategory, .price, .qty .description_text {
-  font-size: 12px;
+.cart_items,
+.order_summary {
+  flex: 1 1 100%;
+  width: 100%;
+  min-width: 0;
+}
+
+@media (min-width: 768px) {
+  .cart_items {
+    flex: 3;
+    padding-right: 10px;
+  }
+
+  .order_summary {
+    flex: 1;
+    padding-left: 10px;
+  }
+}
+
+/* CART ITEMS */
+.cart_items {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  gap: 5px;
 }
 
 .cart_items h5 {
-  font-size: 15px
+  font-size: 15px;
+}
+
+.cart_items .name,
+.cart_items .item_id,
+.cart_items .category,
+.cart_items .subcategory,
+.cart_items .price,
+.cart_items .qty,
+.cart_items .description_text {
+  font-size: 12px;
 }
 
 .cart_item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border-bottom: 1px solid #ddd;
-    padding: 15px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid #ddd;
+  padding: 15px 0;
 }
 
+/* ITEM IMAGE */
 .item_image {
   aspect-ratio: 1/1;
   width: 80px;
@@ -31,7 +63,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 
 .item_image img {
@@ -41,21 +72,34 @@
   display: block;
 }
 
+/* ORDER SUMMARY */
 .order_summary {
   display: flex;
   flex-direction: column;
-    flex: 1;
-    background: white;
-    border-radius: 8px;
-    padding: 20px;
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  font-size: 13px;
+}
+
+.order_summary b,
+.order_summary strong,
+.order_summary #estimated_total,
+.order_summary #status,
+.order_summary .summary_item > div:first-child {
+  font-size: 13px;
+  font-weight: 600;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .summary_item {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
 }
 
+/* QUANTITY CONTROL */
 .quantity_control {
   display: flex;
   align-items: center;
@@ -64,6 +108,11 @@
   border-radius: 20px;
   padding: 5px;
   width: 100px;
+  transition: box-shadow 0.2s ease;
+}
+
+.quantity_control:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .quantity_control button {
@@ -75,6 +124,12 @@
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
+  transition: transform 0.1s ease, background-color 0.2s ease;
+}
+
+.quantity_control button:active {
+  transform: scale(0.9);
+  background-color: #bbb;
 }
 
 .quantity_control input {
@@ -84,4 +139,87 @@
   width: 30px;
   font-size: 16px;
   pointer-events: none;
+}
+
+.quantity_control input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #aaa;
+}
+
+/* BUTTON INTERACTION */
+.add_to_cart {
+  transition: transform 0.1s ease, box-shadow 0.2s ease;
+  border-radius: 6px;
+}
+
+.add_to_cart:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.add_to_cart:active {
+  transform: scale(0.97);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 768px) {
+  .cart_items {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .cart_item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .item_image {
+    width: 100%;
+    height: auto;
+  }
+
+  .order_summary {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .d-flex.align-items-stretch.justify-content-center {
+    flex-direction: column !important;
+  }
+
+  .col-md-3.col-lg-2.p-2 {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex-shrink: 0;
+    margin-bottom: 15px;
+  }
+
+  main[style*="flex-grow: 1;"] {
+    width: 100% !important;
+  }
+
+  #sidebar {
+    max-height: none !important;
+    overflow-y: visible !important;
+    padding-left: 10px;
+  }
+
+  .item_nav h6 {
+    font-size: 1.1rem;
+  }
+
+  .category summary {
+    font-size: 1rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .subcategory {
+    margin-left: 1rem !important;
+  }
+
+  .subcategory a {
+    display: block;
+    padding: 0.25rem 0;
+  }
 }

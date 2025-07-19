@@ -35,9 +35,9 @@
 
     <?php include '../Navbars/navbar.php'; ?>
 
-
         <main class="flex-fill" style="height: 100%;">
-            <div class="d-flex align-items-stretch justify-content-center" style="min-height: 100vh;">
+            <div class="row g-0" style="min-height: 100vh;">
+
                 <div class="col-2 p-2" style="background-color: white; flex-shrink: 0;">
                     <aside class="item_nav flex-column align-items-start text-start">
                         <h6>Categories</h6>
@@ -46,18 +46,18 @@
                             <details class="category">
                                 <summary>${category}</summary>
                                 <ul class="subcategory">
-                                    <a href="../Webpages/category.php?category=${category}&subcategory=${item.subcategory}">• ${item.subcategory}</a>
+                                    <a href="../Webpages/category.php?category=${category}&subcategory=${item.subcategory}">
+                                        ${item.subcategory}</a>
                                 </ul>
                             </details>
                         </div>
                     </aside>
                 </div>
 
-                <main style="flex-grow: 1;">
-                    <div class="object_container">
-                        <div class="cart-container" style="display: flex; gap: 20px; padding: 20px; background: #f5f5f5;">
+                <div class="col-10">
+                    <div class="cart-container" style="display: flex; flex-wrap: wrap; gap: 20px; padding: 20px; background: #f5f5f5; width: 100%;">
 
-                            <div class="cart_items">
+                        <div class="cart_items">
                                 <h4><b id="cart_number">Cart</b></h4>
 
                                 <!-- item-->
@@ -151,7 +151,6 @@
                                 <button class="add_to_cart" id="reserve">Reserve</button>
                             </div>
                         </div>
-                    </div>
                 </main>
             </div>
         </main>

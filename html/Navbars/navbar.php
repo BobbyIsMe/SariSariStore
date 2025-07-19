@@ -1,10 +1,12 @@
 <div class="header">
-            <div class="container-fluid d-flex flex-row align-items-center text-center py-2 " style="gap: 40px;">
-                <a href="../Webpages/homepage.php" class="text-decoration-none">
-                    <h5 class="mb-0"><b>Cerina's Sari2Store</b></h5>
+            <div class="container-fluid d-flex flex-row align-items-center justify-content-between py-2 px-3" style="gap: 10px;">
+
+                <a href="../Webpages/homepage.php" class="text-decoration-none d-flex align-items-center">
+                    <img src="../../icons/logo-icon.png" alt="Cerina's Sari2Store Logo" style="height: 40px; width: auto;">
                 </a>
 
-                <div class=" d-flex col-7  mx-auto">
+                <div class="d-flex flex-grow-1 me-3" style="max-width: 700px;">
+
                     <div class="d-flex flex-row flex-grow-1">
                         <input type="text" class="form-control" id="search_input" placeholder="Search">
                         <button class="btn btn-light search-button" id="search_button" type="button"
@@ -17,10 +19,9 @@
                             </svg>
                         </button>
                     </div>
-
                 </div>
 
-                <div class="nav-icons d-flex gap-4">
+                <div class="d-flex align-items-center gap-3 flex-wrap">
 
                     <button class="btn nav-icon" onclick="window.location.href='../Cart/cart.php'" aria-label="Cart">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -77,9 +78,6 @@
                             </svg>
                             <div id="notification_count"></div>
                         </button>
-
-
-
                     </div>
 
                     <div class="dropdown ms-auto">
@@ -95,9 +93,7 @@
                             <a class="dropdown-item" id="authLink" onclick="signoutClick(event)">Logout</a>
                         </ul>
                     </div>
-
                 </div>
-
             </div>
 
         <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel"
@@ -121,5 +117,4 @@
                 </div>
             </div>
         </div>
-
-        </div>
+    </div>

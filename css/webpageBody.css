@@ -1,9 +1,9 @@
-html {
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
   scrollbar-gutter: stable;
-}
-
-
-body {
+  font-family: 'Inter', sans-serif;
   overflow-y: scroll;
 }
 
@@ -12,17 +12,30 @@ a {
   text-decoration: none;
 }
 
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
+/* CONTAINERS */
 .body_container {
   flex-grow: 1;
   padding: 20px;
 }
 
+.object_container {
+  flex-wrap: wrap;
+  padding: 20px;
+  margin: 10px;
+  background-color: #fff;
+  border: 1px solid #fff;
+  border-radius: 10px;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.items_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* CATEGORY FILTER NAV */
 .item_nav {
   align-self: flex-start;
   margin: 1.5rem 0 0 1rem;
@@ -34,9 +47,9 @@ html, body {
   margin-bottom: 0.5rem;
 }
 
-.category summary::-webkit-details-marker,
-.category summary::marker {
-  display: none;
+.category {
+  margin-bottom: 0.5rem;
+  border-radius: 5px;
 }
 
 .category summary {
@@ -45,12 +58,17 @@ html, body {
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s;
   list-style: none;
+  transition: background 0.2s;
 }
 
 .category summary:hover {
   background-color: rgba(0, 0, 0, 0.05);
+}
+
+.category summary::-webkit-details-marker,
+.category summary::marker {
+  display: none;
 }
 
 .category summary::after {
@@ -67,11 +85,6 @@ html, body {
   transform: translateY(-50%) rotate(90deg);
 }
 
-.category {
-  margin-bottom: 0.5rem;
-  border-radius: 5px;
-}
-
 .subcategory {
   margin: 0.5rem 0 0.5rem 2rem;
   padding: 0;
@@ -83,20 +96,7 @@ html, body {
   margin-bottom: 0.25rem;
 }
 
-.object_container {
-  border: 1px solid #fff;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 10px;
-  margin: 10px;
-}
-
-.items_container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
+/* PRODUCT GRID */
 .product_list {
   display: flex;
   gap: 20px;
@@ -105,25 +105,34 @@ html, body {
 }
 
 .product_card {
+  width: 280px;
+  padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  padding: 10px;
-  width: 280px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product_card:hover {
+  transform: translateY(-20px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
 }
 
 .product_card .category {
-  font-size: 11px
+  font-size: 11px;
 }
 
+/* IMAGE BLOCKS */
 .image {
-  aspect-ratio: 1/1;
   width: 100%;
+  aspect-ratio: 1/1;
   background: #eee;
   overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
-
+  transition: box-shadow 0.3s ease;
 }
 
 .image img {
@@ -133,28 +142,52 @@ html, body {
   display: block;
 }
 
-.item_desc {
-  aspect-ratio: 1/1;
-  height: 400px;
-  border: 1px solid #000;
-
+.image:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
-.add_to_cart {
+.item_desc {
+  height: 400px;
+  aspect-ratio: 1/1;
+  border: 1px solid #000;
+}
+
+/* BUTTONS */
+.add_to_cart,
+.navButton {
   width: 100%;
   margin-top: 5px;
   padding: 10px;
   border-radius: 5px;
   background-color: #FFC107;
-  border: NONE;
-
+  border: none;
+  transition: box-shadow 0.3s ease;
 }
 
+.navButton {
+  width: 100px;
+}
 
+.navButton:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* ABOUT / CONTACT PAGE */
 .about-section-wrapper {
   display: flex;
-  gap: 40px;
   flex-wrap: wrap;
+  gap: 40px;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.5s ease forwards;
+  animation-delay: 0.2s;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .creator-box,
@@ -163,20 +196,39 @@ html, body {
   border: 1px solid #ddd;
   padding: 25px;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   max-width: 500px;
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: left;
+}
+
+.faq-box h4 {
+  text-align: left;
+}
+
+.faq-box .image {
+  margin: 10px 0 20px;
 }
 
 .creator-profile {
-  gap: 15px;
-  width: 100%;
-  max-width: 350px;
   display: flex;
   align-items: center;
+  gap: 15px;
+  max-width: 350px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.creator-profile:hover {
+  background-color: #f5f5f5;
+  transform: translateX(5px);
+}
+
+.creator-profile:active {
+  transform: scale(0.97);
 }
 
 .avatar-img {
@@ -190,7 +242,7 @@ html, body {
 .creator-details h5 {
   margin: 0 0 6px;
   font-weight: bold;
-  flex-grow: 1
+  flex-grow: 1;
 }
 
 .creator-details p {
@@ -199,27 +251,17 @@ html, body {
   color: #555;
 }
 
-.faq-box h4 {
-  text-align: left;
+/* BEMBI EASTER EGG */
+.bembi-profile:hover .creator-details::after {
+  content: "🍌 Certified Kingkong Banana Conga";
+  display: block;
+  font-size: 12px;
+  color: #777;
+  margin-top: 5px;
+  animation: popUp 0.3s ease;
 }
 
-.faq-box .image {
-  margin-top: 10px;
-  margin-bottom: 20px;
-}
-
-
-/*page navigation*/
-.navButton {
-  border-radius: 5px;
-  padding: 10px;
-  background-color: #FFC107;
-  border: none;
-  width: 100px;
-  transition: box-shadow 0.3s;
-  
-}
-
-.navButton:hover {
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+@keyframes popUp {
+  0% { opacity: 0; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1); }
 }

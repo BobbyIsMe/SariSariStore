@@ -47,7 +47,7 @@
                             <details class="category">
                                 <summary>${category}</summary>
                                 <ul class="subcategory">
-                                    <a href="../Webpages/category.php?category=${category}&subcategory=${item.subcategory}">• ${item.subcategory}</a>
+                                    <a href="../Webpages/category.php?category=${category}&subcategory=${item.subcategory}"> ${item.subcategory}</a>
                                 </ul>
                             </details>
                         </div>
@@ -55,77 +55,62 @@
                 </div>
 
                 <main style="flex-grow: 1;">
-                    <div class="object_container">
-                        <div class="cart-container" style="display: flex; gap: 20px; padding: 20px; background: #f5f5f5;">
-                            <div class="cart_items">
-                                <h4><b id="order_number">Order</b></h4>
-                                <div id="order_items">
-                                    <div class="cart_item">
+                    <div class="cart-container" style="display: flex; flex-wrap: wrap; gap: 20px; padding: 20px; background: #f5f5f5; width: 100%;">
 
-                                        <div class="item_image">
-                                            <img src="../../img/bembi.jpg" alt="img" >
-                                        </div>
+  <!-- 🧾 Order Items -->
+  <div class="cart_items">
+    <h4><b id="order_number">Order</b></h4>
 
-                                        <!-- details-->
-                                        <div style="flex: 1; ">
-                                            <div class="d-flex flex-row g-2"
-                                                style="gap: 20px; font-size: 12px; color: gray;">
-                                                <div class="category">${item.category}</div>
-                                                <div>|</div>
-                                                <div class="category">${item.subcategory}</div>
-                                            </div>
+    <div id="order_items">
+      <div class="cart_item">
+        <div class="item_image">
+          <img src="../../img/bembi.jpg" alt="img" class="bembi-logo" style="width: 80px; height: 80px">
+        </div>
 
-                                            <div class="name" style="font-weight: bold;">${item.brand} | ${item.item_name}</div>
-                                            <div style="font-size: 15px;">
-                                                ${item.variation_name}
-                                            </div>
-                                        </div>
+        <div style="flex: 1;">
+          <div class="d-flex flex-row" style="gap: 20px; font-size: 12px; color: gray;">
+            <div class="category">${item.category}</div>
+            <div>|</div>
+            <div class="category">${item.subcategory}</div>
+          </div>
 
-                                        <div class="d-flex flex-row align-items-center" style="gap:20px">
-                                            <div style="width: auto; text-align: right;">₱${item.subtotal}</div>
-                                            <div class="d-flex flex-column align-items-center text-center"
-                                                style="gap: 10px; ">
-                                                <div readonly
-                                                    style="height: 15px; width: 100px; font-size: 12PX; color: red; ">
-                                                </div>
-                                                <div>
-                                                    <div>
-                                                        ${item.item_qty} pcs
-                                                    </div>
-                                                </div>
-                                                <div style="font-size: 10px; color: gray;">${item.stock_qty} in Stock</div>
-                                            </div>
-                                            <div>
+          <div class="name" style="font-weight: bold;">${item.brand} | ${item.item_name}</div>
+          <div style="font-size: 15px;">${item.variation_name}</div>
+        </div>
 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+        <div class="d-flex flex-column align-items-center text-center" style="gap: 10px;">
+          <div style="height: 15px; width: 100px; font-size: 12px; color: red;"></div>
+          <div>${item.item_qty} pcs</div>
+          <div style="font-size: 10px; color: gray;">${item.stock_qty} in Stock</div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-                            <div class="order_summary">
-                                <h3>Order Details</h3>
-                                <!-- item -->
-                                <div id="order_details">
-                                    <div class="summary_item">
-                                        <div><strong>${item.item_qty}x</strong> ${item.brand} | ${item.item_name} (${item.variation_name})</div>
-                                        <div>₱${item.subtotal}</div>
-                                    </div>
-                                </div>
-                                <br>
+  <!-- 📦 Order Summary -->
+  <div class="order_summary">
+    <h3>Order Details</h3>
 
-                                <div style="margin-top: 20px; font-weight: bold; display: flex; justify-content: space-between;">
-                                    <div>Estimated Total</div>
-                                    <div id="estimated_total">N/A</div>
-                                </div>
-                                <br>
-                                <button
-                                    class="add_to_cart" id="cancel">
-                                    Cancel
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+    <div id="order_details">
+      <div class="summary_item">
+        <div><strong>${item.item_qty}x</strong> ${item.brand} | ${item.item_name} (${item.variation_name})</div>
+        <div>₱${item.subtotal}</div>
+      </div>
+    </div>
+
+    <br>
+
+    <div class="d-flex flex-row justify-content-between" style="margin-top: 20px; font-weight: bold;">
+      <div>Estimated Total</div>
+      <div id="estimated_total">N/A</div>
+    </div>
+
+    <br>
+    <button class="add_to_cart" id="cancel">Cancel</button>
+  </div>
+</div>
+
+
                 </main>
             </div>
         </main>

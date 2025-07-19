@@ -29,7 +29,9 @@
           <h4 class="mb-3"><b>Meet the Creators</b></h4>
 
           <div class="creator-profile d-flex align-items-start mb-4">
-            <div class="avatar-img bg-light border"></div>
+            <div class="avatar-img bg-light border">
+              <img src="../../img/bembi.jpg" alt="Contact Avatar" class="bembi-logo" style="height: 80px; width: 80px; object-fit: cover; border-radius: 6px;">
+            </div>
             <div class="creator-details">
               <h5>James Cameron Abello</h5>
               <p>Lead Developer. Focused on usability, dynamic features, and frontend polish.</p>
@@ -68,7 +70,7 @@
             <ul><li>Simply select your products and click “Reserve” in your cart.</li></ul>
           </li>
           <li>Can I cancel a reservation?
-            <ul><li>Yes, as long as the status is still pending approval.</li></ul>
+            <ul><li>Yes, as long as the status is still pending for approval.</li></ul>
           </li>
           <li>How often are items restocked?
             <ul><li>We restock key products weekly; exact dates may vary per supplier.</li></ul>
